@@ -1,0 +1,34 @@
+<ion-view view-title="Exercícios">
+	<ion-content ng-controller="ListExerciceController">
+		
+		<div class="item item-input-inset">
+		    <label class="item-input-wrapper">
+		    	<i class="icon ion-search placeholder-icon"></i>
+		    	<input type="text" placeholder="Pesquisar" ng-model="search">
+		    </label>
+		    <i class="icon ion-ios-close-outline padding-horizontal" ng-show="search" ng-click="clearSearch()"></i>
+		</div>
+
+		<div class="card" ng-repeat="exercice in filteredExercices = (exercices | filter:search)">
+			<div class="item item-checkbox">
+				<label class="checkbox">
+			    	<input type="checkbox">
+			    </label>
+				{{exercice.doc.name}}
+				<span class="item-note">
+					{{exercice.doc.muscle}}
+				</span>
+			</div>
+		</div>
+
+		<div class="list list-inset" ng-hide="filteredExercices.length">
+
+		    <div class="item text-center">
+		      Sua busca não retornou resultados
+		    </div>
+
+		</div>
+		
+
+	</ion-content>
+</ion-view>

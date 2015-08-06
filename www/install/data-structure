@@ -1,0 +1,49 @@
+exercice = {
+	name : "",
+	type : "exercice",
+	muscle : "",
+	owner : ""
+}
+
+training = {
+	name : "",
+	teacher : "",
+	student : "",
+	duration : "",
+	objective : ""
+}
+
+trainingExercice = {
+	training : "",
+	exercice : "",
+	repetitions : 0,
+	series : 0,
+	time : 0,
+	weight : 0
+}
+
+user = {
+	name : "",
+	email : "",
+	birthDate : 0,
+	gender : "",
+	pic : "",
+	creationDate : 0
+}
+
+student = {
+	teachers : []
+}
+
+teacher = {
+	students : []
+}
+
+notification = {
+	title : "",
+	message : "",
+	link : "",
+	from : "",
+	to : [],
+	readTo : []
+}

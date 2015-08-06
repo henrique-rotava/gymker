@@ -1,0 +1,8 @@
+
+.loading-container {
+	align-items: flex-end;
+	padding-bottom: 10px;
+}
+.loading-container .loading {
+	border-radius: 30px;
+}

@@ -1,0 +1,22 @@
+<ion-view view-title="Novo Exercício">
+	<ion-content ng-controller="CreateExerciceController">
+		<div class="list list-inset">
+			<label class="item item-input">
+				<input type="text" placeholder="Nome do exercicio" ng-model="exercice.name">
+			</label>
+		</div>
+		<div class="list list-inset">
+			<label class="item item-input item-select">
+				<span class="input-label">
+					Grupo muscular
+				</span>
+				<select ng-model="exercice.muscle">
+					<option ng-repeat="muscle in muscles">{{muscle}}</option>
+				</select>
+			</label>
+		</div>
+		<div class="padding">
+        	<button class="button button-block button-balanced" ng-click="createExercice()">Criar</button>
+      	</div>
+	</ion-content>
+</ion-view>
