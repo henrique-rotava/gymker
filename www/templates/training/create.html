@@ -12,7 +12,7 @@
 		<div class="card" ng-repeat="exercice in filteredExercices = (exercices | filter:search)">
 			<div class="item item-checkbox">
 				<label class="checkbox">
-			    	<input type="checkbox">
+			    	<input type="checkbox" ng-model="exercice.selected">
 			    </label>
 				{{exercice.doc.name}}
 				<span class="item-note">

@@ -52,8 +52,8 @@ var app = angular.module('gymker', ['ionic', 'starter.controllers', 'gymker.exer
         templateUrl: "templates/training/create.html"
       }
     }
-  });
+  })
 
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/exercices/list');
+  $urlRouterProvider.otherwise('/app/exercices/list');
 });

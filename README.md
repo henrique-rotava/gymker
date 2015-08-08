@@ -1,2 +1,2 @@
-# gymker
+# Gymker
 A mobile experience for gym
