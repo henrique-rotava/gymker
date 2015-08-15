@@ -1,0 +1,33 @@
+<ion-view view-title="Perfil">
+	<ion-content ng-controller="ProfileController">
+	
+		<div class="text-center balanced-bg padding">
+			<img ng-click="openPictureType($event)" class="circle profile-pic" src="{{imageSrc}}">
+			<br/>
+			<label class="stable profile-name">Henrique Rotava</label>
+		</div>
+		<div class="row">
+			<div class="col text-center">Frequência</div>
+			<div class="col text-center">Peso</div>
+			<div class="col text-center">Treinos</div>
+		</div>
+
+		<script id="choose-pic-type.html" type="text/ng-template">
+			<ion-popover-view class="fit">
+				<div class="row">
+					<div class="col text-center">
+						<button class="button button-clear icon-button" ng-click="getPicture(0)">
+							<i class="ion-image"></i>
+						</button>
+					</div>
+					<div class="col text-center">
+						<button class="button button-clear icon-button" ng-click="getPicture(1)">
+							<i class="ion-camera"></i>
+						</button>
+					</div>
+				</div>
+  			</ion-popover-view>
+	</script>
+	
+	</ion-content>
+</ion-view>

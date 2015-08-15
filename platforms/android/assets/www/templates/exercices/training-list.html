@@ -1,0 +1,40 @@
+<ion-view view-title="Exercícios">
+	<ion-content ng-controller="UserExerciceController">
+
+		<style>
+			.item-icon-right .icon{
+				z-index:100;
+			}
+		</style>
+
+		<div class="card" ng-repeat="exer in exercices">
+			<div class="item item-icon-right item-checkbox">
+				
+				<label class="checkbox">
+					<input type="checkbox" ng-model="exer.done">
+				</label>
+				{{exer.name}}
+				<span class="item-note">
+					{{exer.muscle}}
+				</span>
+				<i ng-click="showActions($index)" class="icon ion-android-more-vertical"></i>
+				
+			</div>
+			<div class="item tabs tabs-secondary tabs-icon-left" ng-hide="exer.done">
+				<a class="tab-item" ng-click="changeSeries({{exer}})">
+					<i class="icon">{{exer.series}}</i>
+					Séries
+				</a>
+				<a class="tab-item" ng-click="changeRepetitions({{exer}})">
+					<i class="icon">{{exer.repetitions}}</i>
+					Repetições
+				</a>
+				<a class="tab-item" ng-click="changeWeight({{exer}})">
+					<i class="icon">{{exer.weight}}</i>
+					Kg
+				</a>
+			</div>
+		</div>
+
+	</ion-content>
+</ion-view>
