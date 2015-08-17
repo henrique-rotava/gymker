@@ -1,7 +1,14 @@
 var localDB = new PouchDB("gymkerr");
 var remoteDB = new PouchDB("http://localhost:5984/gymkerr");
 
-var app = angular.module('gymker', ['ionic', 'starter.controllers', 'gymker.exercicecontrollers', 'gymker.profilecontrollers'])
+var app = angular.module('gymker', 
+		[
+		 'ionic', 
+		 'starter.controllers', 
+		 'gymker.exercicecontrollers', 
+		 'gymker.profilecontrollers',
+		 'gymker.authenticationServices'
+		 ])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
@@ -59,6 +66,15 @@ var app = angular.module('gymker', ['ionic', 'starter.controllers', 'gymker.exer
     views: {
       'menuContent': {
         templateUrl: "templates/profile/index.html"
+      }
+    }
+  })
+  
+  .state('app.profile-edit', {
+    url: "/profile/edit",
+    views: {
+      'menuContent': {
+        templateUrl: "templates/profile/edit.html"
       }
     }
   })

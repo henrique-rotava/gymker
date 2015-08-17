@@ -1,8 +1,19 @@
 angular.module('gymker.profilecontrollers', [])
 
-.controller('ProfileController', ['$scope', '$ionicPopover', function($scope, $ionicPopover){
+.controller('ProfileController', ['$scope', '$ionicPopover', 'AuthService', 'UserRepository',
+                                  function($scope, $ionicPopover, AuthService, UserRepository){
 	
-	$scope.imageSrc = "/resources/icon.png";
+	$scope.user;
+	
+	AuthService.getUser(function(error, result){
+		$scope.$apply(function (){
+			if(!error){
+				$scope.user = result;
+			}
+		});
+	});
+	
+	$scope.newImageSrc;
 	
 	$ionicPopover.fromTemplateUrl('choose-pic-type.html', {
 	    scope: $scope
@@ -24,7 +35,9 @@ angular.module('gymker.profilecontrollers', [])
 		};
 		
 		var cameraSuccess = function(imageData) {
-			$scope.imageSrc = 'data:image/jpeg;base64,' + imageData;
+			 $scope.$apply(function (){
+				 $scope.newImageSrc = 'data:image/jpeg;base64,' + imageData
+			 });
 		};
 		
 		var cameraError = function(message){
@@ -32,8 +45,17 @@ angular.module('gymker.profilecontrollers', [])
 		};
 		
 		navigator.camera.getPicture(cameraSuccess, cameraError, cameraOptions);
-		
-		
+	};
+	
+	$scope.saveNewPic = function(){
+		$scope.user.profilePic = $scope.newImageSrc;
+		$scope.closePopover();
+		UserRepository.save($scope.user);
+	};
+	
+	$scope.closePopover = function(){
+		$scope.newImageSrc = "";
+		$scope.popover.hide();
 	};
 	
 }]);

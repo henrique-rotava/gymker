@@ -13,11 +13,12 @@
 	border-radius: 50%;
 }
 .profile-pic {
-	max-width: 150px;
-	max-height: 150px;
+	width: 150px;
+	height: 150px;
 	border: solid 4px white;
-	min-height: 150px;
-	height: auto;
+	background-size: cover;
+    background-position: center center;
+    margin:auto;
 }
 
 .profile-name {
@@ -44,4 +45,36 @@ ion-popover-view.fit ion-content {
 
 .platform-android ion-popover-view.fit {
   margin-top: 10px !important;
+}
+.new-profile-pic {
+	height: 150px;
+	background-position: center center;
+	background-size: cover;
+}
+.pic-container {
+	position:relative;
+}
+.pic-container:before {
+	content:"";
+	position:absolute;
+	height:100%;
+	width:100%;
+	left:0px;
+	z-index:-1;
+	background-size: cover;
+    background-position: center center;
+    filter:blur(6px);
+    -o-filter:blur(6px);
+    -ms-filter:blur(6px);
+    -moz-filter:blur(6px);
+    -webkit-filter:blur(6px);
+}
+.full-width {
+	width:100%;
+}
+.button-clear.edit-profile-button{
+	position:absolute;
+	right:0px;
+	top:0px;
+	color:white;
 }
