@@ -61,19 +61,23 @@ angular.module('gymker.profilecontrollers', [])
 	
 	$scope.updateProfile = function(formUser) {
 		$scope.user = angular.copy(formUser);
-		console.log($scope.user);
 		UserRepository.save($scope.user, function(error, result){
 			if(!error){
 				$ionicLoading.show({ 
 		            template: 'Perfil atualizado com sucesso!',
 		            noBackdrop: true,
-		            duration: 500
+		            duration: 1000
 		        });
+				
+				$scope.user._rev = result.rev;
+				$scope.formUser = angular.copy($scope.user);
+				
 			}else{
+				console.log(result);
 				$ionicLoading.show({ 
 		            template: 'Ops, ocorreu um erro ao salvar suas informações.',
 		            noBackdrop: true,
-		            duration: 500
+		            duration: 1000
 		        });
 			}
 		});

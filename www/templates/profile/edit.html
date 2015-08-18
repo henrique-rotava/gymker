@@ -3,9 +3,13 @@
 		
 		<style>
 			.profile-pic{
-				background-image: url({{formUser.profilePic}});
+				background-image: url({{user.profilePic}});
+			}
+			.new-profile-pic{
+				background-image: url({{newImageSrc}});
 			}
 		</style>
+		
 		<div class="has-header editing-profile-container">
 			<label>{{user.name}}</label>
 			<div ng-click="openPictureType($event)" class="circle profile-pic profile-pic-editing"></div>
@@ -52,10 +56,10 @@
 				<input type="password" placeholder="Confirmação de senha" ng-model="form.comfirmPassword">
 			</label>
 			
-		</div>
-		<div class="padding-horizontal">
+		<div class="padding">
         	<button class="button button-block button-balanced" ng-click="updateProfile(formUser)">Salvar</button>
       	</div>
+		</div>
 
 	</ion-content>
 </ion-view>
