@@ -1,0 +1,61 @@
+<ion-view view-title="Perfil">
+	<ion-content ng-controller="ProfileController">
+		
+		<style>
+			.profile-pic{
+				background-image: url({{formUser.profilePic}});
+			}
+		</style>
+		<div class="has-header editing-profile-container">
+			<label>{{user.name}}</label>
+			<div ng-click="openPictureType($event)" class="circle profile-pic profile-pic-editing"></div>
+		</div>
+		<div class="list">
+			<label class="item item-input item-floating-label">
+				<span class="input-label">Nome</span>
+				<input type="text" placeholder="Nome" ng-model="formUser.name">
+			</label>
+			<label class="item item-input item-floating-label">
+				<span class="input-label">Email</span>
+				<input type="email" placeholder="Email" ng-model="formUser.email">
+			</label>
+			<label class="item item-input item-floating-label">
+				<span class="input-label">Telefone</span>
+				<input type="tel" placeholder="Telefone" ng-model="formUser.phone">
+			</label>
+			<label class="item item-input item-floating-label">
+				<span class="input-label">Data de nascimento</span>
+				<input type="date" placeholder="Data de nascimento" ng-model="formUser.birthDate">
+			</label>
+			
+			<label class="item item-input item-select">
+				<div class="input-label">
+			      Sexo
+			    </div>
+				<select ng-model="formUser.gender">
+			      <option selected>Selecione</option>
+			      <option>Masculino</option>
+			      <option>Feminino</option>
+			    </select>
+			</label>
+			
+			<div class="item item-divider">
+				Alterar senha
+			</div>
+			
+			<label class="item item-input item-floating-label">
+				<span class="input-label">Senha</span>
+				<input type="password" placeholder="Senha" ng-model="formUser.password">
+			</label>
+			<label class="item item-input item-floating-label">
+				<span class="input-label">Confirmação de senha</span>
+				<input type="password" placeholder="Confirmação de senha" ng-model="form.comfirmPassword">
+			</label>
+			
+		</div>
+		<div class="padding-horizontal">
+        	<button class="button button-block button-balanced" ng-click="updateProfile(formUser)">Salvar</button>
+      	</div>
+
+	</ion-content>
+</ion-view>
