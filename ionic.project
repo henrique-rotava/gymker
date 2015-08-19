@@ -1,4 +1,12 @@
 {
   "name": "Gymker",
-  "app_id": "fe77ccdd"
+  "app_id": "fe77ccdd",
+  "gulpStartupTasks": [
+    "sass",
+    "watch"
+  ],
+  "watchPatterns": [
+    "www/**/*",
+    "!www/lib/**/*"
+  ]
 }

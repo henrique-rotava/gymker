@@ -1,3 +1,17 @@
+/* custom */
+ion-content{
+	background-color: #E9EAED;
+}
+.item-floating-label{
+	background:white;
+}
+/* custom end*/
+
+.clear-search {
+	position: absolute;
+    right: 12px;
+    top: 16px;
+}
 .loading-container {
 	align-items: flex-end;
 	padding-bottom: 10px;
@@ -19,6 +33,27 @@
 	background-size: cover;
     background-position: center center;
     margin:auto;
+}
+
+.profile-pic-editing {
+	width: 90px;
+	height: 90px;
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    z-index: 5;
+}
+
+.editing-profile-container label{
+	line-height: 65px;
+    font-size: 20px;
+    margin-left: 15px;
+    color:#2a8945
+}
+
+.editing-profile-container{
+	height: 65px;
 }
 
 .profile-name {

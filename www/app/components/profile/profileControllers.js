@@ -6,15 +6,26 @@ angular.module('gymker.profilecontrollers', [])
 	$scope.user;
 	$scope.formUser;
 	$scope.newImageSrc;
+	$scope.birthDateType = 'text';
 	
 	AuthService.getUser(function(error, result){
 		$scope.$apply(function (){
 			if(!error){
 				$scope.user = result;
 				$scope.formUser = angular.copy($scope.user);
+				$scope.updateBirthDateType();
 			}
 		});
 	});
+	
+	// workaround for input[type=date]
+	$scope.updateBirthDateType = function(type){
+		if(type){
+			$scope.birthDateType = type;
+		}else{
+			$scope.birthDateType = $scope.formUser.birthDate ? 'date' : 'text';
+		}
+	}
 	
 	$ionicPopover.fromTemplateUrl('choose-pic-type.html', {
 	    scope: $scope

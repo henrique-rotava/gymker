@@ -1,19 +1,31 @@
 angular.module('gymker.profilecontrollers', [])
 
-.controller('ProfileController', ['$scope', '$ionicPopover', 'AuthService', 'UserRepository',
-                                  function($scope, $ionicPopover, AuthService, UserRepository){
+.controller('ProfileController', ['$scope', '$ionicPopover', 'AuthService', 'UserRepository', '$ionicLoading',
+                                  function($scope, $ionicPopover, AuthService, UserRepository, $ionicLoading){
 	
 	$scope.user;
+	$scope.formUser;
+	$scope.newImageSrc;
+	$scope.birthDateType = 'text';
 	
 	AuthService.getUser(function(error, result){
 		$scope.$apply(function (){
 			if(!error){
 				$scope.user = result;
+				$scope.formUser = angular.copy($scope.user);
+				$scope.updateBirthDateType();
 			}
 		});
 	});
 	
-	$scope.newImageSrc;
+	// workaround for input[type=date]
+	$scope.updateBirthDateType = function(type){
+		if(type){
+			$scope.birthDateType = type;
+		}else{
+			$scope.birthDateType = $scope.formUser.birthDate ? 'date' : 'text';
+		}
+	}
 	
 	$ionicPopover.fromTemplateUrl('choose-pic-type.html', {
 	    scope: $scope
@@ -56,6 +68,30 @@ angular.module('gymker.profilecontrollers', [])
 	$scope.closePopover = function(){
 		$scope.newImageSrc = "";
 		$scope.popover.hide();
+	};
+	
+	$scope.updateProfile = function(formUser) {
+		$scope.user = angular.copy(formUser);
+		UserRepository.save($scope.user, function(error, result){
+			if(!error){
+				$ionicLoading.show({ 
+		            template: 'Perfil atualizado com sucesso!',
+		            noBackdrop: true,
+		            duration: 1000
+		        });
+				
+				$scope.user._rev = result.rev;
+				$scope.formUser = angular.copy($scope.user);
+				
+			}else{
+				console.log(result);
+				$ionicLoading.show({ 
+		            template: 'Ops, ocorreu um erro ao salvar suas informações.',
+		            noBackdrop: true,
+		            duration: 1000
+		        });
+			}
+		});
 	};
 	
 }]);
