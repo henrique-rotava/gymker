@@ -1,0 +1,36 @@
+<div class="popup-exercice-intensity">
+	<div class="row">
+		<span class="button-small col col-25">
+			<label for="series">Séries</label>
+			<button type="button" class="button button-clear button-small button-dark" ng-click="increase('series')">
+				<i class="icon ion-chevron-up"></i>
+			</button>
+			<input name="series" type="text" class="input-box" ng-model="exercice.series">
+			<button type="button" class="button button-clear button-small button-dark" ng-click="decrease('series')">
+				<i class="icon ion-chevron-down"></i>
+			</button>
+		</span>
+		<span class="button-small col col-12"></span>
+		<span class="button-small col col-25">
+			<label for="repetitions">Repet.</label>
+			<button type="button" class="button button-clear button-small button-dark" ng-click="increase('repetitions')">
+				<i class="icon ion-chevron-up"></i>
+			</button>
+			<input name="repetitions" type="text" class="input-box" ng-model="exercice.repetitions">
+			<button type="button" class="button button-clear button-small button-dark" ng-click="decrease('repetitions')">
+				<i class="icon ion-chevron-down"></i>
+			</button>
+		</span>
+		<span class="button-small col col-12"></span>
+		<span class="button-small col col-25">
+			<label for="weight">Peso</label>
+			<button type="button" class="button button-clear button-small button-dark" ng-click="increase('weight')">
+				<i class="icon ion-chevron-up"></i>
+			</button>
+			<input name="weight" type="text" class="input-box" ng-model="exercice.weight">
+			<button type="button" class="button button-clear button-small button-dark" ng-click="decrease('weight')">
+				<i class="icon ion-chevron-down"></i>
+			</button>
+		</span>
+	</div>
+</div>

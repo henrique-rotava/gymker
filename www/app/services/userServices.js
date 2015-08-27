@@ -1,6 +1,6 @@
 angular.module('gymker.userservices', [])
 
-.factory('UserRepository', [ function(){
+.factory('UserRepository', ['DataBase', function(DataBase){
 
 	function User(){
 		this.type = 'user';
@@ -12,7 +12,7 @@ angular.module('gymker.userservices', [])
 
 		doc.type = 'user';
 
-		localDB.post(
+		DataBase.post(
 			doc
 		).then(function(response){
 			callback(false, response);
@@ -23,7 +23,7 @@ angular.module('gymker.userservices', [])
 
 	var getAll = function(callback){
 
-		localDB.query("index/by_type", {
+		DataBase.query("index/by_type", {
 			key : "user",
 			include_docs : true
 		}).then(function (result) {
@@ -35,7 +35,7 @@ angular.module('gymker.userservices', [])
 	};
 	
 	var get = function(uid, callback){
-		localDB.get(uid)
+		DataBase.get(uid)
 		.then(function (result) {
 			callback(false, result);
 		}).catch(function (err) {
@@ -45,7 +45,7 @@ angular.module('gymker.userservices', [])
 	};
 	
 	var create = function(callback){
-		localDB.post(
+		DataBase.post(
 			new User()
 		).then(function(response){
 			get(response.id, callback);

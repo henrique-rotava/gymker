@@ -1,16 +1,15 @@
-var localDB = new PouchDB("gymkerr");
-var remoteDB = new PouchDB("http://localhost:5984/gymkerr");
-
 var app = angular.module('gymker', 
 		[
 		 'ionic', 
 		 'starter.controllers', 
 		 'gymker.exercicecontrollers', 
 		 'gymker.profilecontrollers',
-		 'gymker.authenticationServices'
+		 'gymker.authenticationServices',
+		 'gymker.trainingcontrollers',
+		 'gymker.database'
 		 ])
 
-.run(function($ionicPlatform) {
+.run(function($ionicPlatform, DataBase) {
   $ionicPlatform.ready(function() {
     if (window.cordova && window.cordova.plugins.Keyboard) {
       cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
@@ -20,7 +19,8 @@ var app = angular.module('gymker',
     }
   });
 
-  localDB.sync(remoteDB, {live: true, retry: true});
+  DataBase.sync();
+  DataBase.install();
 
 })
 
@@ -81,27 +81,4 @@ var app = angular.module('gymker',
 
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/app/profile');
-});
-
-localDB.get('_design/index').catch(function(error){
-	if(error.status == '404'){
-		
-		var ddoc = {
-		  _id: "_design/index",
-		  views: {
-		    by_type: {
-		      map: function (doc) { 
-		      	emit(doc.type); 
-		      }.toString()
-		    }
-		  }
-		};
-		
-		localDB.put(ddoc).then(function () {
-		  console.log("index saved");
-		}).catch(function (err) {
-		  console.log("error saving the index", err);
-		});
-	
-	}
 });

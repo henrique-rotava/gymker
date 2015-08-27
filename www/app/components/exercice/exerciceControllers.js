@@ -93,34 +93,29 @@ angular.module('gymker.exercicecontrollers', ['gymker.exerciceservices'])
 
  };
 
+	$scope.changeWeight = function(exer){
+		$scope.weight = exer.weight;
+		var weightPopUp = $ionicPopup.show({
+			templateUrl: 'popup.html',
+			title: 'Selecione o peso',
+			scope: $scope,
+			buttons: [
+		          { text: 'Cancelar' },
+		          {
+		        	  text: '<b>Salvar</b>',
+		        	  type: 'button-positive',
+		        	  onTap: function(e) {
+		        		  return $scope.weight;
+		        	  }
+		          }
+		    ]
+		});
+	
+		weightPopUp.then(function(res) {
+			exer.weight = res;
+		});
+	}
 
-
-$scope.changeWeight = function(exer){
-  $scope.weight = exer.weight;
-
-  var weightPopUp = $ionicPopup.show({
-      templateUrl: 'popup.html',
-      title: 'Selecione o peso',
-      scope: $scope,
-      buttons: [
-        { text: 'Cancelar' },
-        {
-          text: '<b>Salvar</b>',
-          type: 'button-positive',
-          onTap: function(e) {
-            return $scope.weight;
-          }
-        }
-      ]
-    });
-
-    weightPopUp.then(function(res) {
-      exer.weight = res;
-    });
-  }
-
-  
-
-});
+})
 
 

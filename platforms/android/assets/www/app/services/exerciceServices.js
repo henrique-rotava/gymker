@@ -1,12 +1,12 @@
 angular.module('gymker.exerciceservices', [])
 
-.factory('ExerciceRepository', [ function(){
+.factory('ExerciceRepository', ['DataBase', function(DataBase){
 
 	this.save = function(doc, callback){
 
 		doc.type = 'exercice';
 
-		localDB.post(
+		DataBase.db.post(
 			doc
 		).then(function(response){
 			callback(false, response);
@@ -17,7 +17,7 @@ angular.module('gymker.exerciceservices', [])
 
 	this.getAll = function(callback){
 
-		localDB.query("index/by_type", {
+		DataBase.db.query("index/by_type", {
 			key : "exercice",
 			include_docs : true
 		}).then(function (result) {
