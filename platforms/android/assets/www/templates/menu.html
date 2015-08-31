@@ -21,10 +21,11 @@
   </ion-side-menu-content>
 
   <ion-side-menu side="left" width="190">
-    <ion-header-bar class="bar-dark">
-      <h1 class="title">Gymker</h1>
-    </ion-header-bar>
     <ion-content>
+	    <div class="menu-profile-container dark-bg" ng-controller="ProfileController">
+			<span class="circle profile-pic profile-pic-editing"></span>
+			<label class="stable">{{user.name}}</label>
+		</div>
       <ion-list>
       	<ion-item menu-close href="#/app/profile">
           Perfil
@@ -38,7 +39,7 @@
         <ion-item menu-close href="#/app/exercices">
           Exercícios
         </ion-item>
-        <ion-item menu-close href="#/app/training/create">
+        <ion-item menu-close href="#/app/training/create-start">
           Novo treino
         </ion-item>
       </ion-list>

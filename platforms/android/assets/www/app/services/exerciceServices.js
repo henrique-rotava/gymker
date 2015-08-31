@@ -6,7 +6,7 @@ angular.module('gymker.exerciceservices', [])
 
 		doc.type = 'exercice';
 
-		DataBase.db.post(
+		DataBase.post(
 			doc
 		).then(function(response){
 			callback(false, response);
@@ -17,7 +17,7 @@ angular.module('gymker.exerciceservices', [])
 
 	this.getAll = function(callback){
 
-		DataBase.db.query("index/by_type", {
+		DataBase.query("index/by_type", {
 			key : "exercice",
 			include_docs : true
 		}).then(function (result) {

@@ -1,0 +1,99 @@
+<ion-view view-title="Novo treino">
+	
+	<ion-content ng-controller="TrainingController">
+		<ion-slide-box show-pager="false">
+			<ion-slide>
+			
+				<div class="card">
+					<div class="item item-divider">
+						Primeiros passos
+					</div>
+					<div class="item item-text-wrap">
+						<div class="list">
+							<label class="item item-input item-floating-label">
+								<span class="input-label">Nome</span>
+								<input type="text" placeholder="Nome">
+							</label>
+							<label class="item item-input item-floating-label">
+								<span class="input-label">Objetivo</span>
+								<input type="text" placeholder="Objetivo">
+							</label>
+							<label class="item item-input item-floating-label">
+								<span class="input-label">Frequência</span>
+								<input type="number" placeholder="Frequência">
+							</label>
+							<div class="item item-toggle">
+								Treino para aluno
+								<label class="toggle toggle-balanced">
+									<input type="checkbox">
+										<div class="track">
+										<div class="handle"></div>
+									</div>
+								</label>
+							</div>
+							<label class="item item-input item-select">
+								<div class="input-label">
+									Tipo
+								</div>
+								<select>
+									<option selected>ABC</option>
+									<option>Semana</option>
+								</select>
+							</label>
+						</div>
+						<div class="padding-top">
+							<button class="button button-block button-balanced" ng-click="nextStep()">Próximo passo</button>
+						</div>
+					</div>
+				</div>
+		
+			</ion-slide>
+			<ion-slide>
+			
+				<ion-refresher pulling-text="Arraste para atualizar" pulling-icon="ion-ios7-arrow-thin-down" on-refresh="refresh()">
+				</ion-refresher>
+			
+				<div class="item item-input-inset">
+				    <label class="item-input-wrapper">
+				    	<i class="icon ion-search placeholder-icon"></i>
+				    	<input type="text" placeholder="Pesquisar" ng-model="search">
+				    </label>
+				    <i class="icon ion-ios-close-outline padding-horizontal" ng-show="search" ng-click="clearSearch()"></i>
+				</div>
+				
+				<div class="card" ng-repeat="exercice in filteredExercices = (exercices | filter:search)" ng-click="configExercice(exercice)">
+					<div class="item item-checkbox">
+						<label class="checkbox">
+					    	<input type="checkbox" ng-model="exercice.selected">
+					    </label>
+						{{exercice.doc.name}}
+						<span class="item-note">
+							{{exercice.doc.muscle}}
+						</span>
+					</div>
+					<div class="item tabs tabs-secondary tabs-icon-left" ng-show="exercice.selected">
+						<a class="tab-item">
+							<i class="icon">{{exercice.doc.series || 0}}</i>
+							Séries
+						</a>
+						<a class="tab-item">
+							<i class="icon">{{exercice.doc.repetitions || 0}}</i>
+							Repetições
+						</a>
+						<a class="tab-item">
+							<i class="icon">{{exercice.doc.weight || 0}}</i>
+							Kg
+						</a>
+					</div>
+				</div>
+		
+				<div class="list list-inset" ng-hide="filteredExercices.length">
+		
+				    <div class="item text-center">
+				      Sua busca não retornou resultados
+				    </div>
+				</div>
+			</ion-slide>
+		</ion-slide-box>
+	</ion-content>
+</ion-view>

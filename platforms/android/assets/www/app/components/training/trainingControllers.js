@@ -1,8 +1,8 @@
 angular.module('gymker.trainingcontrollers', ['gymker.exerciceservices'])
 
 .controller('TrainingController', 
-			['$scope', 'ExerciceRepository', '$ionicPopup', '$ionicLoading',
-			function($scope, ExerciceRepository, $ionicPopup, $ionicLoading){
+			['$scope', 'ExerciceRepository', '$ionicPopup', '$ionicLoading', '$ionicSlideBoxDelegate',
+			function($scope, ExerciceRepository, $ionicPopup, $ionicLoading, $ionicSlideBoxDelegate){
 	
 	$scope.exercices = [];
     $scope.search = "";
@@ -22,6 +22,10 @@ angular.module('gymker.trainingcontrollers', ['gymker.exerciceservices'])
     }
 
     load();
+    
+    $scope.refresh = function(){
+        load();
+    }
 	
 	$scope.configExercice = function(exercice){
 		
@@ -70,6 +74,10 @@ angular.module('gymker.trainingcontrollers', ['gymker.exerciceservices'])
 			--actualValue
 		}
 		$scope.exercice[prop] = actualValue;
+	};
+	
+	$scope.nextStep = function(){
+		$ionicSlideBoxDelegate.next();
 	};
 
 }]);

@@ -2,8 +2,8 @@ angular.module('gymker.database', [])
 
 .factory('DataBase', [function(){
 	
-	var localDB = new PouchDB("gymkerr");
-	var remoteDB = new PouchDB("http://localhost:5984/gymkerr");
+	var localDB = new PouchDB("gymker");
+	var remoteDB = new PouchDB("http://localhost:5984/gymker");
 	
 	var sync = function(){
 		localDB.sync(remoteDB, {live: true, retry: true});
@@ -35,12 +35,58 @@ angular.module('gymker.database', [])
 		
 	};
 	
-	var dataBase = {
-		db: localDB,
-		remoteDB: remoteDB,
-		sync: sync,
-		install: install
+	var schema = [
+	    {
+	    	singular: 'athlete',
+	    	plural: 'athletes',
+	    	relations: {
+	    		'coachs': {hasMany: 'coach'},
+	    		'trainings': {hasMany: 'training'}
+	    	}
+	    },
+	    {
+	    	singular: 'coach',
+	    	plural: 'coachs',
+	    	relations: {
+	    		'athletes': {hasMany: 'athlete'},
+	    		'trainings': {hasMany: 'training'}
+	    	}
+	    },
+	    {
+	    	singular: 'training',
+	    	plural: 'trainings',
+	    	relations: {
+	    		'athlete': {belongsTo: 'athlete'},
+	    		'coach': {belongsTo: 'coach'},
+	    		'trainingExercices': {hasMany: 'trainingExercice'}
+	    	}
+	    },
+	    {
+	    	singular: 'trainingExercice',
+	    	plural: 'trainingExercices',
+	    	relations: {
+	    		'training': {belongsTo: 'training'},
+	    		'exercice': {belongsTo: 'exercice'}
+	    	}
+	    },
+	    {
+	    	singular: 'exercice',
+	    	plural: 'exercices'
+	    }
+	];
+	
+	var buildSchema = function(){
+		localDB.setSchema(schema);
 	};
+	
+	var startUp = function(){
+		buildSchema();
+		sync();
+		install();
+	};
+	
+	var dataBase = localDB;
+	dataBase.startUp = startUp;
 	
 	return dataBase;
 	

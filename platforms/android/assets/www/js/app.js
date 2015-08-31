@@ -19,9 +19,7 @@ var app = angular.module('gymker',
     }
   });
 
-  DataBase.sync();
-  DataBase.install();
-
+  DataBase.startUp();
 })
 
 .config(function($stateProvider, $urlRouterProvider) {
@@ -53,10 +51,10 @@ var app = angular.module('gymker',
   })
 
   .state('app.training-create', {
-    url: "/training/create",
+    url: "/training/create-start",
     views: {
       'menuContent': {
-        templateUrl: "templates/training/create.html"
+        templateUrl: "templates/training/create-step-start.html"
       }
     }
   })

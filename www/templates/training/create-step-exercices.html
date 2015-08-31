@@ -1,0 +1,15 @@
+<ion-refresher pulling-text="Arraste para atualizar" pulling-icon="ion-ios7-arrow-thin-down" on-refresh="refresh()">
+</ion-refresher>
+
+<div class="button-bar">
+
+  <a class="button button-clear {{selectedTraining.A}}" ng-click="selectTraining('A')">A</a>
+  <a class="button button-clear {{selectedTraining.B}}" ng-click="selectTraining('B')">B</a>
+  <a class="button button-clear {{selectedTraining.C}}" ng-click="selectTraining('C')">C</a>
+  <a class="button button-clear {{selectedTraining.D}}" ng-click="selectTraining('D')">D</a>
+  <a class="button button-clear {{selectedTraining.E}}" ng-click="selectTraining('E')">E</a>
+  <a class="button button-clear {{selectedTraining.F}}" ng-click="selectTraining('F')">F</a>
+  <a class="button button-clear {{selectedTraining.G}}" ng-click="selectTraining('G')">G</a>
+</div>
+
+<div ng-include src="'templates/training/list-exercices.html'">

@@ -1,47 +1,19 @@
-<ion-view view-title="Exercícios">
-	<ion-content ng-controller="TrainingController">
-		
-		<div class="item item-input-inset">
-		    <label class="item-input-wrapper">
-		    	<i class="icon ion-search placeholder-icon"></i>
-		    	<input type="text" placeholder="Pesquisar" ng-model="search">
-		    </label>
-		    <i class="icon ion-ios-close-outline padding-horizontal" ng-show="search" ng-click="clearSearch()"></i>
-		</div>
+<ion-view view-title="Novo treino" ng-controller="TrainingController">
 
-		<div class="card" ng-repeat="exercice in filteredExercices = (exercices | filter:search)" ng-click="configExercice(exercice)">
-			<div class="item item-checkbox">
-				<label class="checkbox">
-			    	<input type="checkbox" ng-model="exercice.selected">
-			    </label>
-				{{exercice.doc.name}}
-				<span class="item-note">
-					{{exercice.doc.muscle}}
-				</span>
-			</div>
-			<div class="item tabs tabs-secondary tabs-icon-left" ng-show="exercice.selected">
-				<a class="tab-item">
-					<i class="icon">{{exercice.doc.series || 0}}</i>
-					Séries
-				</a>
-				<a class="tab-item">
-					<i class="icon">{{exercice.doc.repetitions || 0}}</i>
-					Repetições
-				</a>
-				<a class="tab-item">
-					<i class="icon">{{exercice.doc.weight || 0}}</i>
-					Kg
-				</a>
-			</div>
-		</div>
-
-		<div class="list list-inset" ng-hide="filteredExercices.length">
-
-		    <div class="item text-center">
-		      Sua busca não retornou resultados
-		    </div>
-
-		</div>
-
+	<ion-content>
+		<ion-slide-box show-pager="false">
+			<ion-slide>
+				<div ng-include src="'templates/training/create-step-start.html'"></div>
+			</ion-slide>
+			<ion-slide>
+				<div ng-include src="'templates/training/create-step-exercices.html'"></div>
+			</ion-slide>
+		</ion-slide-box>
 	</ion-content>
+	
+	<div class="bar bar-footer bar-light">
+		<button class="button button-clear button-balanced icon-left ion-ios-arrow-left"  ng-click="previousStep()">Anterior</button>
+		<button class="button button-clear button-balanced icon-right ion-ios-arrow-right" ng-click="nextStep()">Próximo</button>
+	</div>
+	
 </ion-view>

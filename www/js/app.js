@@ -51,7 +51,7 @@ var app = angular.module('gymker',
   })
 
   .state('app.training-create', {
-    url: "/training/create",
+    url: "/training/create-start",
     views: {
       'menuContent': {
         templateUrl: "templates/training/create.html"

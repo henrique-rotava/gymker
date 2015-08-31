@@ -131,3 +131,11 @@ input[type=text].input-box {
 	padding: 4px;
 	text-align: center;
 }
+
+/* Customizing ionic */
+	
+.item-icon-right .icon{
+	z-index: 999;
+}
+
+/**/

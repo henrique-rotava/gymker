@@ -1,0 +1,39 @@
+<div class="item item-input-inset">
+    <label class="item-input-wrapper">
+    	<i class="icon ion-search placeholder-icon"></i>
+    	<input type="text" placeholder="Pesquisar" ng-model="search">
+    </label>
+    <i class="icon ion-ios-close-outline padding-horizontal clear-search" ng-show="search" ng-click="search=''"></i>
+</div>
+
+<div class="card" ng-repeat="exercice in filteredExercices = (exercices | filter:search | orderBy:'selected')">
+	<div class="item item-checkbox item-icon-right">
+		<label class="checkbox" ng-click="configExercice(exercice)">
+	    	<input type="checkbox" ng-model="exercice.selected">
+	    </label>
+		{{exercice.doc.name}}
+		<span class="item-note">{{exercice.doc.muscle}}</span>
+		<i class="icon ion-android-more-vertical"></i>
+	</div>
+	<div class="item tabs tabs-secondary tabs-icon-left" ng-show="exercice.selected">
+		<a class="tab-item">
+			<i class="icon">{{exercice.doc.series || 0}}</i>
+			Séries
+		</a>
+		<a class="tab-item">
+			<i class="icon">{{exercice.doc.repetitions || 0}}</i>
+			Repetições
+		</a>
+		<a class="tab-item">
+			<i class="icon">{{exercice.doc.weight || 0}}</i>
+			Kg
+		</a>
+	</div>
+</div>
+
+<div class="list list-inset" ng-hide="filteredExercices.length">
+
+    <div class="item text-center">
+      Sua busca não retornou resultados
+    </div>
+</div>

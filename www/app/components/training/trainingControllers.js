@@ -1,8 +1,8 @@
 angular.module('gymker.trainingcontrollers', ['gymker.exerciceservices'])
 
 .controller('TrainingController', 
-			['$scope', 'ExerciceRepository', '$ionicPopup', '$ionicLoading',
-			function($scope, ExerciceRepository, $ionicPopup, $ionicLoading){
+			['$scope', 'ExerciceRepository', '$ionicPopup', '$ionicLoading', '$ionicSlideBoxDelegate',
+			function($scope, ExerciceRepository, $ionicPopup, $ionicLoading, $ionicSlideBoxDelegate){
 	
 	$scope.exercices = [];
     $scope.search = "";
@@ -10,7 +10,7 @@ angular.module('gymker.trainingcontrollers', ['gymker.exerciceservices'])
     $ionicLoading.show({ 
         template: 'Carregando...'
     });
-
+    
     var load = function(){
       ExerciceRepository.getAll(function(err, result){
         if(!err){
@@ -22,8 +22,16 @@ angular.module('gymker.trainingcontrollers', ['gymker.exerciceservices'])
     }
 
     load();
+    
+    $scope.refresh = function(){
+        load();
+    }
 	
 	$scope.configExercice = function(exercice){
+		
+		if(!exercice.selected){
+			return;
+		}
 		
 		$scope.exercice = angular.copy(exercice.doc);
 		
@@ -71,5 +79,31 @@ angular.module('gymker.trainingcontrollers', ['gymker.exerciceservices'])
 		}
 		$scope.exercice[prop] = actualValue;
 	};
+	
+	/* Slider controllers */
+	$scope.previousStep = function(){
+		$ionicSlideBoxDelegate.previous();
+	};
+	
+	$scope.nextStep = function(){
+		$ionicSlideBoxDelegate.next();
+	};
 
+	/* Fake tabs */
+	var letters = ['A','B','C','D','E','F','G'];
+	$scope.selectedTraining = {};
+	var clearTrainingSelection = function(){
+		for(index in letters){
+			$scope.selectedTraining[letters[index]] = 'button-dark';
+		}
+	}
+	clearTrainingSelection();
+	$scope.selectedTrainingLetter = 'A';
+	$scope.selectedTraining[$scope.selectedTrainingLetter] = 'button-balanced';
+	$scope.selectTraining = function(letter){
+		clearTrainingSelection();
+		$scope.selectedTrainingLetter = letter;
+		$scope.selectedTraining[$scope.selectedTrainingLetter] = 'button-balanced';
+	};
+	
 }]);
