@@ -42,7 +42,7 @@ ion-content{
     z-index: 5;
     border-width: 2px;
     float:left;
-    margin: 15px;
+    margin: 5px 15px 5px 0;
 }
 .editing-profile-container, .menu-profile-container{
 	float:left;

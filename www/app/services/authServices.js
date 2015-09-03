@@ -1,4 +1,4 @@
-angular.module('gymker.authenticationServices', ['gymker.userservices'])
+	angular.module('gymker.authenticationServices', ['gymker.userservices'])
 
 .service('AuthService', ['UserRepository', function(UserRepository){
 	
@@ -14,7 +14,7 @@ angular.module('gymker.authenticationServices', ['gymker.userservices'])
 	
 	var populateSession = function(user){
 		user = user;
-		window.localStorage.setItem('uid', user._id);
+		window.localStorage.setItem('uid', user.id);
 	};
 	
 	var destroySession = function(user){

@@ -33,7 +33,7 @@ angular.module('gymker.trainingcontrollers', ['gymker.exerciceservices'])
 			return;
 		}
 		
-		$scope.exercice = angular.copy(exercice.doc);
+		$scope.exercice = angular.copy(exercice);
 		
 		$scope.exercice.series = $scope.exercice.series || 0;
 		$scope.exercice.repetitions = $scope.exercice.repetitions || 0;
@@ -41,7 +41,7 @@ angular.module('gymker.trainingcontrollers', ['gymker.exerciceservices'])
 		
 		var exerciceOptionsPopup = $ionicPopup.show({
 			templateUrl: 'templates/exercices/exercice-intensity-popup.html' ,
-			title: 'Configure o exercício',
+			title: exercice.name,
 			scope: $scope,
 			buttons: [
 	           { 
@@ -52,7 +52,7 @@ angular.module('gymker.trainingcontrollers', ['gymker.exerciceservices'])
 	        	   text: 'Salvar',
 	        	   type: 'button-balanced button-clear',
 	        	   onTap: function(e){
-	        		   angular.copy($scope.exercice, exercice.doc);
+	        		   angular.copy($scope.exercice, exercice);
 	        	   }
 	        	   
 	           }

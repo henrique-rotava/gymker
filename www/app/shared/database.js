@@ -37,18 +37,11 @@ angular.module('gymker.database', [])
 	
 	var schema = [
 	    {
-	    	singular: 'athlete',
-	    	plural: 'athletes',
+	    	singular: 'user',
+	    	plural: 'users',
 	    	relations: {
-	    		'coachs': {hasMany: 'coach'},
-	    		'trainings': {hasMany: 'training'}
-	    	}
-	    },
-	    {
-	    	singular: 'coach',
-	    	plural: 'coachs',
-	    	relations: {
-	    		'athletes': {hasMany: 'athlete'},
+	    		'coachs': {hasMany: 'user'},
+	    		'athletes': {hasMany: 'user'},
 	    		'trainings': {hasMany: 'training'}
 	    	}
 	    },
@@ -56,8 +49,8 @@ angular.module('gymker.database', [])
 	    	singular: 'training',
 	    	plural: 'trainings',
 	    	relations: {
-	    		'athlete': {belongsTo: 'athlete'},
-	    		'coach': {belongsTo: 'coach'},
+	    		'athlete': {belongsTo: 'user'},
+	    		'coach': {belongsTo: 'user'},
 	    		'trainingExercices': {hasMany: 'trainingExercice'}
 	    	}
 	    },
