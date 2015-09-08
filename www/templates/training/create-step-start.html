@@ -7,20 +7,20 @@
 		<div class="list">
 			<label class="item item-input item-floating-label">
 				<span class="input-label">Nome</span>
-				<input type="text" placeholder="Nome">
+				<input type="text" placeholder="Nome" ng-model="training.name">
 			</label>
 			<label class="item item-input item-floating-label">
 				<span class="input-label">Objetivo</span>
-				<input type="text" placeholder="Objetivo">
+				<input type="text" placeholder="Objetivo" ng-model="training.goal">
 			</label>
 			<label class="item item-input item-floating-label">
 				<span class="input-label">Frequência</span>
-				<input type="number" placeholder="Frequência">
+				<input type="number" placeholder="Frequência" ng-model="training.frequency">
 			</label>
 			<div class="item item-toggle">
 				Treino para aluno
 				<label class="toggle toggle-balanced">
-					<input type="checkbox">
+					<input type="checkbox" ng-model="training.send">
 						<div class="track">
 						<div class="handle"></div>
 					</div>

@@ -52,10 +52,6 @@ angular.module('gymker.exercicecontrollers', ['gymker.exerciceservices'])
       load();
     }
 
-    $scope.clearSearch = function(){
-      $scope.search = "";
-    }
-
 }])
 
 .controller('UserExerciceController', function($scope, $ionicActionSheet, $ionicPopup) {

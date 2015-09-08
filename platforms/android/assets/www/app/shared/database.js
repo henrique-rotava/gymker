@@ -3,7 +3,7 @@ angular.module('gymker.database', [])
 .factory('DataBase', [function(){
 	
 	var localDB = new PouchDB("gymker");
-	var remoteDB = new PouchDB("http://localhost:5984/gymker");
+	var remoteDB = new PouchDB("https://gymker.iriscouch.com/gymker-test");
 	
 	var sync = function(){
 		localDB.sync(remoteDB, {live: true, retry: true});
@@ -37,27 +37,35 @@ angular.module('gymker.database', [])
 	
 	var schema = [
 	    {
-	    	singular: 'athlete',
-	    	plural: 'athletes',
+	    	singular: 'user',
+	    	plural: 'users',
 	    	relations: {
-	    		'coachs': {hasMany: 'coach'},
+	    		'coachs': {hasMany: 'relationship'},
+	    		'athletes': {hasMany: 'relationship'},
 	    		'trainings': {hasMany: 'training'}
 	    	}
 	    },
 	    {
-	    	singular: 'coach',
-	    	plural: 'coachs',
+	    	singular: 'relationship',
+	    	plural: 'relationships',
 	    	relations: {
-	    		'athletes': {hasMany: 'athlete'},
-	    		'trainings': {hasMany: 'training'}
+	    		'person': {belongsTo: 'user'},
+	    		'friend': {belongsTo: 'user'}
 	    	}
 	    },
 	    {
 	    	singular: 'training',
 	    	plural: 'trainings',
 	    	relations: {
-	    		'athlete': {belongsTo: 'athlete'},
-	    		'coach': {belongsTo: 'coach'},
+	    		'athlete': {belongsTo: 'user'},
+	    		'coach': {belongsTo: 'user'},
+	    		'days': {hasMany: 'trainingDay'}
+	    	}
+	    },
+	    {
+	    	singular: 'trainingDay',
+	    	plural: 'trainingDay',
+	    	relations: {
 	    		'trainingExercices': {hasMany: 'trainingExercice'}
 	    	}
 	    },
@@ -65,7 +73,7 @@ angular.module('gymker.database', [])
 	    	singular: 'trainingExercice',
 	    	plural: 'trainingExercices',
 	    	relations: {
-	    		'training': {belongsTo: 'training'},
+	    		'trainingDay': {belongsTo: 'trainingDay'},
 	    		'exercice': {belongsTo: 'exercice'}
 	    	}
 	    },

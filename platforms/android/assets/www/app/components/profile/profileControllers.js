@@ -1,22 +1,11 @@
 angular.module('gymker.profilecontrollers', [])
 
-.controller('ProfileController', ['$scope', '$ionicPopover', 'AuthService', 'UserRepository', '$ionicLoading',
-                                  function($scope, $ionicPopover, AuthService, UserRepository, $ionicLoading){
+.controller('ProfileController', ['$rootScope', '$scope', '$ionicPopover', 'AuthService', 'UserRepository', '$ionicLoading',
+                                  function($rootScope, $scope, $ionicPopover, AuthService, UserRepository, $ionicLoading){
 	
-	$scope.user;
-	$scope.formUser;
 	$scope.newImageSrc;
 	$scope.birthDateType = 'text';
-	
-	AuthService.getUser(function(error, result){
-		$scope.$apply(function (){
-			if(!error){
-				$scope.user = result;
-				$scope.formUser = angular.copy($scope.user);
-				$scope.updateBirthDateType();
-			}
-		});
-	});
+	$scope.formUser = angular.copy($rootScope.user);
 	
 	// workaround for input[type=date]
 	$scope.updateBirthDateType = function(type){
@@ -60,9 +49,9 @@ angular.module('gymker.profilecontrollers', [])
 	};
 	
 	$scope.saveNewPic = function(){
-		$scope.user.profilePic = $scope.newImageSrc;
+		$rootScope.user.profilePic = $scope.newImageSrc;
 		$scope.closePopover();
-		UserRepository.save($scope.user);
+		UserRepository.save($rootScope.user);
 	};
 	
 	$scope.closePopover = function(){
@@ -71,8 +60,8 @@ angular.module('gymker.profilecontrollers', [])
 	};
 	
 	$scope.updateProfile = function(formUser) {
-		$scope.user = angular.copy(formUser);
-		UserRepository.save($scope.user, function(error, result){
+		$rootScope.user = angular.copy(formUser);
+		UserRepository.save($rootScope.user, function(error, result){
 			if(!error){
 				$ionicLoading.show({ 
 		            template: 'Perfil atualizado com sucesso!',
@@ -80,8 +69,8 @@ angular.module('gymker.profilecontrollers', [])
 		            duration: 1000
 		        });
 				
-				$scope.user._rev = result.rev;
-				$scope.formUser = angular.copy($scope.user);
+				$rootScope.user._rev = result.rev;
+				$scope.formUser = angular.copy($rootScope.user);
 				
 			}else{
 				console.log(result);

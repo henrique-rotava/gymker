@@ -1,3 +1,9 @@
+<style>
+	.pic-container:before, .profile-pic{
+		background-image: url({{user.profilePic}});
+	}
+</style>
+
 <ion-side-menus enable-menu-with-back-views="false">
   <ion-side-menu-content>
     <ion-nav-bar class="bar-balanced">
@@ -9,10 +15,7 @@
         </button>
       </ion-nav-buttons>
       <ion-nav-buttons side="right">
-        <button class="button button-clear">
-          <span class="badge badge-assertive">0</span>
-        </button>
-        <button class="button button-icon button-clear ion-android-notifications">
+        <button class="button button-icon button-clear ion-android-notifications-none">
         </button>
       </ion-nav-buttons>
     </ion-nav-bar>
@@ -20,7 +23,7 @@
     
   </ion-side-menu-content>
 
-  <ion-side-menu side="left" width="190">
+  <ion-side-menu side="left">
     <ion-content>
 	    <div class="menu-profile-container dark-bg" ng-controller="ProfileController">
 			<span class="circle profile-pic profile-pic-editing"></span>
@@ -41,6 +44,9 @@
         </ion-item>
         <ion-item menu-close href="#/app/training/create-start">
           Novo treino
+        </ion-item>
+        <ion-item menu-close href="#/app/profile/coach/athletes">
+          Meus alunos
         </ion-item>
       </ion-list>
     </ion-content>

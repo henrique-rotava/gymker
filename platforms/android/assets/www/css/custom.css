@@ -42,7 +42,7 @@ ion-content{
     z-index: 5;
     border-width: 2px;
     float:left;
-    margin: 15px;
+    margin: 5px 15px 5px 0;
 }
 .editing-profile-container, .menu-profile-container{
 	float:left;
@@ -131,3 +131,18 @@ input[type=text].input-box {
 	padding: 4px;
 	text-align: center;
 }
+
+/* Training */
+.fake-tabs .button.selected {
+	border-bottom: solid 4px;
+}
+
+/* /Training */
+
+/* Customizing ionic */
+	
+.item-icon-right .icon{
+	z-index: 999;
+}
+
+/**/

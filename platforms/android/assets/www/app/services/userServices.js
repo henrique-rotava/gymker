@@ -3,19 +3,15 @@ angular.module('gymker.userservices', [])
 .factory('UserRepository', ['DataBase', function(DataBase){
 
 	function User(){
-		this.type = 'user';
 		this.name = 'Meu Nome';
 		this.profilePic = 'img/default_profile_picture.jpg'
 	};
 	
 	var save = function(doc, callback){
-
-		doc.type = 'user';
-
-		DataBase.post(
+		DataBase.rel.save('user',
 			doc
 		).then(function(response){
-			callback(false, response);
+			callback(false, response.users[0]);
 		}).catch(function(err){
 			callback(true, err);
 		});
@@ -23,11 +19,9 @@ angular.module('gymker.userservices', [])
 
 	var getAll = function(callback){
 
-		DataBase.query("index/by_type", {
-			key : "user",
-			include_docs : true
-		}).then(function (result) {
-			callback(false, result.rows);
+		DataBase.rel.find("user")
+		.then(function (result) {
+			callback(false, result.users);
 		}).catch(function (err) {
 			callback(true, err);
 		});
@@ -35,22 +29,21 @@ angular.module('gymker.userservices', [])
 	};
 	
 	var get = function(uid, callback){
-		DataBase.get(uid)
-		.then(function (result) {
-			callback(false, result);
+		DataBase.rel.find('user', 
+			uid
+		).then(function (response) {
+			callback(false, response.users[0]);
 		}).catch(function (err) {
-			console.log('error', err);
 			callback(true, err);
 		});
 	};
 	
 	var create = function(callback){
-		DataBase.post(
+		DataBase.rel.save('user',
 			new User()
 		).then(function(response){
-			get(response.id, callback);
+			callback(false, response.users[0]);
 		}).catch(function(err){
-			console.log('error creating user',err);
 			callback(true, err);
 		});
 	};

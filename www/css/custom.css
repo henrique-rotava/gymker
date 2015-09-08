@@ -132,6 +132,13 @@ input[type=text].input-box {
 	text-align: center;
 }
 
+/* Training */
+.fake-tabs .button.selected {
+	border-bottom: solid 4px;
+}
+
+/* /Training */
+
 /* Customizing ionic */
 	
 .item-icon-right .icon{

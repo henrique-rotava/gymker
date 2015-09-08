@@ -1,26 +1,35 @@
 angular.module('gymker.trainingcontrollers', ['gymker.exerciceservices'])
 
 .controller('TrainingController', 
-			['$scope', 'ExerciceRepository', '$ionicPopup', '$ionicLoading', '$ionicSlideBoxDelegate',
-			function($scope, ExerciceRepository, $ionicPopup, $ionicLoading, $ionicSlideBoxDelegate){
+			['$rootScope', '$scope', 'ExerciceRepository', '$ionicPopup', '$ionicLoading', '$ionicSlideBoxDelegate',
+			function($rootScope, $scope, ExerciceRepository, $ionicPopup, $ionicLoading, $ionicSlideBoxDelegate){
 	
 	$scope.exercices = [];
     $scope.search = "";
+    $scope.training = {days:{}, coach: $rootScope.user};
+    $scope.letters = ['A','B','C','D','E','F','G'];
+    $scope.exerciceDays = {};
 	
-    $ionicLoading.show({ 
+    $ionicLoading.show({
         template: 'Carregando...'
     });
     
     var load = function(){
       ExerciceRepository.getAll(function(err, result){
         if(!err){
-          $scope.exercices = result;
+        	for(index in $scope.letters){
+        		$scope.exerciceDays[$scope.letters[index]] = angular.copy(result);
+        	}
         }
         $ionicLoading.hide();
         $scope.$broadcast('scroll.refreshComplete');
       });
     }
-
+    
+    $scope.getExerciceDay = function(letter){
+    	return $scope.exerciceDays[letter];
+    };
+    
     load();
     
     $scope.refresh = function(){
@@ -28,11 +37,9 @@ angular.module('gymker.trainingcontrollers', ['gymker.exerciceservices'])
     }
 	
 	$scope.configExercice = function(exercice){
-		
 		if(!exercice.selected){
 			return;
 		}
-		
 		$scope.exercice = angular.copy(exercice);
 		
 		$scope.exercice.series = $scope.exercice.series || 0;
@@ -58,6 +65,32 @@ angular.module('gymker.trainingcontrollers', ['gymker.exerciceservices'])
 	           }
 			]
 		});
+	};
+	
+	$scope.selectExercice = function(exercice, letter){
+		$scope.configExercice(exercice);
+		
+		if(exercice.selected){
+			addExercice(exercice, letter);
+		} else {
+			removeExercice(exercice, letter);
+		}
+	}
+	
+	$scope.selectUser = function(user){
+		$scope.training.athlete = user;
+	};
+	
+	var addExercice = function(exercice, letter){
+		if(!$scope.training.days[letter]){
+			$scope.training.days[letter] = {};
+		}
+		$scope.training.days[letter][exercice.id] = exercice;
+		console.log($scope.training);
+	};
+	
+	var removeExercice = function(exercice, letter){
+		delete $scope.training.days[letter][exercice.id];
 	}
 	
 	$scope.increase = function(prop){
@@ -90,20 +123,15 @@ angular.module('gymker.trainingcontrollers', ['gymker.exerciceservices'])
 	};
 
 	/* Fake tabs */
-	var letters = ['A','B','C','D','E','F','G'];
-	$scope.selectedTraining = {};
-	var clearTrainingSelection = function(){
-		for(index in letters){
-			$scope.selectedTraining[letters[index]] = 'button-dark';
-		}
-	}
-	clearTrainingSelection();
-	$scope.selectedTrainingLetter = 'A';
-	$scope.selectedTraining[$scope.selectedTrainingLetter] = 'button-balanced';
+	$scope.selectedTraining = 'A';
+	$scope.selectedTrainings = {};
+	$scope.selectedTrainings['A'] = true;
 	$scope.selectTraining = function(letter){
-		clearTrainingSelection();
-		$scope.selectedTrainingLetter = letter;
-		$scope.selectedTraining[$scope.selectedTrainingLetter] = 'button-balanced';
+		$scope.selectedTraining = letter;
+		$scope.selectedTrainings[letter] = true;
+	};
+	$scope.wasSelected = function(letter){
+		return !!$scope.selectedTrainings[letter];
 	};
 	
 }]);

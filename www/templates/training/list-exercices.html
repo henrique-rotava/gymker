@@ -1,4 +1,4 @@
-<div class="item item-input-inset">
+<div class="item item-input-inset stable-bg">
     <label class="item-input-wrapper">
     	<i class="icon ion-search placeholder-icon"></i>
     	<input type="text" placeholder="Pesquisar" ng-model="search">
@@ -6,28 +6,24 @@
     <i class="icon ion-ios-close-outline padding-horizontal clear-search" ng-show="search" ng-click="search=''"></i>
 </div>
 
-<div class="card" ng-repeat="exercice in filteredExercices = (exercices | filter:search | orderBy:'selected')">
-	<div class="item item-checkbox item-icon-right">
-		<label class="checkbox" ng-click="configExercice(exercice)">
-	    	<input type="checkbox" ng-model="exercice.selected">
-	    </label>
-		{{exercice.doc.name}}
-		<span class="item-note">{{exercice.doc.muscle}}</span>
-		<i class="icon ion-android-more-vertical"></i>
-	</div>
-	<div class="item tabs tabs-secondary tabs-icon-left" ng-show="exercice.selected">
-		<a class="tab-item">
-			<i class="icon">{{exercice.doc.series || 0}}</i>
-			Séries
-		</a>
-		<a class="tab-item">
-			<i class="icon">{{exercice.doc.repetitions || 0}}</i>
-			Repetições
-		</a>
-		<a class="tab-item">
-			<i class="icon">{{exercice.doc.weight || 0}}</i>
-			Kg
-		</a>
+<div class="list">
+	<div class="item item-toggle item-avatar" ng-repeat="exercice in filteredExercices = (getExerciceDay(letter) | filter:search)">
+		<img src="img/default_profile_picture.jpg">
+		{{exercice.name}}
+		<span class="item-note">
+			{{exercice.muscle}}
+	    </span>
+	    <p>
+	    	<span>{{exercice.series || 0}} Séries</span>
+	    	<span>{{exercice.repetitions || 0}} Repet.</span>
+	    	<span>{{exercice.weight || 0}} Kg</span>
+	    </p>
+		<label class="toggle toggle-balanced">
+			<input type="checkbox" ng-model="exercice.selected" ng-change="selectExercice(exercice, letter)">
+			<div class="track">
+				<div class="handle"></div>
+			</div>
+		</label>
 	</div>
 </div>
 

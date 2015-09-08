@@ -1,0 +1,46 @@
+<ion-modal-view>
+	<ion-header-bar>
+		<h1 class="title balanced">Convidar alunos</h1>
+		<div class="buttons">
+			<button class="button button-clear icon ion-ios-close-empty" ng-click="closeInvite()"></button>
+		</div>
+	</ion-header-bar>
+	<ion-content>
+		<div class="item item-input-inset stable-bg item-button-right">
+			<label class="item-input-wrapper">
+				<i class="icon ion-search placeholder-icon"></i>
+				<input type="text" placeholder="Pesquisar" ng-model="search">
+			</label>
+			<i class="icon ion-ios-close-outline padding-horizontal clear-search" ng-show="search" ng-click="search=''"></i>
+		</div>
+		
+		<div class="list">
+			<div class="item item-toggle item-avatar item-toggle" ng-repeat="user in filteredUsers = (users | filter:search)">
+				<img src="{{user.profilePic}}">
+				<h2>{{user.name}}</h2>
+				<p>{{user.email}}</p>
+				<label class="toggle toggle-balanced">
+					<input type="checkbox" ng-model="user.selected" ng-change="selectUser(user)">
+					<div class="track">
+						<div class="handle"></div>
+					</div>
+				</label>
+			</div>
+		</div>
+		
+		<div class="list list-inset" ng-hide="filteredUsers.length">
+		    <div class="item text-center icon-left">
+		    	<i class="icon ion-android-warning"></i>
+				Sua busca não retornou resultados
+		    </div>
+		</div>
+		
+	</ion-content>
+	
+	<div class="bar bar-footer bar-light">
+	 	<div class="title icon">
+			<button class="button button-balanced button-clear pull-right icon-left ion-ios-paperplane" ng-click="sendInvites()"></button>
+		</div>
+	</div>
+	
+</ion-modal-view>

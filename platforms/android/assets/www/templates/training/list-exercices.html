@@ -7,7 +7,7 @@
 </div>
 
 <div class="list">
-	<div class="item item-toggle item-avatar" ng-repeat="exercice in filteredExercices = (exercices | filter:search | orderBy:'selected')">
+	<div class="item item-toggle item-avatar" ng-repeat="exercice in filteredExercices = (getExerciceDay(letter) | filter:search)">
 		<img src="img/default_profile_picture.jpg">
 		{{exercice.name}}
 		<span class="item-note">
@@ -19,7 +19,7 @@
 	    	<span>{{exercice.weight || 0}} Kg</span>
 	    </p>
 		<label class="toggle toggle-balanced">
-			<input type="checkbox" ng-model="exercice.selected" ng-change="configExercice(exercice)">
+			<input type="checkbox" ng-model="exercice.selected" ng-change="selectExercice(exercice, letter)">
 			<div class="track">
 				<div class="handle"></div>
 			</div>

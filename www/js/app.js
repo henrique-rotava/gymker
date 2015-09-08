@@ -9,17 +9,23 @@ var app = angular.module('gymker',
 		 'gymker.database'
 		 ])
 
-.run(function($ionicPlatform, DataBase) {
-  $ionicPlatform.ready(function() {
-    if (window.cordova && window.cordova.plugins.Keyboard) {
-      cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
-    }
-    if (window.StatusBar) {
-      StatusBar.styleDefault();
-    }
-  });
+.run(function($ionicPlatform, DataBase, AuthService, $rootScope) {
+	$ionicPlatform.ready(function() {
+	  	if (window.cordova && window.cordova.plugins.Keyboard) {
+    		cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
+		}
+		if (window.StatusBar) {
+    		StatusBar.styleDefault();
+		}
+	});
 
-  DataBase.startUp();
+	DataBase.startUp();
+	
+	AuthService.getUser(function(error, result){
+		if(!error){
+			$rootScope.user = result;
+		}
+	});
 })
 
 .config(function($stateProvider, $urlRouterProvider) {
@@ -73,6 +79,15 @@ var app = angular.module('gymker',
     views: {
       'menuContent': {
         templateUrl: "templates/profile/edit.html"
+      }
+    }
+  })
+  
+  .state('app.athletes', {
+    url: "/profile/coach/athletes",
+    views: {
+      'menuContent': {
+        templateUrl: "templates/profile/athletes.html"
       }
     }
   })
