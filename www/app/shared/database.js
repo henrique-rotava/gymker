@@ -3,10 +3,10 @@ angular.module('gymker.database', [])
 .factory('DataBase', [function(){
 	
 	var localDB = new PouchDB("gymker");
-//	var remoteDB = new PouchDB("https://gymker.iriscouch.com/gymker-test");
-//	
+	var remoteDB = new PouchDB("https://gymker.iriscouch.com/gymker-test");
+
 	var sync = function(){
-//		localDB.sync(remoteDB, {live: true, retry: true});
+		localDB.sync(remoteDB, {live: true, retry: true});
 	}
 	
 	var install = function(){
