@@ -7,16 +7,17 @@
 </div>
 
 <div class="list">
-	<div class="item item-toggle item-avatar item-icon-right" ng-repeat="exercice in filteredExercices = (getExerciceDay('A') | filter:search)">
-		<img src="img/default_profile_picture.jpg">
-		<h2>{{exercice.name}}</h2>
-		<i class="icon ion-ios-arrow-right"></i>
+	<div ng-click="selectUser(relation)" class="item item-avatar item-icon-right" ng-repeat="relation in filteredRelations = (relations | filter:searchUser)" ng-if="!relation.confirmed">
+		<img src="{{relation.related.profilePic}}">
+		{{relation.related.name}}
+		<p>{{relation.related.email}}</p>
+		<i ng-show="relation.selected" class="icon ion-ios-checkmark-outline balanced"></i>
 	</div>
 </div>
 
-<div class="list list-inset" ng-hide="filteredExercices.length">
-   <div class="item text-center icon-left">
-		<i class="icon ion-android-warning"></i>
-		Sua busca não retornou resultados
+<div class="list list-inset" ng-hide="relations.length">
+    <div class="item text-center icon-left">
+    	<i class="icon ion-android-warning"></i>
+		Você ainda não possui alunos.
     </div>
 </div>

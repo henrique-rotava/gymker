@@ -17,7 +17,7 @@
 		<div class="list">
 			<div class="item item-toggle item-avatar item-toggle" ng-repeat="user in filteredUsers = (users | filter:search)">
 				<img src="{{user.profilePic}}">
-				{{user.name}}
+				<h2>{{user.name}}</h2>
 				<p>{{user.email}}</p>
 				<label class="toggle toggle-balanced">
 					<input type="checkbox" ng-model="user.selected" ng-change="selectUser(user)">
@@ -39,7 +39,7 @@
 	
 	<div class="bar bar-footer bar-light">
 	 	<div class="title icon">
-			<button class="button button-balanced button-clear pull-right icon-left ion-paper-airplane" ng-click="sendInvites()"></button>
+			<button class="button button-balanced button-clear pull-right icon-left ion-ios-paperplane" ng-click="sendInvites()"></button>
 		</div>
 	</div>
 	

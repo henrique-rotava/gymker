@@ -88,6 +88,24 @@ angular.module('gymker.profilecontrollers', [])
 .controller('CoachController', ['$rootScope', '$scope', '$ionicModal', 'UserRepository', '$ionicLoading',
                                 function($rootScope, $scope, $ionicModal, UserRepository, $ionicLoading){
 
+	$scope.loadAthletes = function(){
+		$ionicLoading.show({
+	        template: 'Carregando...'
+	    });
+		$rootScope.$watch('user', function(){
+			if($rootScope.user){
+				UserRepository.getUserAthletes($rootScope.user, function(err, result){
+					if(!err){
+						$scope.relations = result;
+					}
+					$ionicLoading.hide();
+				});
+			}
+		});
+	}
+	
+	$scope.loadAthletes();
+	
 	var athletesToAdd = {};
 	
 	$ionicModal.fromTemplateUrl('templates/profile/list-profiles.html', {
@@ -133,7 +151,10 @@ angular.module('gymker.profilecontrollers', [])
 	
 	$scope.sendInvites = function(){
 		UserRepository.saveAthletesRelationships($rootScope.user, athletesToAdd, function(error, result){
-			console.log(result);
+			if(result && result.users && result.users[0]){
+				$rootScope.user = result.users[0];
+				$scope.loadAthletes();
+			}
 		});
 	};
 	

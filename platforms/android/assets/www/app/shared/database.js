@@ -4,7 +4,7 @@ angular.module('gymker.database', [])
 	
 	var localDB = new PouchDB("gymker");
 	var remoteDB = new PouchDB("https://gymker.iriscouch.com/gymker-test");
-	
+
 	var sync = function(){
 		localDB.sync(remoteDB, {live: true, retry: true});
 	}
@@ -50,7 +50,7 @@ angular.module('gymker.database', [])
 	    	plural: 'relationships',
 	    	relations: {
 	    		'person': {belongsTo: 'user'},
-	    		'friend': {belongsTo: 'user'}
+	    		'related': {belongsTo: 'user'}
 	    	}
 	    },
 	    {

@@ -15,8 +15,8 @@
 	</ion-content>
 	
 	<div class="bar bar-footer bar-light">
-		<button class="button button-clear button-balanced icon-left ion-ios-arrow-left"  ng-click="previousStep()">Anterior</button>
-		<button class="button button-clear button-balanced icon-right ion-ios-arrow-right" ng-click="nextStep()">Próximo</button>
+		<button ng-show="hasPrevious()" class="button button-clear button-balanced icon-left ion-android-arrow-back"  ng-click="previousStep()"></button>
+		<button ng-show="hasNext()" class="button button-clear button-balanced icon-right ion-android-arrow-forward" ng-click="nextStep()"></button>
 	</div>
 	
 </ion-view>

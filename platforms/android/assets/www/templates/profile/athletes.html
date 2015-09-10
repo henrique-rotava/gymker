@@ -1,7 +1,7 @@
-<ion-view view-title="Meus alunos" ng-controller="TrainingController">
+<ion-view view-title="Meus alunos" ng-controller="CoachController">
 	<ion-content>
 	
-		<div class="item item-input-inset stable-bg">
+		<div class="item item-input-inset stable-bg item-button-right">
 		    <label class="item-input-wrapper">
 		    	<i class="icon ion-search placeholder-icon"></i>
 		    	<input type="text" placeholder="Pesquisar" ng-model="search">
@@ -10,4 +10,11 @@
 		</div>
 
 	</ion-content>
+	
+	<div class="bar bar-footer bar-clear">
+	 	<div class="title icon">
+			<button class="button button-balanced button-clear pull-right icon-left ion-ios-personadd" ng-click="openInvite()"></button>
+		</div>
+	</div>
+	
 </ion-view>

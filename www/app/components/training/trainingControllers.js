@@ -1,18 +1,32 @@
 angular.module('gymker.trainingcontrollers', ['gymker.exerciceservices'])
 
 .controller('TrainingController', 
-			['$rootScope', '$scope', 'ExerciceRepository', '$ionicPopup', '$ionicLoading', '$ionicSlideBoxDelegate',
-			function($rootScope, $scope, ExerciceRepository, $ionicPopup, $ionicLoading, $ionicSlideBoxDelegate){
+			['$rootScope', '$scope', 'ExerciceRepository', 'UserRepository', '$ionicPopup', '$ionicLoading', '$ionicSlideBoxDelegate',
+			function($rootScope, $scope, ExerciceRepository, UserRepository, $ionicPopup, $ionicLoading, $ionicSlideBoxDelegate){
 	
 	$scope.exercices = [];
     $scope.search = "";
     $scope.training = {days:{}, coach: $rootScope.user};
     $scope.letters = ['A','B','C','D','E','F','G'];
     $scope.exerciceDays = {};
+
+    var loadAthletes = function(){
+		$ionicLoading.show({
+	        template: 'Carregando...'
+	    });
+		$rootScope.$watch('user', function(){
+			if($rootScope.user){
+				UserRepository.getUserAthletes($rootScope.user, function(err, result){
+					if(!err){
+						$scope.relations = result;
+					}
+					$ionicLoading.hide();
+				});
+			}
+		});
+	}
 	
-    $ionicLoading.show({
-        template: 'Carregando...'
-    });
+	loadAthletes();
     
     var load = function(){
       ExerciceRepository.getAll(function(err, result){
@@ -21,7 +35,6 @@ angular.module('gymker.trainingcontrollers', ['gymker.exerciceservices'])
         		$scope.exerciceDays[$scope.letters[index]] = angular.copy(result);
         	}
         }
-        $ionicLoading.hide();
         $scope.$broadcast('scroll.refreshComplete');
       });
     }
@@ -77,8 +90,20 @@ angular.module('gymker.trainingcontrollers', ['gymker.exerciceservices'])
 		}
 	}
 	
-	$scope.selectUser = function(user){
-		$scope.training.athlete = user;
+	var lastSelection;
+	$scope.selectUser = function(relation){
+		relation.selected = true;
+		if(lastSelection){
+			lastSelection.selected = false;
+		}
+		lastSelection = relation;
+		$scope.training.athlete = relation.related;
+		$scope.nextStep();
+		$ionicLoading.show({ 
+            template: 'Aluno ' + relation.related.name + ' selecionado.',
+            noBackdrop: true,
+            duration: 2000
+        });
 	};
 	
 	var addExercice = function(exercice, letter){
@@ -117,9 +142,15 @@ angular.module('gymker.trainingcontrollers', ['gymker.exerciceservices'])
 	$scope.previousStep = function(){
 		$ionicSlideBoxDelegate.previous();
 	};
-	
 	$scope.nextStep = function(){
+		console.log($ionicSlideBoxDelegate);
 		$ionicSlideBoxDelegate.next();
+	};
+	$scope.hasPrevious = function(){
+		return $ionicSlideBoxDelegate.currentIndex() > 0;
+	};
+	$scope.hasNext = function(){
+		return $ionicSlideBoxDelegate.currentIndex() < $ionicSlideBoxDelegate.count() - 1;
 	};
 
 	/* Fake tabs */

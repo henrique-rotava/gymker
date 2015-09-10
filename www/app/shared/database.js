@@ -40,8 +40,8 @@ angular.module('gymker.database', [])
 	    	singular: 'user',
 	    	plural: 'users',
 	    	relations: {
-	    		'coachs': {hasMany: 'relationship'},
-	    		'athletes': {hasMany: 'relationship'},
+	    		'coachs': {hasMany: {type: 'relationship', options: {async: true}}},
+	    		'athletes': {hasMany: {type: 'relationship', options: {async: true}}},
 	    		'trainings': {hasMany: 'training'}
 	    	}
 	    },

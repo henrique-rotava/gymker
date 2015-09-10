@@ -32,6 +32,7 @@ angular.module('gymker.userservices', [])
 		DataBase.rel.find('user', 
 			uid
 		).then(function (response) {
+			console.log(response.users[0]);
 			callback(false, response.users[0]);
 		}).catch(function (err) {
 			callback(true, err);
@@ -47,12 +48,41 @@ angular.module('gymker.userservices', [])
 			callback(true, err);
 		});
 	};
+	
+	var saveAthletesRelationships = function (user, relateds, callback){
+		
+		var relations = user.athletes || [];
+		for(prop in relateds){
+			var related = relateds[prop];
+
+			var relationship = {
+				id: user.id + related.id,
+				confirmed: false,
+				person: user,
+				related: related
+			};
+			relations.push(relationship);
+			user.athletes = relations;
+			
+			console.log(user);
+		}
+		console.log('acabou');
+//		DataBase.rel.save('user',
+//			user
+//		).then(function(response){
+//			callback(false, response.users[0]);
+//		}).catch(function(err){
+//			callback(true, err);
+//		});
+		
+	}
 
 	return {
 		save: save,
 		getAll: getAll,
 		get: get,
-		create: create
+		create: create,
+		saveAthletesRelationships: saveAthletesRelationships
 	};
 
 }]);
