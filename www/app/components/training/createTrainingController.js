@@ -1,14 +1,21 @@
-angular.module('gymker.trainingcontrollers', ['gymker.exerciceservices'])
+angular.module('gymker.trainingcontrollers')
 
-.controller('TrainingController', 
-			['$rootScope', '$scope', 'ExerciceRepository', 'UserRepository', '$ionicPopup', '$ionicLoading', '$ionicSlideBoxDelegate',
-			function($rootScope, $scope, ExerciceRepository, UserRepository, $ionicPopup, $ionicLoading, $ionicSlideBoxDelegate){
+.controller('CreateTrainingController', 
+			['$rootScope', '$scope', 'ExerciceRepository', 'UserRepository', 'TrainingRepository', '$ionicPopup', '$ionicLoading', '$ionicSlideBoxDelegate',
+			function($rootScope, $scope, ExerciceRepository, UserRepository, TrainingRepository, $ionicPopup, $ionicLoading, $ionicSlideBoxDelegate){
 	
 	$scope.exercices = [];
     $scope.search = "";
-    $scope.training = {days:{}, coach: $rootScope.user};
+    $scope.training = {days:{}};
     $scope.letters = ['A','B','C','D','E','F','G'];
     $scope.exerciceDays = {};
+    
+    $rootScope.$watch('user', function(){
+		if($rootScope.user){
+			$scope.training.coach = $rootScope.user,
+			$scope.training.athlete = $rootScope.user
+		}
+    });
 
     var loadAthletes = function(){
 		$ionicLoading.show({
@@ -50,14 +57,14 @@ angular.module('gymker.trainingcontrollers', ['gymker.exerciceservices'])
     }
 	
 	$scope.configExercice = function(exercice){
-		if(!exercice.selected){
-			return;
-		}
-		$scope.exercice = angular.copy(exercice);
 		
-		$scope.exercice.series = $scope.exercice.series || 0;
-		$scope.exercice.repetitions = $scope.exercice.repetitions || 0;
-		$scope.exercice.weight = $scope.exercice.weight || 0;
+		texercice = angular.copy(exercice);
+		texercice.intensity = texercice.intensity || {};
+		texercice.intensity.series = texercice.intensity.series || 0;
+		texercice.intensity.repetitions = texercice.intensity.repetitions || 0;
+		texercice.intensity.weight = texercice.intensity.weight || 0;
+		
+		$scope.exercice = texercice;
 		
 		var exerciceOptionsPopup = $ionicPopup.show({
 			templateUrl: 'templates/exercices/exercice-intensity-popup.html' ,
@@ -81,9 +88,9 @@ angular.module('gymker.trainingcontrollers', ['gymker.exerciceservices'])
 	};
 	
 	$scope.selectExercice = function(exercice, letter){
-		$scope.configExercice(exercice);
 		
 		if(exercice.selected){
+			$scope.configExercice(exercice);
 			addExercice(exercice, letter);
 		} else {
 			removeExercice(exercice, letter);
@@ -110,32 +117,34 @@ angular.module('gymker.trainingcontrollers', ['gymker.exerciceservices'])
 		if(!$scope.training.days[letter]){
 			$scope.training.days[letter] = {};
 		}
-		$scope.training.days[letter][exercice.id] = exercice;
-		console.log($scope.training);
+		if(!$scope.training.days[letter].trainingExercices){
+			$scope.training.days[letter].trainingExercices = {};
+		}
+		$scope.training.days[letter].trainingExercices[exercice.id] = exercice;
 	};
 	
 	var removeExercice = function(exercice, letter){
-		delete $scope.training.days[letter][exercice.id];
+		delete $scope.training.days[letter].exercices[exercice.id];
 	}
 	
 	$scope.increase = function(prop){
-		var actualValue = parseFloat($scope.exercice[prop]);
+		var actualValue = parseFloat($scope.exercice.intensity[prop]);
 		if(!actualValue && actualValue != 0){
 			actualValue = 0;
 		} else {
 			++actualValue;
 		}
-		$scope.exercice[prop] = actualValue;
+		$scope.exercice.intensity[prop] = actualValue;
 	};
 	
 	$scope.decrease = function(prop){
-		var actualValue = parseFloat($scope.exercice[prop]);
+		var actualValue = parseFloat($scope.exercice.intensity[prop]);
 		if(!actualValue && actualValue != 0){
 			actualValue = 0;
 		} else if(actualValue - 1 > 0){
 			--actualValue
 		}
-		$scope.exercice[prop] = actualValue;
+		$scope.exercice.intensity[prop] = actualValue;
 	};
 	
 	/* Slider controllers */
@@ -143,7 +152,6 @@ angular.module('gymker.trainingcontrollers', ['gymker.exerciceservices'])
 		$ionicSlideBoxDelegate.previous();
 	};
 	$scope.nextStep = function(){
-		console.log($ionicSlideBoxDelegate);
 		$ionicSlideBoxDelegate.next();
 	};
 	$scope.hasPrevious = function(){
@@ -163,6 +171,11 @@ angular.module('gymker.trainingcontrollers', ['gymker.exerciceservices'])
 	};
 	$scope.wasSelected = function(letter){
 		return !!$scope.selectedTrainings[letter];
+	};
+	
+	$scope.saveTraining = function(){
+		console.log($scope.training);
+		TrainingRepository.save($scope.training);
 	};
 	
 }]);

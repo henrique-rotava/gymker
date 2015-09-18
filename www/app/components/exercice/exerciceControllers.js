@@ -1,10 +1,11 @@
-angular.module('gymker.exercicecontrollers', ['gymker.exerciceservices'])
+angular.module('exercicecontrollers')
 
 .controller('CreateExerciceController', 
     ['$scope', '$ionicLoading', 'ExerciceRepository',
      function($scope, $ionicLoading, ExerciceRepository){
 
   $scope.muscles = ['Bíceps', 'Tríceps', 'Peitoral', 'Costas', 'Antebraço', 'Coxa'];
+  $scope.exerciceTypes = ['Tempo', 'Repetições'];
 
   $scope.exercice = {};
 
@@ -16,6 +17,7 @@ angular.module('gymker.exercicecontrollers', ['gymker.exerciceservices'])
             noBackdrop: true,
             duration: 2000
         });
+        $scope.exercice = {};
       }else{
         console.log("error");
       }

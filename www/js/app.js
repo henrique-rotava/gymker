@@ -1,9 +1,14 @@
+// modules
+angular.module('profilecontrollers', []);
+angular.module('exercicecontrollers', ['gymker.exerciceservices']);
+angular.module('gymker.trainingcontrollers', ['gymker.exerciceservices', 'gymker.trainingservices']);
+
 var app = angular.module('gymker', 
 		[
 		 'ionic', 
 		 'starter.controllers', 
-		 'gymker.exercicecontrollers', 
-		 'gymker.profilecontrollers',
+		 'exercicecontrollers', 
+		 'profilecontrollers',
 		 'gymker.authenticationServices',
 		 'gymker.trainingcontrollers',
 		 'gymker.database'
@@ -57,10 +62,19 @@ var app = angular.module('gymker',
   })
 
   .state('app.training-create', {
-    url: "/training/create-start",
+    url: "/training/create",
     views: {
       'menuContent': {
-        templateUrl: "templates/training/create.html"
+        templateUrl: "templates/training/create/create.html"
+      }
+    }
+  })
+  
+  .state('app.training-list', {
+    url: "/training/list",
+    views: {
+      'menuContent': {
+        templateUrl: "templates/training/list/list-trainings.html"
       }
     }
   })

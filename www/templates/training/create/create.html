@@ -1,15 +1,18 @@
-<ion-view view-title="Novo treino" ng-controller="TrainingController">
+<ion-view view-title="Novo treino" ng-controller="CreateTrainingController">
 
 	<ion-content>
 		<ion-slide-box show-pager="false">
 			<ion-slide>
-				<div ng-include src="'templates/training/create-step-start.html'"></div>
+				<div ng-include src="'templates/training/create/create-step-start.html'"></div>
 			</ion-slide>
 			<ion-slide>
-				<div ng-include src="'templates/training/create-step-users.html'"></div>
+				<div ng-include src="'templates/training/create/create-step-users.html'"></div>
 			</ion-slide>
 			<ion-slide>
-				<div ng-include src="'templates/training/create-step-exercices.html'"></div>
+				<div ng-include src="'templates/training/create/create-step-exercices.html'"></div>
+			</ion-slide>
+			<ion-slide>
+				<div ng-include src="'templates/training/create/create-step-final.html'"></div>
 			</ion-slide>
 		</ion-slide-box>
 	</ion-content>

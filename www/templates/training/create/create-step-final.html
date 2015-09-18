@@ -1,0 +1,22 @@
+<div class="card">
+	<div class="item item-divider">
+		<h2>Pronto!</h2>
+		<p>Seu treino está completo.</p>
+	</div>
+	<div class="item item-text-wrap">
+		<div class="list">
+			{{training.name}}
+			<br/>
+			Para {{training.athlete.name}}
+			<label class="item item-input item-floating-label">
+				<span class="input-label">Mensagem</span>
+				<input type="text" placeholder="Mensagem" ng-model="training.message">
+			</label>
+			<div class="padding-top">
+				<button class="button button-block button-balanced button-outline" ng-click="saveTraining()">
+					{{training.send ? 'Enviar' : 'Salvar'}}
+				</button>
+			</div>
+		</div>
+	</div>
+</div>

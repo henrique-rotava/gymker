@@ -10,8 +10,8 @@ angular.module('gymker.userservices', [])
 	var save = function(doc, callback){
 		DataBase.rel.save('user',
 			doc
-		).then(function(response){
-			callback(false, response.users[0]);
+		).then(function(result){
+			callback(false, result.users[0]);
 		}).catch(function(err){
 			callback(true, err);
 		});
@@ -31,8 +31,10 @@ angular.module('gymker.userservices', [])
 	var get = function(uid, callback){
 		DataBase.rel.find('user', 
 			uid
-		).then(function (response) {
-			callback(false, response.users[0]);
+		).then(function (result) {
+			console.log(result);
+			var user = DataBase.parseResponse('user', uid, angular.copy(result));
+			callback(false, user);
 		}).catch(function (err) {
 			callback(true, err);
 		});
@@ -41,8 +43,8 @@ angular.module('gymker.userservices', [])
 	var create = function(callback){
 		DataBase.rel.save('user',
 			new User()
-		).then(function(response){
-			callback(false, response.users[0]);
+		).then(function(result){
+			callback(false, result.users[0]);
 		}).catch(function(err){
 			callback(true, err);
 		});
@@ -52,6 +54,7 @@ angular.module('gymker.userservices', [])
 		
 		var athletes = user.athletes || [];
 		var related;
+		var relationPromises = [];
 		for(prop in relateds){
 			var related = relateds[prop];
 			var relation = {
@@ -60,60 +63,32 @@ angular.module('gymker.userservices', [])
 				person: user.id,
 				related: related.id
 			};
-			DataBase.rel.save('relationship', relation);
-			if (athletes.indexOf(relation.id) == -1) {
-				athletes.push(relation.id);
+			
+			if (user.athletes.indexOf(relation.id) < 0) {
+				user.athletes.push(relation.id);
 			}
+			relationPromises.push(DataBase.rel.save('relationship', relation));
 		}
 		
-		user.athletes = athletes;
-		
-		DataBase.rel.save('user', 
-			user
-		).then(function (result) {
-			callback(false, result);
+		Promise.all(relationPromises)
+		.then(function(result){
+			return DataBase.rel.save('user', user);
+		}).then(function (result) {
+			var user = result.users[0];
+			callback(false, user);
 		}).catch(function(err){
 			callback(true, err);
 		});
 	};
 	
-	var normalizeAthletesRelations = function(response){
-		var relations = [];
-		var relationships = response.relationships;
-		var users = response.users;
-		if(users.length == relationships.length){
-			// easy way
-			for(index in relationships){
-				var relation = relationships[index];
-				relation.related = users[index];
-				relations.push(relation);
-			}
-		} else {
-			// build objects
-			// hard way
-			var relatedUsers = {};
-			for(index in users){
-				var user = users[index];
-				relatedUsers[user.id] = user;
-			}
-			for(index in relationships){
-				var relation = relationships[index];
-				var related = relatedUsers[relation.related];
-				if(related){
-					relation.related = related;
-					relations.push(relation);
-				}
-			}
-		}
-		return relations;
-	};
-	
 	var getUserAthletes = function(user, callback){
-		DataBase.rel.find('relationship', 
+		DataBase.rel.find('relationship',
 			user.athletes
 		).then(function (response) {
-			callback(false, normalizeAthletesRelations(response));
+			var relations = DataBase.parseResponse('relationship', user.athletes, response);
+			callback(false, relations);
 		}).catch(function (err) {
+			console.log(err);
 			callback(true, err);
 		});
 	};

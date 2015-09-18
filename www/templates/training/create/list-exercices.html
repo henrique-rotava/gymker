@@ -14,9 +14,9 @@
 			{{exercice.muscle}}
 	    </span>
 	    <p>
-	    	<span>{{exercice.series || 0}} Séries</span>
-	    	<span>{{exercice.repetitions || 0}} Repet.</span>
-	    	<span>{{exercice.weight || 0}} Kg</span>
+	    	<span>{{exercice.intensity.series || 0}} Séries</span>
+	    	<span>{{exercice.intensity.repetitions || 0}} Repet.</span>
+	    	<span>{{exercice.intensity.weight || 0}} Kg</span>
 	    </p>
 		<label class="toggle toggle-balanced">
 			<input type="checkbox" ng-model="exercice.selected" ng-change="selectExercice(exercice, letter)">

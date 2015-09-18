@@ -1,6 +1,6 @@
-	angular.module('gymker.authenticationServices', ['gymker.userservices'])
+angular.module('gymker.authenticationServices', ['gymker.userservices'])
 
-.service('AuthService', ['UserRepository', function(UserRepository){
+.service('AuthService', ['UserRepository', 'DataBase', function(UserRepository, DataBase){
 	
 	var user;
 	
@@ -35,6 +35,7 @@
 					}
 					callback(error, result);
 				});
+				
 			}else{
 				console.log('user id not found in localStorage');
 				UserRepository.create(function(error, result){
