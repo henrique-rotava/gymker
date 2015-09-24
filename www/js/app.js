@@ -2,6 +2,7 @@
 angular.module('profilecontrollers', []);
 angular.module('exercicecontrollers', ['gymker.exerciceservices']);
 angular.module('gymker.trainingcontrollers', ['gymker.exerciceservices', 'gymker.trainingservices']);
+angular.module('notificationcontrollers', []);
 
 var app = angular.module('gymker', 
 		[
@@ -11,7 +12,9 @@ var app = angular.module('gymker',
 		 'profilecontrollers',
 		 'gymker.authenticationServices',
 		 'gymker.trainingcontrollers',
-		 'gymker.database'
+		 'gymker.database',
+		 'notificationservices',
+		 'notificationcontrollers'
 		 ])
 
 .run(function($ionicPlatform, DataBase, AuthService, $rootScope) {
@@ -102,6 +105,15 @@ var app = angular.module('gymker',
     views: {
       'menuContent': {
         templateUrl: "templates/profile/athletes.html"
+      }
+    }
+  })
+  
+  .state('app.notifications', {
+    url: "/profile/notifications",
+    views: {
+      'menuContent': {
+        templateUrl: "templates/profile/notifications.html"
       }
     }
   })

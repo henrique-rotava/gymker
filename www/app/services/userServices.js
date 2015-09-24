@@ -50,33 +50,41 @@ angular.module('gymker.userservices', [])
 		});
 	};
 	
+	var getRelationsIDs = function (promisses, userAthletes){
+		userAthletes = userAthletes || [];
+		for(var index = 0; index < promisses.length; index++){
+			var relations = promisses[index].relationships;
+			for(var relIndex = 0; relIndex < relations.length; relIndex++){
+				var relation = relations[relIndex];
+				userAthletes.push(relation.id);
+			}
+		}
+		return userAthletes;
+	};
+	
 	var saveAthletesRelationships = function (user, relateds, callback){
-		
-		var athletes = user.athletes || [];
-		var related;
 		var relationPromises = [];
-		for(prop in relateds){
-			var related = relateds[prop];
+		var relateds = Object.keys(relateds);
+		for(var index = 0; index < relateds.length; index++){
+			var related = relateds[index];
 			var relation = {
-				id: user.id + related.id,
 				confirmed: false,
 				person: user.id,
-				related: related.id
+				related: related
 			};
 			
-			if (user.athletes.indexOf(relation.id) < 0) {
-				user.athletes.push(relation.id);
-			}
 			relationPromises.push(DataBase.rel.save('relationship', relation));
 		}
 		
 		Promise.all(relationPromises)
 		.then(function(result){
+			user.athletes = getRelationsIDs(result, user.athletes);
 			return DataBase.rel.save('user', user);
 		}).then(function (result) {
 			var user = result.users[0];
 			callback(false, user);
 		}).catch(function(err){
+			console.log(err);
 			callback(true, err);
 		});
 	};

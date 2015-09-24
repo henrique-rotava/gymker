@@ -1,0 +1,22 @@
+<ion-view view-title="Notificações" ng-controller="ListNotificationsController">
+	<ion-content>
+		<div class="list" ng-show="loaded">
+			<div class="item item-divider" ng-show="user.unreadNotifications.length">
+				<h2>Não lidas</h2>
+			</div>
+			<div class="item" ng-repeat="notification in user.unreadNotifications">
+				<h2>{{notification.name}}</h2>
+				<p>{{notification.message}}</p>
+				<span class="item-note">
+					{{notification.sender.name}}
+				</span>
+			</div>
+			<div class="item item-divider" ng-show="user.readNotifications.length">
+				<h2>Lidas</h2>
+			</div>
+			<div class="item" ng-repeat="notification in user.readNotifications">
+				{{notification.name}}
+			</div>
+		</div>
+	</ion-content>
+</ion-view>

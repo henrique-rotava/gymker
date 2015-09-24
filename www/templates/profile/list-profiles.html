@@ -15,11 +15,14 @@
 		</div>
 		
 		<div class="list">
-			<div class="item item-toggle item-avatar item-toggle" ng-repeat="user in filteredUsers = (users | filter:search)">
+			<div class="item item-toggle item-avatar item-toggle" ng-repeat="user in filteredUsers = (users | filter:search:relatedUsersIDs)">
 				<img src="{{user.profilePic}}">
 				{{user.name}}
 				<p>{{user.email}}</p>
-				<label class="toggle toggle-balanced">
+				<span class="item-note" ng-if="relatedUsersIDs[user.id]">
+					Adicionado
+				</span>
+				<label class="toggle toggle-balanced" ng-if="!relatedUsersIDs[user.id]">
 					<input type="checkbox" ng-model="user.selected" ng-change="selectUser(user)">
 					<div class="track">
 						<div class="handle"></div>

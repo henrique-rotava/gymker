@@ -43,10 +43,10 @@ angular.module('gymker.database', [])
 	    		'coachs': {hasMany: {type: 'relationship', options: {async: true}}},
 	    		'athletes': {hasMany: {type: 'relationship', options: {async: true}}},
 	    		'trainings': {hasMany: {type: 'training', options: {async: true}}},
-	    		'authorTrainings': {hasMany: {type: 'training', options: {async: true}}}
-//	    		'athletes': {hasMany: 'relationship'},
-//	    		'trainings': {hasMany: 'training'},
-//	    		'authorTrainings': {hasMany: 'training'}
+	    		'authorTrainings': {hasMany: {type: 'training', options: {async: true}}},
+	    		'unreadNotifications': {hasMany: 'notification'},
+	    		'readNotifications': {hasMany: {type: 'notification', options: {async: true}}},
+	    		'sentNotifications': {hasMany: {type: 'notification', options: {async: true}}},
 	    	}
 	    },
 	    {
@@ -82,6 +82,13 @@ angular.module('gymker.database', [])
 	    {
 	    	singular: 'exercice',
 	    	plural: 'exercices'
+	    },
+	    {
+	    	singular: 'notification',
+	    	plural: 'notifications',
+	    	relations: {
+	    		'sender': {belongsTo: 'user'}
+	    	}
 	    }
 	];
 	
@@ -171,7 +178,6 @@ angular.module('gymker.database', [])
 			// is an array
 			var result = [];
 			for(var index = 0; index < id.length; index++){
-//				control = {};
 				result.push(recursive(type, id[index]));
 			}
 			return result;
@@ -187,19 +193,63 @@ angular.module('gymker.database', [])
 		return recursiveParseResponse(type, id, parsedResults, schema, control);
 	};
 	
+	var removeReferenceIDs = function(type, document){
+//		console.log('cópia 1', angular.copy(document));
+		var relations = schema[type].relations;
+		if(relations){
+//			console.log('relations', relations);
+			var propertyNames = Object.keys(relations);
+//			console.log('propertyNames', propertyNames);
+			for(var index = 0; index < propertyNames.length; index++){
+				var propertyName = propertyNames[index];
+//				console.log('propertyName', propertyName);
+				var property = document[propertyName];
+				if (angular.isArray(property)){
+//					console.log('is array');
+//					console.log('property value', document[propertyName]);
+					for(var ind = 0; ind < property.length; ind ++){
+						var propertyIndex = property[ind];
+//						console.log('property index value', propertyIndex);
+						document[propertyName][ind] = propertyIndex.id || propertyIndex;
+//						console.log('new property value', document[propertyName][ind]);
+					}
+				} else if (angular.isObject(property)){
+//					console.log('is object');
+//					console.log('property value', document[propertyName]);
+					document[propertyName] = document[propertyName].id || document[propertyName];
+//					console.log('new property value', document[propertyName]);
+				}
+			}
+		}
+//		console.log('cópia 2', angular.copy(document));
+		return document;
+	};
+	
 	var buildSchema = function(){
 		localDB.setSchema(dbschema);
+	};
+	
+	var overrideSave = function(){
+		var nativeSave = dataBase.rel.save;
+		var extendedSave = function(type, document){
+			var cleanDocument = removeReferenceIDs(type, document);
+			return nativeSave(type, cleanDocument);
+		}
+		dataBase.rel.save = extendedSave;
 	};
 	
 	var startUp = function(){
 		buildSchema();
 		sync();
 		install();
+		overrideSave();
 	};
 	
 	var dataBase = localDB;
 	dataBase.startUp = startUp;
 	dataBase.parseResponse = parseResponse;
+	dataBase.removeReferenceIDs = removeReferenceIDs;
+	
 	
 	return dataBase;
 	

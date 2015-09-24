@@ -1,21 +1,31 @@
 angular.module('gymker.trainingcontrollers')
 
 .controller('CreateTrainingController', 
-			['$rootScope', '$scope', 'ExerciceRepository', 'UserRepository', 'TrainingRepository', '$ionicPopup', '$ionicLoading', '$ionicSlideBoxDelegate',
-			function($rootScope, $scope, ExerciceRepository, UserRepository, TrainingRepository, $ionicPopup, $ionicLoading, $ionicSlideBoxDelegate){
+			['$timeout', '$rootScope', '$scope', 'ExerciceRepository', 'UserRepository', 'TrainingRepository', 'NotificationRepository', '$ionicPopup', '$ionicLoading', '$ionicSlideBoxDelegate',
+			function($timeout, $rootScope, $scope, ExerciceRepository, UserRepository, TrainingRepository, NotificationRepository, $ionicPopup, $ionicLoading, $ionicSlideBoxDelegate){
 	
-	$scope.exercices = [];
-    $scope.search = "";
-    $scope.training = {days:{}};
-    $scope.letters = ['A','B','C','D','E','F','G'];
-    $scope.exerciceDays = {};
-    
-    $rootScope.$watch('user', function(){
-		if($rootScope.user){
-			$scope.training.coach = $rootScope.user,
-			$scope.training.athlete = $rootScope.user
-		}
-    });
+	var startUp = function(){
+		$scope.exercices = [];
+	    $scope.search = "";
+	    $scope.training = {days:{}};
+	    $scope.letters = ['A','B','C','D','E','F','G'];
+	    $scope.exerciceDays = {};
+	    
+	    if(!$rootScope.user){
+		    $rootScope.$watch('user', function(){
+				if($rootScope.user){
+					$scope.training.coach = $rootScope.user,
+					$scope.training.athlete = $rootScope.user
+				}
+		    });
+	    }else{
+	    	$scope.training.coach = $rootScope.user;
+			$scope.training.athlete = $rootScope.user;
+	    }
+	    loadAthletes();
+	    loadExercices();
+	    $ionicSlideBoxDelegate.slide(0);
+	}
 
     var loadAthletes = function(){
 		$ionicLoading.show({
@@ -33,9 +43,7 @@ angular.module('gymker.trainingcontrollers')
 		});
 	}
 	
-	loadAthletes();
-    
-    var load = function(){
+    var loadExercices = function(){
       ExerciceRepository.getAll(function(err, result){
         if(!err){
         	for(index in $scope.letters){
@@ -50,10 +58,8 @@ angular.module('gymker.trainingcontrollers')
     	return $scope.exerciceDays[letter];
     };
     
-    load();
-    
     $scope.refresh = function(){
-        load();
+    	loadExercices();
     }
 	
 	$scope.configExercice = function(exercice){
@@ -174,8 +180,57 @@ angular.module('gymker.trainingcontrollers')
 	};
 	
 	$scope.saveTraining = function(){
-		console.log($scope.training);
-		TrainingRepository.save($scope.training);
+		
+		TrainingRepository.save(angular.copy($scope.training), function(error, result){
+			if(!error){
+				
+				$rootScope.user = result;
+				
+				var coachId = $scope.training.coach.id || $scope.training.coach;
+				var athleteId = $scope.training.athlete.id || $scope.training.athlete;
+				
+				if(coachId != athleteId){
+					var notification = {
+						name: $scope.training.name,
+						type: 'Novo treino',
+						link: $scope.training.id,
+						message: $scope.training.message
+					};
+					
+					NotificationRepository.save(coachId, athleteId, notification, function(error, result){
+						if(!error){
+							$rootScope.user = result;
+							showSuccessMessage();
+						} else {
+							showFailureMessage();
+						}
+					});
+				} else {
+					showSuccessMessage();
+				}
+				
+			} else {
+				showFailureMessage();
+			}
+		});
+		
+		function showFailureMessage(){
+			$ionicLoading.show({
+				template: 'Ocorreu um erro ao enviar o treino.',
+				duration: 2000
+			});
+		};
+		
+		function showSuccessMessage(){
+			startUp();
+			$ionicLoading.show({
+				template: 'Treino enviado com sucesso!',
+				duration: 2000
+			});
+		};
+		
 	};
+	
+	startUp();
 	
 }]);

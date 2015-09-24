@@ -3,7 +3,19 @@ angular.module('profilecontrollers')
 .controller('CoachController', ['$rootScope', '$scope', '$ionicModal', 'UserRepository', '$ionicLoading',
                                 function($rootScope, $scope, $ionicModal, UserRepository, $ionicLoading){
 
+	$scope.relatedUsersIDs = {};
 	$scope.athletesLoaded = false;
+	$scope.relations = [];
+	
+	function setRelatedIDs(){
+		$scope.relatedUsersIDs = {};
+		$scope.relatedUsersIDs[$rootScope.user.id] = true;
+		for(var index = 0; index < $scope.relations.length; index++){
+			var relation = $scope.relations[index];
+			$scope.relatedUsersIDs[relation.related.id] = true;
+		}
+	}
+	
 	$scope.loadAthletes = function(){
 		$ionicLoading.show({
 	        template: 'Carregando...'
@@ -13,6 +25,8 @@ angular.module('profilecontrollers')
 				UserRepository.getUserAthletes($rootScope.user, function(err, result){
 					if(!err){
 						$scope.relations = result;
+						setRelatedIDs();
+						$scope.athletesLoaded = true;
 					}
 					$ionicLoading.hide();
 				});
@@ -67,9 +81,12 @@ angular.module('profilecontrollers')
 	
 	$scope.sendInvites = function(){
 		UserRepository.saveAthletesRelationships($rootScope.user, athletesToAdd, function(error, result){
-			$rootScope.user = result;
+			if(!error){
+				$rootScope.user = result;
+				$scope.loadAthletes();
+			}
 			$scope.closeInvite();
-			$scope.loadAthletes();
+			athletesToAdd = {};
 		});
 	};
 	
