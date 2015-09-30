@@ -1,0 +1,31 @@
+<ion-view view-title="Notificação" ng-controller="ShowContactNotificationController">
+
+	<ion-content>
+		
+		<div class="card">
+			<div class="item item-divider">
+				<h2>{{notification.title}}</h2>
+				<p>
+					<a href="">{{notification.sender.name}}</a> gostaria de ser seu(sua) treinador(a).
+				</p>
+			</div>
+			<div class="item item-text-wrap">
+				{{notification.message}}
+			</div>
+			
+			<div class="row">
+				<div class="col text-center">
+					<button class="button button-clear button-balanced full-width icon-button ion-ios-close-outline" ng-click="rejectContact(notification.relation)">
+						Rejeitar
+					</button>
+				</div>
+				<div class="col text-center">
+					<button class="button button-clear button-balanced full-width icon-button ion-ios-checkmark-outline" ng-click="acceptContact(notification.relation)">
+						Aceitar
+					</button>
+				</div>
+			</div>
+			
+		</div>
+	</ion-content>
+</ion-view>

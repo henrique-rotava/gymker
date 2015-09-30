@@ -1,0 +1,33 @@
+<ion-popover-view class="fit">
+	<div class="row" ng-show="!newImageSrc">
+		<div class="col text-center">
+			<button class="button button-clear icon-button" ng-click="getPicture(2)">
+				<i class="ion-image"></i>
+			</button>
+		</div>
+		<div class="col text-center">
+			<button class="button button-clear icon-button" ng-click="getPicture(1)">
+				<i class="ion-camera"></i>
+			</button>
+		</div>
+	</div>
+	
+	<div ng-show="newImageSrc">
+		<div class="row">
+			<div class="col new-profile-pic">
+			</div>
+		</div>
+		<div class="row">
+			<div class="col text-center">
+				<button class="button button-clear button-positive full-width icon-button" ng-click="closePopover()">
+					Cancelar
+				</button>
+			</div>
+			<div class="col text-center">
+				<button class="button button-clear button-positive full-width icon-button" ng-click="saveNewPic()">
+					OK
+				</button>
+			</div>
+		</div>
+	</div>
+</ion-popover-view>

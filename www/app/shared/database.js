@@ -53,6 +53,7 @@ angular.module('gymker.database', [])
 	    	singular: 'relationship',
 	    	plural: 'relationships',
 	    	relations: {
+	    		'relater': {belongsTo: 'user'},
 	    		'related': {belongsTo: 'user'}
 	    	}
 	    },
@@ -123,14 +124,11 @@ angular.module('gymker.database', [])
 
 			type = schema[type].plural;
 			
-//			console.log('Getting', type, id);
 			if(!results[type]){
-//				console.log('type not found', type);
 				return id;
 			}
 
 			var document = results[type][id];
-//			console.log('Found document', document);
 
 			if(!document){
 				return id;
@@ -143,30 +141,29 @@ angular.module('gymker.database', [])
 			}
 			
 			var relations = schema[type].relations;
-//			console.log('Relations ', relations, 'for type', type);
 			if(relations){
 				var properties = Object.keys(relations);
-//				console.log('Properties ', properties, 'for type', type);
 				for(var ind = 0; ind < properties.length; ind++){
 					var propertyName = properties[ind];
 					var property = document[propertyName];
-//					console.log('Property', propertyName, property, 'for type', type);
 					if(property){
+						var newPropertyValue;
 						if(typeof property == 'string'){
 							var relationObjectType = relations[propertyName].belongsTo.type || relations[propertyName].belongsTo;
 							var resolvedObject = recursive(relationObjectType, property);
-//							console.log('Assigning', propertyName, resolvedObject);
-							document[propertyName] = resolvedObject;
+							newPropertyValue = resolvedObject;
 						} else if (typeof property == 'object'){
 							var relationObjectType = relations[propertyName].hasMany.type || relations[propertyName].hasMany;
 							var index = 0;
 							var size = property.length;
+							newPropertyValue = [];
 							for(; index < size; index++){
 								var relationObjectId = property[index];
 								var resolvedObject = recursive(relationObjectType, relationObjectId);
-								property[index] = resolvedObject;
+								newPropertyValue.push(resolvedObject);
 							}
 						}
+						document[propertyName] = newPropertyValue;
 					}
 				}
 			}
@@ -174,11 +171,15 @@ angular.module('gymker.database', [])
 			return document;
 		};
 		
-		if(typeof id == 'object'){
+		if(angular.isArray(id)){
 			// is an array
 			var result = [];
 			for(var index = 0; index < id.length; index++){
-				result.push(recursive(type, id[index]));
+				var document = recursive(type, id[index]);
+				// ignore it if was not found
+				if(angular.isObject(document)){
+					result.push(document);
+				}
 			}
 			return result;
 		} else {
@@ -194,34 +195,22 @@ angular.module('gymker.database', [])
 	};
 	
 	var removeReferenceIDs = function(type, document){
-//		console.log('cópia 1', angular.copy(document));
 		var relations = schema[type].relations;
 		if(relations){
-//			console.log('relations', relations);
 			var propertyNames = Object.keys(relations);
-//			console.log('propertyNames', propertyNames);
 			for(var index = 0; index < propertyNames.length; index++){
 				var propertyName = propertyNames[index];
-//				console.log('propertyName', propertyName);
 				var property = document[propertyName];
 				if (angular.isArray(property)){
-//					console.log('is array');
-//					console.log('property value', document[propertyName]);
 					for(var ind = 0; ind < property.length; ind ++){
 						var propertyIndex = property[ind];
-//						console.log('property index value', propertyIndex);
 						document[propertyName][ind] = propertyIndex.id || propertyIndex;
-//						console.log('new property value', document[propertyName][ind]);
 					}
 				} else if (angular.isObject(property)){
-//					console.log('is object');
-//					console.log('property value', document[propertyName]);
 					document[propertyName] = document[propertyName].id || document[propertyName];
-//					console.log('new property value', document[propertyName]);
 				}
 			}
 		}
-//		console.log('cópia 2', angular.copy(document));
 		return document;
 	};
 	
@@ -229,20 +218,21 @@ angular.module('gymker.database', [])
 		localDB.setSchema(dbschema);
 	};
 	
-	var overrideSave = function(){
-		var nativeSave = dataBase.rel.save;
-		var extendedSave = function(type, document){
+	var overrideRelationFunction = function(functionName){
+		var nativeFunction = dataBase.rel[functionName];
+		var extendedFunction = function(type, document){
 			var cleanDocument = removeReferenceIDs(type, document);
-			return nativeSave(type, cleanDocument);
+			return nativeFunction(type, cleanDocument);
 		}
-		dataBase.rel.save = extendedSave;
+		dataBase.rel[functionName] = extendedFunction;
 	};
 	
 	var startUp = function(){
 		buildSchema();
 		sync();
 		install();
-		overrideSave();
+		overrideRelationFunction('save');
+		overrideRelationFunction('del');
 	};
 	
 	var dataBase = localDB;

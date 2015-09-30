@@ -190,7 +190,8 @@ angular.module('gymker.trainingservices', [])
 		return trainingDays;
 	};
 	
-	var getTrainings = function(trainings, callback){
+	// works for single id (string) and multiple ids (string[])
+	var get = function(trainings, callback){
 		DataBase.rel.find('training', trainings)
 		.then(function(dbresult){
 			var response = DataBase.parseResponse('training', trainings, dbresult);
@@ -202,7 +203,7 @@ angular.module('gymker.trainingservices', [])
 	
 	return {
 		save: save,
-		getTrainings: getTrainings
+		get: get
 	};
 	
 }]);

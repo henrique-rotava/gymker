@@ -1,13 +1,13 @@
 angular.module('profilecontrollers')
 
-.controller('CoachController', ['$rootScope', '$scope', '$ionicModal', 'UserRepository', '$ionicLoading', 'NotificationRepository',
+.controller('AthleteController', ['$rootScope', '$scope', '$ionicModal', 'UserRepository', '$ionicLoading', 'NotificationRepository',
                                 function($rootScope, $scope, $ionicModal, UserRepository, $ionicLoading, NotificationRepository){
 
 	$scope.$on('$ionicView.enter', function() {
 		$scope.loadRelations();
 	});
 	
-	var relationPropName = 'related';
+	var relationPropName = 'relater';
 	$scope.relationUsersIDs = {};
 	$scope.relationsLoaded = false;
 	$scope.relations = [];
@@ -27,7 +27,8 @@ angular.module('profilecontrollers')
 	    });
 		$rootScope.$watch('user', function(){
 			if($rootScope.user){
-				UserRepository.getUserRelations($rootScope.user, 'athletes', function(err, result){
+				UserRepository.getUserRelations($rootScope.user, 'coachs', function(err, result){
+					console.log(result);
 					if(!err){
 						$scope.relations = result;
 						setRelationIDs();
@@ -85,25 +86,25 @@ angular.module('profilecontrollers')
 	};
 	
 	$scope.sendInvites = function(){
-		UserRepository.saveAthletesRelationships($rootScope.user, usersToAdd, function(error, result){
+		UserRepository.saveCoachsRelationships($rootScope.user, usersToAdd, function(error, result){
 			if(!error){
 				$rootScope.user = result.user;
 				
 				for(var index = 0; index < result.relations.length; index++){
 					
-					var athleteId = result.relations[index].related;
+					var coachId = result.relations[index].relater;
 					var relationId = result.relations[index].id;
 					
 					var notification = {
-						title: 'Solicitação de contato - Treinador',
+						title: 'Solicitação de contato - Aluno',
 						link: '#/app/profile/contact-request-notification/',
-						message: 'Olá, você poderia me adicionar à sua lista de professores?',
+						message: 'Olá, você poderia me adicionar à sua lista de alunos?',
 						createdDate: new Date(),
 						relation: relationId,
 						notificationType: 'relation'
 					};
 					
-					NotificationRepository.save($rootScope.user.id, athleteId, notification, function(error, result){
+					NotificationRepository.save($rootScope.user.id, coachId, notification, function(error, result){
 						if(!error){
 							$rootScope.user = result;
 						}

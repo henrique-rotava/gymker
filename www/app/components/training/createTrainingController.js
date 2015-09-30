@@ -3,7 +3,11 @@ angular.module('gymker.trainingcontrollers')
 .controller('CreateTrainingController', 
 			['$timeout', '$rootScope', '$scope', 'ExerciceRepository', 'UserRepository', 'TrainingRepository', 'NotificationRepository', '$ionicPopup', '$ionicLoading', '$ionicSlideBoxDelegate',
 			function($timeout, $rootScope, $scope, ExerciceRepository, UserRepository, TrainingRepository, NotificationRepository, $ionicPopup, $ionicLoading, $ionicSlideBoxDelegate){
-	
+	var isTeacher = false;
+	$rootScope.$watch('user', function(){
+		$ionicSlideBoxDelegate.update();
+	});
+				
 	var startUp = function(){
 		$scope.exercices = [];
 	    $scope.search = "";
@@ -16,6 +20,7 @@ angular.module('gymker.trainingcontrollers')
 				if($rootScope.user){
 					$scope.training.coach = $rootScope.user,
 					$scope.training.athlete = $rootScope.user
+					isTeacher = $rootScope.user.isTeacher;
 				}
 		    });
 	    }else{
@@ -33,7 +38,7 @@ angular.module('gymker.trainingcontrollers')
 	    });
 		$rootScope.$watch('user', function(){
 			if($rootScope.user){
-				UserRepository.getUserAthletes($rootScope.user, function(err, result){
+				UserRepository.getUserRelations($rootScope.user, 'athletes', function(err, result){
 					if(!err){
 						$scope.relations = result;
 					}
@@ -111,12 +116,6 @@ angular.module('gymker.trainingcontrollers')
 		}
 		lastSelection = relation;
 		$scope.training.athlete = relation.related;
-		$scope.nextStep();
-		$ionicLoading.show({ 
-            template: 'Aluno ' + relation.related.name + ' selecionado.',
-            noBackdrop: true,
-            duration: 2000
-        });
 	};
 	
 	var addExercice = function(exercice, letter){
@@ -130,7 +129,10 @@ angular.module('gymker.trainingcontrollers')
 	};
 	
 	var removeExercice = function(exercice, letter){
-		delete $scope.training.days[letter].exercices[exercice.id];
+		delete $scope.training.days[letter].trainingExercices[exercice.id];
+		if(!Object.keys($scope.training.days[letter].trainingExercices).length){
+			delete $scope.training.days[letter];
+		}
 	}
 	
 	$scope.increase = function(prop){
@@ -164,7 +166,11 @@ angular.module('gymker.trainingcontrollers')
 		return $ionicSlideBoxDelegate.currentIndex() > 0;
 	};
 	$scope.hasNext = function(){
-		return $ionicSlideBoxDelegate.currentIndex() < $ionicSlideBoxDelegate.count() - 1;
+		var index = $ionicSlideBoxDelegate.currentIndex();
+		var isExercicesIndex = (isTeacher && index == 2) || (!isTeacher && index == 1);
+		var trainingHasExercice = Object.keys($scope.training.days).length > 0;
+		var letGoOn = true;//!isExercicesIndex || isExercicesIndex && trainingHasExercice;
+		return index < $ionicSlideBoxDelegate.count() - 1 && letGoOn;
 	};
 
 	/* Fake tabs */
@@ -181,7 +187,9 @@ angular.module('gymker.trainingcontrollers')
 	
 	$scope.saveTraining = function(){
 		
-		TrainingRepository.save(angular.copy($scope.training), function(error, result){
+		$scope.training.createdDate = new Date();
+		
+		TrainingRepository.save($scope.training, function(error, result){
 			if(!error){
 				
 				$rootScope.user = result;
@@ -191,11 +199,15 @@ angular.module('gymker.trainingcontrollers')
 				
 				if(coachId != athleteId){
 					var notification = {
-						name: $scope.training.name,
-						type: 'Novo treino',
-						link: $scope.training.id,
-						message: $scope.training.message
+						title: 'Novo treino',
+						link: '#/app/profile/training-notification/',
+						message: $scope.training.message,
+						createdDate: new Date(),
+						training: $scope.training.id,
+						notificationType: 'training'
 					};
+					
+					console.log($scope.training);
 					
 					NotificationRepository.save(coachId, athleteId, notification, function(error, result){
 						if(!error){

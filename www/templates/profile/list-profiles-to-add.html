@@ -19,10 +19,10 @@
 				<img src="{{user.profilePic}}">
 				{{user.name}}
 				<p>{{user.email}}</p>
-				<span class="item-note" ng-if="relatedUsersIDs[user.id]">
+				<span class="item-note" ng-if="relationUsersIDs[user.id]">
 					Adicionado
 				</span>
-				<label class="toggle toggle-balanced" ng-if="!relatedUsersIDs[user.id]">
+				<label class="toggle toggle-balanced" ng-if="!relationUsersIDs[user.id]">
 					<input type="checkbox" ng-model="user.selected" ng-change="selectUser(user)">
 					<div class="track">
 						<div class="handle"></div>
@@ -40,9 +40,11 @@
 		
 	</ion-content>
 	
-	<div class="bar bar-footer bar-light">
-	 	<div class="title icon">
-			<button class="button button-balanced button-clear pull-right icon-left ion-paper-airplane" ng-click="sendInvites()"></button>
+	<div class="bar bar-footer footer-buttons">
+ 		<div class="row">
+			<div class="col">
+				<button class="button button-balanced button-clear icon-left ion-ios-paperplane" ng-click="sendInvites()">Enviar convites</button>
+			</div>
 		</div>
 	</div>
 	

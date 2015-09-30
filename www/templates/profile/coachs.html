@@ -1,4 +1,4 @@
-<ion-view view-title="Meus alunos" ng-controller="CoachController">
+<ion-view view-title="Meus treinadores" ng-controller="AthleteController">
 	<ion-content>
 		<div class="item item-input-inset stable-bg item-button-right">
 		    <label class="item-input-wrapper">
@@ -11,19 +11,19 @@
 		<div class="list">
 			<div class="item item-avatar item-icon-right" ng-repeat="relation in filteredRelations = (relations | filter:search)">
 				<img src="{{relation.related.profilePic}}">
-				{{relation.related.name}}
-				<p>{{relation.related.email}}</p>
-				<span ng-if="!relation.relatedConfirmed" class="item-note">
+				{{relation.relater.name}}
+				<p>{{relation.relater.email}}</p>
+				<span ng-if="!relation.relaterConfirmed" class="item-note">
 					Não confirmado
 				</span>
 				<i class="icon ion-android-more-vertical"></i>
 			</div>
 		</div>
 		
-		<div class="list list-inset" ng-hide="relations.length || !athletesLoaded">
+		<div class="list list-inset" ng-hide="relations.length || !relationsLoaded">
 		    <div class="item text-center icon-left">
 		    	<i class="icon ion-android-warning"></i>
-				Você ainda não possui alunos.
+				Você ainda não possui treinadores.
 		    </div>
 		</div>
 		

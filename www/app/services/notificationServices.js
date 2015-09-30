@@ -8,7 +8,10 @@ angular.module('notificationservices', [])
 		user[propertyName] = notifications;
 	}
 	
-	var save = function(senderId, recipientId, notification, callback, justSendIfOtherPerson){
+	var save = function(senderId, recipientId, notification, callback){
+		
+		notification.sender = senderId;
+		notification.read = false;
 		
 		DataBase.rel.save('notification',
 			// salva the notification
@@ -55,8 +58,53 @@ angular.module('notificationservices', [])
 		});
 	};
 	
+	var read = function(user, notification, callback){
+		var notificationId = notification.id;
+		notification.read = true;
+		readUserNotification(user, notification);
+		
+		DataBase.rel.save('notification', notification)
+		.then(function(result){
+			return DataBase.rel.save('user', user);
+		}).then(function(result){
+			return DataBase.rel.find('user', user.id);
+		}).then(function(result){
+			var userResult = DataBase.parseResponse('user', user.id, result);
+			callback(false, userResult);
+		}).catch(function(result){
+			callback(true, result);
+		});
+	};
+	
+	var readUserNotification = function(user, notification){
+		// remove from unread
+		var notificationId = notification.id;
+		var index = user.unreadNotifications.indexOf(notification);
+		console.log(index);
+		if (index > -1) {
+			user.unreadNotifications.splice(index, 1);
+		}
+		// add to read
+		user.readNotifications = user.readNotifications || [];
+		user.readNotifications.splice(0, 0, notificationId);
+	};
+	
+	var get = function(id, callback){
+		DataBase.rel.find('notification', 
+			id
+		).then(function (result) {
+			console.log(result);
+			var user = DataBase.parseResponse('notification', id, angular.copy(result));
+			callback(false, user);
+		}).catch(function (err) {
+			callback(true, err);
+		});
+	};
+	
 	return {
-		save: save
+		save: save,
+		read: read,
+		get: get
 	}
 	
 }])
