@@ -1,0 +1,77 @@
+<ion-view view-title="Treinos">
+	<ion-tabs class="tabs-top tabs-background-light tabs-color-balanced" ng-controller="ListTrainingsController">
+		<ion-tab title="Meus Treinos">
+		
+			<ion-view title="Treinos">
+				<ion-content>
+					<ion-refresher pulling-text="Arraste para atualizar"
+			         pulling-icon="ion-ios7-arrow-thin-down"
+			         on-refresh="refresh()">
+					</ion-refresher>
+					
+					<div class="item item-input-inset stable-bg">
+					    <label class="item-input-wrapper">
+					    	<i class="icon ion-search placeholder-icon"></i>
+					    	<input type="text" placeholder="Pesquisar" ng-model="search.name">
+					    </label>
+					    <i class="icon ion-ios-close-outline padding-horizontal clear-search" ng-show="search.name" ng-click="search.name=''"></i>
+					</div>
+					
+					<div class="list">
+						<a href="#/app/training/show/{{training.id}}" class="item" ng-repeat="training in trainings track by $index | filter:search | orderBy:'name'">
+							{{training.name}}
+						    <p>
+						    	{{training.coach.name}}
+						    </p>
+						</a>
+					</div>
+					
+					<div class="list list-inset" ng-hide="filteredTrainings.length || !trainingsLoaded">
+					     <div class="item text-center">
+							Você ainda não possui treinos.
+							<a href="#/app/training/create" class="button button-block button-outline button-balanced">
+								Novo treino
+							</a>
+					    </div>
+					</div>
+				</ion-content>
+			</ion-view>
+		</ion-tab>
+		<ion-tab title="Criados por mim">
+			<ion-view title="Meus treinos">
+				<ion-content>
+					<ion-refresher pulling-text="Arraste para atualizar"
+			         pulling-icon="ion-ios7-arrow-thin-down"
+			         on-refresh="refresh()">
+					</ion-refresher>
+					
+					<div class="item item-input-inset stable-bg">
+					    <label class="item-input-wrapper">
+					    	<i class="icon ion-search placeholder-icon"></i>
+					    	<input type="text" placeholder="Pesquisar" ng-model="search.name">
+					    </label>
+					    <i class="icon ion-ios-close-outline padding-horizontal clear-search" ng-show="search.name" ng-click="search.name=''"></i>
+					</div>
+					
+					<div class="list">
+						<a href="#/app/training/show/{{myTraining.id}}" class="item" ng-repeat="myTraining in myTrainings | filter:search">
+							{{myTraining.name}}
+						    <p>
+						    	{{myTraining.coach.name}}
+						    </p>
+						</a>
+					</div>
+					
+					<div class="list list-inset" ng-hide="myFilteredTrainings.length || !myTrainingsLoaded">
+					    <div class="item text-center">
+							Você ainda não criou nenhum treino.
+							<a href="#/app/training/create" class="button button-block button-outline button-balanced">
+								Novo treino
+							</a>
+					    </div>
+					</div>
+				</ion-content>
+			</ion-view>
+		</ion-tab>
+	</ion-tabs>
+</ion-view>

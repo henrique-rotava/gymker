@@ -1,12 +1,34 @@
-angular.module('gymker.profilecontrollers', [])
+angular.module('profilecontrollers')
 
-.controller('ProfileController', ['$rootScope', '$scope', '$ionicPopover', 'AuthService', 'UserRepository', '$ionicLoading',
+.controller('EditProfileController', ['$rootScope', '$scope', '$ionicPopover', 'AuthService', 'UserRepository', '$ionicLoading',
                                   function($rootScope, $scope, $ionicPopover, AuthService, UserRepository, $ionicLoading){
 	
-	$scope.newImageSrc;
-	$scope.birthDateType = 'text';
-	$scope.formUser = angular.copy($rootScope.user);
+	var startUp = function(){
+		if($rootScope.user){
+			$scope.formUser = angular.copy($rootScope.user);
+		}else{
+			$rootScope.$watch('user', function(){
+				$scope.formUser = angular.copy($rootScope.user);
+			});
+		}
+		$scope.birthDateType = 'text';
+		$scope.newImageSrc;
+		$scope.inputPasswordType = 'password';
+		console.log($scope.formUser);
+	}
 	
+	$scope.$on('$ionicView.enter', function() {
+		startUp();
+	});
+	
+	$scope.togglePassword = function(){
+		if($scope.inputPasswordType == 'password'){
+			$scope.inputPasswordType = 'text';
+		}else{
+			$scope.inputPasswordType = 'password';
+		}
+	};
+
 	// workaround for input[type=date]
 	$scope.updateBirthDateType = function(type){
 		if(type){
@@ -16,7 +38,7 @@ angular.module('gymker.profilecontrollers', [])
 		}
 	}
 	
-	$ionicPopover.fromTemplateUrl('choose-pic-type.html', {
+	$ionicPopover.fromTemplateUrl('templates/profile/choose-pic-type.html', {
 	    scope: $scope
 	}).then(function(popover) {
 		$scope.popover = popover;
@@ -66,10 +88,10 @@ angular.module('gymker.profilecontrollers', [])
 				$ionicLoading.show({ 
 		            template: 'Perfil atualizado com sucesso!',
 		            noBackdrop: true,
-		            duration: 1000
+		            duration: 2000
 		        });
 				
-				$rootScope.user._rev = result.rev;
+				$rootScope.user = result;
 				$scope.formUser = angular.copy($rootScope.user);
 				
 			}else{
@@ -83,58 +105,6 @@ angular.module('gymker.profilecontrollers', [])
 		});
 	};
 	
-}])
-
-.controller('CoachController', ['$rootScope', '$scope', '$ionicModal', 'UserRepository', '$ionicLoading',
-                                function($rootScope, $scope, $ionicModal, UserRepository, $ionicLoading){
-
-	var athletesToAdd = {};
-	
-	$ionicModal.fromTemplateUrl('templates/profile/list-profiles.html', {
-		scope: $scope
-	}).then(function(modal) {
-		$scope.modal = modal;
-	});
-	
-	$scope.openInvite = function() {
-		$ionicLoading.show({
-	        template: 'Carregando...'
-	    });
-		UserRepository.getAll(function(err, result){
-			if(!err){
-				$scope.users = result;
-			}
-			$ionicLoading.hide();
-		});
-		$scope.modal.show();
-	};
-	
-	$scope.closeInvite = function() {
-		$scope.modal.hide();
-	};
-	
-	var addAthlete = function(user){
-		athletesToAdd[user.id] = user;
-	};
-	
-	var removeAthlete = function(user){
-		delete athletesToAdd[user.id];
-	}
-	
-	$scope.selectUser = function(user){
-		if(user.selected){
-			var userSelected = angular.copy(user);
-			delete userSelected.selected;
-			addAthlete(userSelected);
-		}else{
-			removeAthlete(user);
-		}
-	};
-	
-	$scope.sendInvites = function(){
-		UserRepository.saveAthletesRelationships($rootScope.user, athletesToAdd, function(error, result){
-			console.log(result);
-		});
-	};
+	startUp();
 	
 }]);

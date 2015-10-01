@@ -1,0 +1,33 @@
+<ion-view view-title="Treino" ng-controller="ShowTrainingController">
+
+	<ion-content>
+		<div class="card">
+			<div class="list">
+				<div class="item item-divider item-text-wrap">
+					<h2>{{::training.name}} <i class="icon ion-android-walk float-right"></i></h2>
+				</div>
+				<div class="item" ng-show="training.objective">
+					<b>Objetivo: </b>{{::training.objective}}</p>
+				</div>
+				<div class="item">
+					<b>Criado por: </b>{{::training.coach.name}}</p>
+				</div>
+				<div class="item" ng-show="{{training.frequency}}">
+					<b>Frequência: </b>{{::training.frequency}}</p>
+				</div>
+				<div class="item item-divider">
+					Dias
+				</div>
+				
+				<a ng-href="#/app/training/show/{{training.id}}/{{day.marker}}" class="item item-icon-right item-text-wrap" ng-repeat="day in ::training.days track by $index | orderBy:'marker'">
+					<b class="balanced">{{::day.marker}}</b>
+					<p>
+						{{::getDayExercicesMuscles(day)}}
+					</p>
+					<i class="icon ion-ios-arrow-right padding-left balanced"></i>
+				</a>
+			</div>
+		</div>
+	</ion-content>
+
+</ion-view>

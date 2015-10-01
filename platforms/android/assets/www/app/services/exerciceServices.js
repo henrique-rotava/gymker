@@ -16,7 +16,6 @@ angular.module('gymker.exerciceservices', [])
 	var getAll = function(callback){
 		DataBase.rel.find("exercice")
 		.then(function (result) {
-			console.log(result);
 			callback(false, result.exercices);
 		}).catch(function (err) {
 			callback(true, err);

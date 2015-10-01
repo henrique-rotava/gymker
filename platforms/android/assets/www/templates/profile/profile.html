@@ -1,0 +1,18 @@
+<ion-view view-title="Perfil">
+	<ion-content ng-controller="ProfileController">	
+		<div class="text-center padding pic-container">
+			<a class="button button-clear edit-profile-button" ng-href="#/app/profile/edit">
+				<i class="ion-edit"></i>
+			</a>
+			<div class="circle profile-pic"></div>
+			<br/>
+			<label class="stable profile-name">{{user.name}}</label>
+		</div>
+		
+		<div class="row">
+			<div class="col text-center">Frequência</div>
+			<div class="col text-center">Peso</div>
+			<div class="col text-center">Treinos</div>
+		</div>
+	</ion-content>
+</ion-view>

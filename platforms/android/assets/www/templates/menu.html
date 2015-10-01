@@ -5,50 +5,56 @@
 </style>
 
 <ion-side-menus enable-menu-with-back-views="false">
-  <ion-side-menu-content>
-    <ion-nav-bar class="bar-balanced">
-      <ion-nav-back-button>
-      </ion-nav-back-button>
+	<ion-side-menu-content>
+		<ion-nav-bar class="bar-balanced">
+			<ion-nav-back-button>
+			</ion-nav-back-button>
 
-      <ion-nav-buttons side="left">
-        <button class="button button-icon button-clear ion-navicon" menu-toggle="left">
-        </button>
-      </ion-nav-buttons>
-      <ion-nav-buttons side="right">
-        <button class="button button-icon button-clear ion-android-notifications-none">
-        </button>
-      </ion-nav-buttons>
-    </ion-nav-bar>
-    <ion-nav-view name="menuContent"></ion-nav-view>
+			<ion-nav-buttons side="left">
+				<button class="button button-icon button-clear ion-navicon" menu-toggle="left"></button>
+			</ion-nav-buttons>
+			<ion-nav-buttons side="right">
+				<a href="#/app/profile/notifications" class="button button-icon button-clear ion-android-notifications{{user.unreadNotifications.length ? '' : '-none'}}">
+					<span ng-show="user.unreadNotifications.length" class="notifications-count">{{user.unreadNotifications.length}}</span>
+				</a>
+			</ion-nav-buttons>
+		</ion-nav-bar>
+		<ion-nav-view name="menuContent"></ion-nav-view>
     
-  </ion-side-menu-content>
+	</ion-side-menu-content>
 
-  <ion-side-menu side="left">
-    <ion-content>
-	    <div class="menu-profile-container dark-bg" ng-controller="ProfileController">
-			<span class="circle profile-pic profile-pic-editing"></span>
-			<label class="stable">{{user.name}}</label>
-		</div>
-      <ion-list>
-      	<ion-item menu-close href="#/app/profile">
-          Perfil
-        </ion-item>
-        <ion-item menu-close ng-click="login()">
-          Login
-        </ion-item>
-        <ion-item menu-close href="#/app/exercices/create">
-          Novo exercício
-        </ion-item>
-        <ion-item menu-close href="#/app/exercices">
-          Exercícios
-        </ion-item>
-        <ion-item menu-close href="#/app/training/create-start">
-          Novo treino
-        </ion-item>
-        <ion-item menu-close href="#/app/profile/coach/athletes">
-          Meus alunos
-        </ion-item>
-      </ion-list>
-    </ion-content>
-  </ion-side-menu>
+	<ion-side-menu side="left">
+		<ion-content>
+		    <div class="menu-profile-container dark-bg" ng-controller="ProfileController">
+				<span class="circle profile-pic profile-pic-editing"></span>
+				<label class="stable">{{user.name}}</label>
+			</div>
+			<ion-list>
+		      	<ion-item menu-close href="#/app/profile">
+		          Perfil
+		        </ion-item>
+		        <ion-item menu-close ng-click="login()">
+		          Login
+		        </ion-item>
+		        <ion-item menu-close href="#/app/exercices/create">
+		          Novo exercício
+		        </ion-item>
+		        <ion-item menu-close href="#/app/exercices">
+		          Exercícios
+		        </ion-item>
+		        <ion-item menu-close href="#/app/training/list">
+		          Treinos
+		        </ion-item>
+		        <ion-item menu-close href="#/app/training/create">
+		          Novo treino
+		        </ion-item>
+		        <ion-item menu-close href="#/app/profile/athletes">
+		          Meus alunos
+		        </ion-item>
+		        <ion-item menu-close href="#/app/profile/coachs">
+		          Meus treinadores
+		        </ion-item>
+			</ion-list>
+		</ion-content>
+	</ion-side-menu>
 </ion-side-menus>

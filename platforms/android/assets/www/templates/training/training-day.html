@@ -1,0 +1,17 @@
+<ion-view view-title="{{training.name}} - {{day.marker}}" ng-controller="ShowTrainingController">
+
+	<ion-content>
+		<div class="card">
+			<div class="list">
+				<div class="item item-divider item-text-wrap">
+					<h2>{{::training.name}} - {{::day.marker}} <i class="icon ion-android-walk float-right"></i></h2>
+				</div>
+				<div class="item item-icon-right item-text-wrap" ng-repeat="trainingExercice in ::day.trainingExercices track by $index">
+					{{trainingExercice.exercice.name}}
+					{{trainingExercice.intensity}}
+				</div>
+			</div>
+		</div>
+	</ion-content>
+
+</ion-view>

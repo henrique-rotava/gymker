@@ -15,11 +15,14 @@
 		</div>
 		
 		<div class="list">
-			<div class="item item-toggle item-avatar item-toggle" ng-repeat="user in filteredUsers = (users | filter:search)">
+			<div class="item item-toggle item-avatar item-toggle" ng-repeat="user in filteredUsers = (users | filter:search:relatedUsersIDs)">
 				<img src="{{user.profilePic}}">
-				<h2>{{user.name}}</h2>
+				{{user.name}}
 				<p>{{user.email}}</p>
-				<label class="toggle toggle-balanced">
+				<span class="item-note" ng-if="relationUsersIDs[user.id]">
+					Adicionado
+				</span>
+				<label class="toggle toggle-balanced" ng-if="!relationUsersIDs[user.id]">
 					<input type="checkbox" ng-model="user.selected" ng-change="selectUser(user)">
 					<div class="track">
 						<div class="handle"></div>
@@ -37,9 +40,11 @@
 		
 	</ion-content>
 	
-	<div class="bar bar-footer bar-light">
-	 	<div class="title icon">
-			<button class="button button-balanced button-clear pull-right icon-left ion-ios-paperplane" ng-click="sendInvites()"></button>
+	<div class="bar bar-footer footer-buttons">
+ 		<div class="row">
+			<div class="col">
+				<button class="button button-balanced button-clear icon-left ion-ios-paperplane" ng-click="sendInvites()">Enviar convites</button>
+			</div>
 		</div>
 	</div>
 	

@@ -1,0 +1,29 @@
+<div class="item item-input-inset stable-bg">
+    <label class="item-input-wrapper">
+    	<i class="icon ion-search placeholder-icon"></i>
+    	<input type="text" placeholder="Pesquisar" ng-model="searchUser">
+    </label>
+    <i class="icon ion-ios-close-outline padding-horizontal clear-search" ng-show="searchUser" ng-click="searchUser=''"></i>
+</div>
+
+<div class="list">
+	<div class="editing-profile-container item item-divider item-text-wrap">
+		<p>Se deseja enviar o treino para um aluno selecione-o a seguir</p>
+	</div>
+	<div ng-click="selectUser(relation)" class="item item-avatar item-icon-right" 
+		ng-repeat="relation in filteredRelations = (relations | filter:searchUser.relation.name)" 
+		ng-if="relation.relatedConfirmed">
+		
+		<img src="{{relation.related.profilePic}}">
+		{{relation.related.name}}
+		<p>{{relation.related.email}}</p>
+		<i ng-show="relation.selected" class="icon ion-ios-checkmark-outline balanced"></i>
+	</div>
+</div>
+
+<div class="list list-inset" ng-hide="relations.length">
+    <div class="item text-center icon-left">
+    	<i class="icon ion-android-warning"></i>
+		Você ainda não possui alunos.
+    </div>
+</div>

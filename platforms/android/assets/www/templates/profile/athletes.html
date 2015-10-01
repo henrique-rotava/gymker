@@ -1,6 +1,5 @@
 <ion-view view-title="Meus alunos" ng-controller="CoachController">
 	<ion-content>
-	
 		<div class="item item-input-inset stable-bg item-button-right">
 		    <label class="item-input-wrapper">
 		    	<i class="icon ion-search placeholder-icon"></i>
@@ -8,12 +7,34 @@
 		    </label>
 		    <i class="icon ion-ios-close-outline padding-horizontal clear-search" ng-show="search" ng-click="search=''"></i>
 		</div>
-
+		
+		<div class="list">
+			<div class="item item-avatar item-icon-right" ng-repeat="relation in filteredRelations = (relations | filter:search)">
+				<img src="{{relation.related.profilePic}}">
+				{{relation.related.name}}
+				<p>{{relation.related.email}}</p>
+				<span ng-if="!relation.relatedConfirmed" class="item-note">
+					Não confirmado
+				</span>
+				<i class="icon ion-android-more-vertical"></i>
+			</div>
+		</div>
+		
+		<div class="list list-inset" ng-hide="relations.length || !athletesLoaded">
+		    <div class="item text-center icon-left">
+		    	<i class="icon ion-android-warning"></i>
+				Você ainda não possui alunos.
+		    </div>
+		</div>
+		
 	</ion-content>
 	
-	<div class="bar bar-footer bar-clear">
-	 	<div class="title icon">
-			<button class="button button-balanced button-clear pull-right icon-left ion-ios-personadd" ng-click="openInvite()"></button>
+	
+	<div class="bar bar-footer footer-buttons">
+ 		<div class="row">
+			<div class="col">
+				<button class="button button-balanced button-clear icon-left ion-ios-personadd" ng-click="openInvite()">Adicionar</button>
+			</div>
 		</div>
 	</div>
 	

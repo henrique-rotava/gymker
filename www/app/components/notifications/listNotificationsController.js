@@ -29,10 +29,11 @@ angular.module('notificationcontrollers')
 						$scope.readLoaded = true;
 					});
 				}
+				$scope.loaded = true;
+				$ionicLoading.hide();
+				$scope.$broadcast('scroll.refreshComplete');
 			});
 			
-			$scope.loaded = true;
-			$ionicLoading.hide();
 		}
 		
 		if($rootScope.user){

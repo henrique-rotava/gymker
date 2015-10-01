@@ -6,4 +6,10 @@
   	ng-click="selectTraining('{{letter}}')">{{letter}}</a>
   	
 </div>
-<ng-include ng-repeat="letter in letters" init="exercices = getExerciceDay(letter)" ng-if="wasSelected(letter)" ng-show="selectedTraining == letter" src="'templates/training/list-exercices.html'"></ng-include>
+<ng-include 
+	ng-repeat="letter in letters" 
+	init="exercices = getExerciceDay(letter)" 
+	ng-if="wasSelected(letter)" 
+	ng-show="selectedTraining == letter" 
+	src="'templates/training/create/list-exercices.html'">
+</ng-include>

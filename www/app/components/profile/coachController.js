@@ -3,8 +3,15 @@ angular.module('profilecontrollers')
 .controller('CoachController', ['$rootScope', '$scope', '$ionicModal', 'UserRepository', '$ionicLoading', 'NotificationRepository',
                                 function($rootScope, $scope, $ionicModal, UserRepository, $ionicLoading, NotificationRepository){
 
-	$scope.$on('$ionicView.enter', function() {
+	$scope.startUp = function(){
+		$ionicLoading.show({
+	        template: 'Carregando...'
+	    });
 		$scope.loadRelations();
+	};
+	
+	$scope.$on('$ionicView.enter', function() {
+		$scope.startUp();
 	});
 	
 	var relationPropName = 'related';
@@ -22,9 +29,6 @@ angular.module('profilecontrollers')
 	}
 	
 	$scope.loadRelations = function(){
-		$ionicLoading.show({
-	        template: 'Carregando...'
-	    });
 		$rootScope.$watch('user', function(){
 			if($rootScope.user){
 				UserRepository.getUserRelations($rootScope.user, 'athletes', function(err, result){
@@ -34,12 +38,15 @@ angular.module('profilecontrollers')
 						$scope.relationsLoaded = true;
 					}
 					$ionicLoading.hide();
+					$scope.$broadcast('scroll.refreshComplete');
 				});
 			}
 		});
 	}
 	
-	$scope.loadRelations();
+	$scope.refreshRelations = function(){
+		$scope.loadRelations();
+	}
 	
 	var usersToAdd = {};
 	

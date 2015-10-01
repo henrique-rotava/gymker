@@ -1,0 +1,25 @@
+<ion-view view-title="Novo treino" ng-controller="CreateTrainingController">
+
+	<ion-content>
+		<ion-slide-box show-pager="false">
+			<ion-slide>
+				<div ng-include src="'templates/training/create/create-step-start.html'"></div>
+			</ion-slide>
+			<ion-slide ng-if="user.isTeacher">
+				<div ng-include src="'templates/training/create/create-step-users.html'"></div>
+			</ion-slide>
+			<ion-slide>
+				<div ng-include src="'templates/training/create/create-step-exercices.html'"></div>
+			</ion-slide>
+			<ion-slide>
+				<div ng-include src="'templates/training/create/create-step-final.html'"></div>
+			</ion-slide>
+		</ion-slide-box>
+	</ion-content>
+	
+	<div class="bar bar-footer bar-light">
+		<button ng-show="hasPrevious()" class="button button-clear button-balanced icon-left ion-android-arrow-back"  ng-click="previousStep()"></button>
+		<button ng-show="hasNext()" class="button button-clear button-balanced icon-right ion-android-arrow-forward" ng-click="nextStep()"></button>
+	</div>
+	
+</ion-view>
