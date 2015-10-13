@@ -6,19 +6,19 @@
 				<ion-content>
 					<ion-refresher pulling-text="Arraste para atualizar"
 			         pulling-icon="ion-ios7-arrow-thin-down"
-			         on-refresh="refresh()">
+			         on-refresh="refreshTrainings()">
 					</ion-refresher>
 					
 					<div class="item item-input-inset stable-bg">
 					    <label class="item-input-wrapper">
 					    	<i class="icon ion-search placeholder-icon"></i>
-					    	<input type="text" placeholder="Pesquisar" ng-model="search.name">
+					    	<input type="text" placeholder="Pesquisar" ng-model="search">
 					    </label>
-					    <i class="icon ion-ios-close-outline padding-horizontal clear-search" ng-show="search.name" ng-click="search.name=''"></i>
+					    <i class="icon ion-ios-close-outline padding-horizontal clear-search" ng-show="search" ng-click="search=''"></i>
 					</div>
 					
 					<div class="list">
-						<a href="#/app/training/show/{{training.id}}" class="item" ng-repeat="training in trainings track by $index | filter:search | orderBy:'name'">
+						<a href="#/app/training/show/{{training.id}}" class="item" ng-repeat="training in trainings | filterByProperties:search:['name','coach.name'] track by $index">
 							{{training.name}}
 						    <p>
 						    	{{training.coach.name}}
@@ -42,19 +42,19 @@
 				<ion-content>
 					<ion-refresher pulling-text="Arraste para atualizar"
 			         pulling-icon="ion-ios7-arrow-thin-down"
-			         on-refresh="refresh()">
+			         on-refresh="refreshMyTrainings()">
 					</ion-refresher>
 					
 					<div class="item item-input-inset stable-bg">
 					    <label class="item-input-wrapper">
 					    	<i class="icon ion-search placeholder-icon"></i>
-					    	<input type="text" placeholder="Pesquisar" ng-model="search.name">
+					    	<input type="text" placeholder="Pesquisar" ng-model="search">
 					    </label>
-					    <i class="icon ion-ios-close-outline padding-horizontal clear-search" ng-show="search.name" ng-click="search.name=''"></i>
+					    <i class="icon ion-ios-close-outline padding-horizontal clear-search" ng-show="search" ng-click="search=''"></i>
 					</div>
 					
 					<div class="list">
-						<a href="#/app/training/show/{{myTraining.id}}" class="item" ng-repeat="myTraining in myTrainings | filter:search">
+						<a href="#/app/training/show/{{myTraining.id}}" class="item" ng-repeat="myTraining in myTrainings | filterByProperties:search:['name','coach.name'] track by $index">
 							{{myTraining.name}}
 						    <p>
 						    	{{myTraining.coach.name}}

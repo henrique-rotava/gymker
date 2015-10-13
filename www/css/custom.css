@@ -145,6 +145,7 @@ ion-popover-view.fit ion-content {
 	right:0px;
 	top:0px;
 	color:white;
+	background-color: rgba(0, 0, 0, 0.3);
 }
 
 .popup-exercice-intensity {
@@ -159,6 +160,10 @@ input[type=text].input-box {
 /* Training */
 .fake-tabs .button.selected {
 	border-bottom: solid 4px;
+}
+.training-timer{
+	font-size: 18px;
+    line-height: 34px;
 }
 
 /* /Training */

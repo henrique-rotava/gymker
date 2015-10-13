@@ -82,7 +82,7 @@ angular.module('gymker.trainingcontrollers')
 			title: exercice.name,
 			scope: $scope,
 			buttons: [
-	           { 
+	           {
 	        	   text: 'Depois' ,
 	        	   type: 'button-balanced button-clear'
 	           },

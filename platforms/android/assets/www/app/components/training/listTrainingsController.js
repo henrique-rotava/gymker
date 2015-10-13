@@ -7,36 +7,47 @@ angular.module('gymker.trainingcontrollers')
 	$scope.trainingsLoaded = false;
 	$scope.myTrainingsLoaded = false;
 	$scope.myTrainings = [];
-			
-	$scope.loadAthletes = function(){
+	
+	function loadTrainings(){
+		TrainingRepository.get($rootScope.user.trainings, function(err, result){
+			if(!err){
+				$scope.trainings = result;
+			}
+			$ionicLoading.hide();
+			$scope.trainingsLoaded = true;
+			$scope.$broadcast('scroll.refreshComplete');
+		});
+	}
+	
+	function loadMyTrainings(){
+		TrainingRepository.get($rootScope.user.authorTrainings, function(err, result){
+			if(!err){
+				$scope.myTrainings = result;
+			}
+			$scope.myTrainingsLoaded = true;
+			$scope.$broadcast('scroll.refreshComplete');
+		});
+	}
+	
+	$scope.loadTrainings = function(){
 		$ionicLoading.show({
 	        template: 'Carregando...'
 	    });
 		$rootScope.$watch('user', function(){
 			if($rootScope.user){
-				TrainingRepository.get($rootScope.user.trainings, function(err, result){
-					if(!err){
-						$scope.trainings = result;
-					}
-					$ionicLoading.hide();
-					$scope.trainingsLoaded = true;
-				});
-				TrainingRepository.get($rootScope.user.authorTrainings, function(err, result){
-					if(!err){
-						$scope.myTrainings = result;
-					}
-					$scope.myTrainingsLoaded = true;
-				});
+				loadTrainings();
+				loadMyTrainings();
 			}
 		});
 	}
 	
-	$scope.loadAthletes();
-	$scope.search = '';
-	$scope.searchFilter = function (objt) {
-		console.log($scope.search);
-        var re = new RegExp($scope.search, 'i');
-        return !$scope.search || re.test(obj.name);
-    };
+	$scope.loadTrainings();
 	
+	$scope.refreshTrainings = function(){
+		loadTrainings();
+	};
+	
+	$scope.refreshMyTrainings = function(){
+		loadMyTrainings();
+	};
 }])

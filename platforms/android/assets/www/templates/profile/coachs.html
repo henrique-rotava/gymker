@@ -1,5 +1,12 @@
 <ion-view view-title="Meus treinadores" ng-controller="AthleteController">
 	<ion-content>
+	
+		<ion-refresher pulling-text="Arraste para atualizar"
+	         pulling-icon="ion-ios7-arrow-thin-down"
+	         on-refresh="refreshRelations()">
+		</ion-refresher>
+		
+		
 		<div class="item item-input-inset stable-bg item-button-right">
 		    <label class="item-input-wrapper">
 		    	<i class="icon ion-search placeholder-icon"></i>

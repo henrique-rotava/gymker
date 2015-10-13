@@ -1,4 +1,4 @@
-<ion-view view-title="{{training.name}} - {{day.marker}}" ng-controller="ShowTrainingController">
+<ion-view view-title="{{::training.name}} - {{::day.marker}}" ng-controller="ShowTrainingController">
 
 	<ion-content>
 		<div class="card">
@@ -6,12 +6,36 @@
 				<div class="item item-divider item-text-wrap">
 					<h2>{{::training.name}} - {{::day.marker}} <i class="icon ion-android-walk float-right"></i></h2>
 				</div>
-				<div class="item item-icon-right item-text-wrap" ng-repeat="trainingExercice in ::day.trainingExercices track by $index">
-					{{trainingExercice.exercice.name}}
-					{{trainingExercice.intensity}}
-				</div>
+				<a class="item item-icon-right item-text-wrap item-thumbnail-left item-icon-left" ng-repeat="trainingExercice in ::day.trainingExercices track by $index">
+					<img src="{{training.image}}"/>
+					<h2>{{::trainingExercice.exercice.name}}</h2>
+					<p>
+						<span>{{trainingExercice.intensity.series || 0}} Séries</span>
+				    	<span>{{trainingExercice.intensity.repetitions || 0}} Repet.</span>
+				    	<span>{{trainingExercice.intensity.weight || 0}} Kg</span>
+					</p>
+					<i ng-click="checkExercice(trainingExercice)" class="icon {{trainingExercice.done ? 'ion-ios-checkmark-outline' : 'ion-ios-circle-outline'}} balanced"></i>
+				</a>
 			</div>
 		</div>
 	</ion-content>
+	
+	<div class="bar bar-footer footer-buttons">
+ 		<div class="row">
+ 			<div class="col training-timer balanced">
+				{{completePercent | number:0}} %
+			</div>
+			<div class="col training-timer balanced">
+				{{timer.hours}}:{{timer.minutes}}:{{timer.seconds}}
+			</div>
+			<div class="col" ng-show="!training.running">
+				<button class="button button-balanced button-clear icon-right ion-play" ng-click="startTraining(training)"></button>
+			</div>
+			<div class="col" ng-show="training.running">
+				<button class="button button-balanced button-clear icon-right ion-stop" ng-click="stopTraining(training)"></button>
+			</div>
+			
+		</div>
+	</div>
 
 </ion-view>

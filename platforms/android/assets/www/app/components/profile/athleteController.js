@@ -4,8 +4,15 @@ angular.module('profilecontrollers')
                                 function($rootScope, $scope, $ionicModal, UserRepository, $ionicLoading, NotificationRepository){
 
 	$scope.$on('$ionicView.enter', function() {
-		$scope.loadRelations();
+		$scope.startUp();
 	});
+	
+	$scope.startUp = function(){
+		$ionicLoading.show({
+	        template: 'Carregando...'
+	    });
+		$scope.loadRelations();
+	};
 	
 	var relationPropName = 'relater';
 	$scope.relationUsersIDs = {};
@@ -22,25 +29,24 @@ angular.module('profilecontrollers')
 	}
 	
 	$scope.loadRelations = function(){
-		$ionicLoading.show({
-	        template: 'Carregando...'
-	    });
 		$rootScope.$watch('user', function(){
 			if($rootScope.user){
 				UserRepository.getUserRelations($rootScope.user, 'coachs', function(err, result){
-					console.log(result);
 					if(!err){
 						$scope.relations = result;
 						setRelationIDs();
 						$scope.relationsLoaded = true;
 					}
 					$ionicLoading.hide();
+					$scope.$broadcast('scroll.refreshComplete');
 				});
 			}
 		});
 	}
 	
-	$scope.loadRelations();
+	$scope.refreshRelations = function(){
+		$scope.loadRelations();
+	};
 	
 	var usersToAdd = {};
 	
