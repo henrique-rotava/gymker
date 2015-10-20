@@ -15,7 +15,7 @@
 		</div>
 		
 		<div class="list">
-			<div class="item item-toggle item-avatar item-toggle" ng-repeat="user in filteredUsers = (users | filter:search:relatedUsersIDs)">
+			<div class="item item-toggle item-avatar item-toggle" ng-repeat="user in users | filterByProperties:search:['name'] track by $index">
 				<img src="{{user.profilePic}}">
 				{{user.name}}
 				<p>{{user.email}}</p>

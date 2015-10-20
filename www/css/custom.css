@@ -5,6 +5,15 @@
 .float-left{
 	float: left;
 }
+.text-center{
+	text-align:center;
+}
+.text-left{
+	text-align:left;
+}
+.text-right{
+	text-align:right;
+}
 ion-content{
 	background-color: #E9EAED;
 }
@@ -146,6 +155,7 @@ ion-popover-view.fit ion-content {
 	top:0px;
 	color:white;
 	background-color: rgba(0, 0, 0, 0.3);
+	border-radius: 0px 0px 0px 100%;
 }
 
 .popup-exercice-intensity {
@@ -181,5 +191,15 @@ input[type=text].input-box {
 }
 .bar-footer.footer-buttons .row .col{
 	text-align: center;
+}
+.item-progress:after{
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    content: " ";
+    display: block;
+    background: #27ae60;
+    height: 3px;
+    transition: width 200ms ease-in-out;
 }
 /**/

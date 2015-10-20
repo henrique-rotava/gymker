@@ -1,0 +1,49 @@
+<ion-view view-title="{{::training.name}} - {{::executingDay.marker}}" ng-controller="ExecuteTrainingController">
+	<style>
+	 .item-progress:after{
+	    width: {{completePercent}}%;
+	 }
+	</style>
+	<ion-content>
+		<div class="card" ng-show="executingDay">
+			<div class="list">
+				<div class="item item-divider item-text-wrap item-progress">
+					<h2>{{::training.name}} - {{::executingDay.marker}}</h2>
+					<p>
+						{{::getDayExercicesMuscles(executingDay)}}
+						<span class="item-note balanced">{{timer.hours}}:{{timer.minutes}}:{{timer.seconds}}</span>
+					</p>
+					
+				</div>
+				<a class="item item-icon-right item-text-wrap item-thumbnail-left item-icon-left" ng-repeat="trainingExercice in ::executingDay.trainingExercices track by $index">
+					<img src="{{training.image}}"/>
+					<h2>{{::trainingExercice.exercice.name}}</h2>
+					<p>
+						<span>{{trainingExercice.intensity.series || 0}} Séries</span>
+				    	<span>{{trainingExercice.intensity.repetitions || 0}} Repet.</span>
+				    	<span>{{trainingExercice.intensity.weight || 0}} Kg</span>
+					</p>
+					<i ng-click="checkExercice(trainingExercice)" class="icon {{trainingExercice.done ? 'ion-ios-checkmark-outline' : 'ion-ios-circle-outline'}} balanced"></i>
+				</a>
+			</div>
+		</div>
+	</ion-content>
+	
+	<div class="bar bar-footer footer-buttons">
+ 		<div class="row">
+			<div class="col" ng-show="!executingDay.running">
+				<button class="button button-balanced button-clear" ng-click="startExecution()">{{executingDay.started ? 'Retomar' : 'Iniciar'}}</button>
+			</div>
+			<div class="col" ng-show="executingDay.running">
+				<button class="button button-balanced button-clear" ng-click="stopExecution()">Parar</button>
+			</div>
+			<div class="col" ng-show="executingDay.running || executingDay.started">
+				<button class="button button-balanced button-clear" ng-click="saveExecution()">Salvar execução</button>
+			</div>
+			<div class="col" ng-show="executingDay.running || executingDay.started">
+				<button class="button button-balanced button-clear" ng-click="discardExecution()">Descartar</button>
+			</div>
+		</div>
+	</div>
+
+</ion-view>

@@ -111,17 +111,22 @@ angular.module('gymker.trainingservices', [])
 	};
 	
 	var saveDays = function(days, callback){
-		console.log('days to save', days);
+		console.log('days to save', angular.copy(days));
 		
 		var daysPromisses = [];
 		function addDayToSave(trainingDay){
 			console.log('adding training day to be saved', trainingDay);
-			daysPromisses.push(DataBase.rel.save('trainingDay', day));
+			daysPromisses.push(trainingDay);
 			
 			if(daysPromisses.length == days.length){
 				console.log('time to save training days');
+				
+				for(var index = 0; index < daysPromisses.length; index++){
+					daysPromisses[index] = DataBase.rel.save('trainingDay', daysPromisses[index]);
+				}
 				Promise.all(daysPromisses)
 				.then(function(results){
+					
 					var trainingDays = [];
 					for(var index = 0; index < results.length; index++){
 						var trainingDay = results[index].trainingDays[0];
@@ -140,8 +145,9 @@ angular.module('gymker.trainingservices', [])
 		var error = false;
 		for(var index = 0; index < days.length && !error; index++){
 			var day = days[index];
+			console.log('save exercices of day', day);
 			var trainingExercices = convertExercicesToTrainingExercices(day.trainingExercices);
-			saveExercices(trainingExercices, function(error, result){
+			saveExercices(trainingExercices, day, function(error, result, day){
 				if(!error){
 					day.trainingExercices = result;
 					addDayToSave(day);
@@ -155,7 +161,7 @@ angular.module('gymker.trainingservices', [])
 		
 	};
 	
-	var saveExercices = function(exercices, callback){
+	var saveExercices = function(exercices, day, callback){
 		console.log("exercices to save", exercices);
 		var exercicesPromises = [];
 		for(var index = 0; index < exercices.length; index++){
@@ -171,7 +177,7 @@ angular.module('gymker.trainingservices', [])
 				trainingExercices.push(trainingExercice);
 			}
 			console.log("saved training exercices", trainingExercices);
-			callback(false, trainingExercices);
+			callback(false, trainingExercices, day);
 		}).catch(function(error){
 			console.error('error saving training exercices', error);
 			callback(true, error);
@@ -201,9 +207,39 @@ angular.module('gymker.trainingservices', [])
 		});
 	};
 	
+	var createExecutionTrainingDay = function(trainingDay, training, callback){
+		var execution = angular.copy(trainingDay);
+		delete execution.id;
+		delete execution.rev;
+		
+		execution.training = training;
+		var executionID;
+		DataBase.rel.save('execution', execution)
+		.then(function(result){
+			executionID = result.executions[0].id;
+			return DataBase.rel.find('execution',  executionID);
+		}).then(function(result){
+			var executionDB = DataBase.parseResponse('execution', executionID, result);
+			callback(false, executionDB);
+		}).catch(function(error){
+			callback(true, error);
+		});
+	};
+	
+	var deleteExecutionTrainingDay = function(execution, callback){
+		DataBase.rel.del('execution', execution)
+		.then(function(result){
+			callback(false, result);
+		}).catch(function(error){
+			callback(true, error);
+		});
+	};
+	
 	return {
 		save: save,
-		get: get
+		get: get,
+		createExecutionTrainingDay: createExecutionTrainingDay,
+		deleteExecutionTrainingDay: deleteExecutionTrainingDay
 	};
 	
 }]);

@@ -15,7 +15,7 @@
 		</div>
 		
 		<div class="list">
-			<div class="item item-avatar item-icon-right" ng-repeat="relation in filteredRelations = (relations | filter:search)">
+			<div class="item item-avatar item-icon-right" ng-repeat="relation in relations | filterByProperties:search:['related.name'] track by $index">
 				<img src="{{relation.related.profilePic}}">
 				{{relation.related.name}}
 				<p>{{relation.related.email}}</p>

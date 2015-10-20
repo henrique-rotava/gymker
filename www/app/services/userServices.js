@@ -230,6 +230,31 @@ angular.module('gymker.userservices', [])
 			callback(true, err);
 		});
 	};
+	
+	var login = function(username, password, callback){
+		DataBase.query(function(doc, emit){
+			if(doc._id.startsWith('user')){
+				emit(doc.data.email + doc.data.password);
+				emit(doc.data.phone + doc.data.password);
+			}
+		}, {
+			key: username + password
+		}).then(function(result){
+			var users = result.rows;
+			if(users && users.length == 1){
+				var found = users[0];
+				console.log('user found', found);
+				var userID = found.id.split('_')[2]
+				console.log('User ID', userID);
+				get(userID, callback);
+			} else {
+				console.log('user was not found');
+				callback(true, {code: '404'});
+			}
+		}).catch(function (err) {
+			callback(true, err);
+		});
+	};
 
 	return {
 		save: save,
@@ -240,7 +265,8 @@ angular.module('gymker.userservices', [])
 		saveCoachsRelationships: saveCoachsRelationships,
 		getUserRelations: getUserRelations,
 		acceptRelationship: acceptRelationship,
-		rejectRelationship: rejectRelationship
+		rejectRelationship: rejectRelationship,
+		login: login
 	};
 
 }]);

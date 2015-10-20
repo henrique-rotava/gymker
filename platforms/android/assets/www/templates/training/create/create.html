@@ -17,9 +17,15 @@
 		</ion-slide-box>
 	</ion-content>
 	
-	<div class="bar bar-footer bar-light">
-		<button ng-show="hasPrevious()" class="button button-clear button-balanced icon-left ion-android-arrow-back"  ng-click="previousStep()"></button>
-		<button ng-show="hasNext()" class="button button-clear button-balanced icon-right ion-android-arrow-forward" ng-click="nextStep()"></button>
+	<div class="bar bar-footer footer-buttons">
+ 		<div class="row">
+			<div class="col">
+				<button ng-show="hasPrevious()" class="button button-balanced button-clear icon-left ion-ios-arrow-back" ng-click="previousStep()">Voltar</button>
+			</div>
+			<div class="col">
+				<button ng-show="hasNext()" class="button button-clear button-balanced icon-right ion-ios-arrow-forward" ng-click="nextStep()">Avançar</button>
+			</div>
+		</div>
 	</div>
 	
 </ion-view>

@@ -90,6 +90,13 @@ angular.module('gymker.database', [])
 	    	relations: {
 	    		'sender': {belongsTo: 'user'}
 	    	}
+	    },
+	    {
+	    	singular: 'execution',
+	    	plural: 'executions',
+	    	relations: {
+	    		'training': {belongsTo: 'training'}
+	    	}
 	    }
 	];
 	
@@ -190,7 +197,7 @@ angular.module('gymker.database', [])
 	var parseResponse = function(type, id, results){
 		var parsedResults = parseResults(results);
 		var control = {};
-		
+		console.log(type, id, results);
 		return recursiveParseResponse(type, id, parsedResults, schema, control);
 	};
 	
@@ -235,7 +242,8 @@ angular.module('gymker.database', [])
 		overrideRelationFunction('del');
 	};
 	
-	var dataBase = localDB;
+	// TODO revoke global access
+	dataBase = localDB;
 	dataBase.startUp = startUp;
 	dataBase.parseResponse = parseResponse;
 	dataBase.removeReferenceIDs = removeReferenceIDs;

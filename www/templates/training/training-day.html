@@ -14,7 +14,6 @@
 				    	<span>{{trainingExercice.intensity.repetitions || 0}} Repet.</span>
 				    	<span>{{trainingExercice.intensity.weight || 0}} Kg</span>
 					</p>
-					<i ng-click="checkExercice(trainingExercice)" class="icon {{trainingExercice.done ? 'ion-ios-checkmark-outline' : 'ion-ios-circle-outline'}} balanced"></i>
 				</a>
 			</div>
 		</div>
@@ -22,19 +21,9 @@
 	
 	<div class="bar bar-footer footer-buttons">
  		<div class="row">
- 			<div class="col training-timer balanced">
-				{{completePercent | number:0}} %
+ 			<div class="col">
+				<a class="button button-balanced button-clear" ng-href="#/app/training/execute/{{::training.id}}/{{::day.marker}}">Executar</a>
 			</div>
-			<div class="col training-timer balanced">
-				{{timer.hours}}:{{timer.minutes}}:{{timer.seconds}}
-			</div>
-			<div class="col" ng-show="!training.running">
-				<button class="button button-balanced button-clear icon-right ion-play" ng-click="startTraining(training)"></button>
-			</div>
-			<div class="col" ng-show="training.running">
-				<button class="button button-balanced button-clear icon-right ion-stop" ng-click="stopTraining(training)"></button>
-			</div>
-			
 		</div>
 	</div>
 

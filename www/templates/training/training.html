@@ -19,7 +19,7 @@
 					Dias
 				</div>
 				
-				<a ng-href="#/app/training/show/{{training.id}}/{{day.marker}}" class="item item-icon-right item-text-wrap" ng-repeat="day in ::training.days track by $index | orderBy:'marker'">
+				<a ng-href="#/app/training/show/{{training.id}}/{{day.marker}}" class="item item-icon-right item-text-wrap" ng-repeat="day in training.days track by $index | orderBy:'marker'">
 					<b class="balanced">{{::day.marker}}</b>
 					<p>
 						{{::getDayExercicesMuscles(day)}}

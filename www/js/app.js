@@ -1,7 +1,6 @@
 var app = angular.module('gymker', 
 		[
 		 'ionic', 
-		 'starter.controllers', 
 		 'exercicecontrollers', 
 		 'profilecontrollers',
 		 'gymker.authenticationServices',
@@ -20,12 +19,16 @@ var app = angular.module('gymker',
     		StatusBar.styleDefault();
 		}
 	});
+	
+	updateSessionUser = function(user){
+		$rootScope.user = user;
+	}
 
 	DataBase.startUp();
 	
 	AuthService.getUser(function(error, result){
 		if(!error){
-			$rootScope.user = result;
+			updateSessionUser(result);
 		}
 	});
 	

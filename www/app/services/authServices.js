@@ -14,10 +14,11 @@ angular.module('gymker.authenticationServices', ['gymker.userservices'])
 	
 	var populateSession = function(user){
 		user = user;
+		updateSessionUser(user);
 		window.localStorage.setItem('uid', user.id);
 	};
 	
-	var destroySession = function(user){
+	var destroySession = function(){
 		user = undefined;
 		window.localStorage.removeItem('uid');
 	};
@@ -56,7 +57,8 @@ angular.module('gymker.authenticationServices', ['gymker.userservices'])
 	
 	return {
 		getUser: getUser,
-		isAuthenticated: isAuthenticated
+		isAuthenticated: isAuthenticated,
+		populateSession: populateSession
 	};
 	
 	
