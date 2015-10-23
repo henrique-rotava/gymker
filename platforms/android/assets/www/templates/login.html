@@ -1,25 +1,47 @@
 <ion-modal-view>
-  <ion-header-bar>
-    <h1 class="title">Login</h1>
-    <div class="buttons">
-      <button class="button button-clear" ng-click="closeLogin()">Close</button>
-    </div>
-  </ion-header-bar>
-  <ion-content>
-    <form ng-submit="doLogin()">
-      <div class="list">
-        <label class="item item-input">
-          <span class="input-label">Username</span>
-          <input type="text" ng-model="loginData.username">
-        </label>
-        <label class="item item-input">
-          <span class="input-label">Password</span>
-          <input type="password" ng-model="loginData.password">
-        </label>
-        <label class="item">
-          <button class="button button-block button-positive" type="submit">Log in</button>
-        </label>
-      </div>
-    </form>
-  </ion-content>
+	<ion-header-bar>
+		<h1 class="title balanced">Login</h1>
+		<div class="buttons">
+			<button class="button button-clear icon ion-ios-close-empty" ng-click="closeLogin()"></button>
+		</div>
+	</ion-header-bar>
+	<ion-content>
+		<div class="card">
+			<form ng-submit="doLogin()">
+				<div class="list list-inset">
+					<label class="item item-input item-floating-label">
+						<span class="input-label">Email ou telefone</span>
+						<input type="text" placeholder="Email ou telefone" ng-model="loginData.username">
+					</label>
+					<label class="item item-input item-floating-label">
+						<span class="input-label">Senha</span>
+						<input type="password" placeholder="Senha" ng-model="loginData.password">
+					</label>
+					<label class="item">
+						<button class="button button-block button-balanced" type="submit">Login</button>
+					</label>
+					<a href="#/app/profile/edit" ng-click="closeLogin()" class="item balanced">
+						Criar uma conta
+					</a>
+				</div>
+			</form>
+		
+		
+			<form ng-submit="doLogin()" ng-hide="true">
+				<div class="list">
+					<label class="item item-input">
+						<span class="input-label">Username</span>
+						<input type="text" ng-model="loginData.username">
+					</label>
+					<label class="item item-input">
+						<span class="input-label">Password</span>
+						<input type="password" ng-model="loginData.password">
+					</label>
+					<label class="item">
+						<button class="button button-block button-positive" type="submit">Log in</button>
+					</label>
+				</div>
+			</form>
+		</div>
+	</ion-content>
 </ion-modal-view>

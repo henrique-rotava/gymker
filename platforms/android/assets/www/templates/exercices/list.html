@@ -15,19 +15,19 @@
 		    <i class="icon ion-ios-close-outline padding-horizontal clear-search" ng-show="search" ng-click="search=''"></i>
 		</div>
 
-		<div class="card" ng-repeat="exercice in filteredExercices = (exercices | filter:search)">
+		<div class="card" ng-repeat="exercice in exercices | filterByProperties:search:['related.name'] track by $index">
 			<div class="item item-icon-right">
 				
-				{{exercice.doc.name}}
+				{{exercice.name}}
 				<span class="item-note">
-					{{exercice.doc.muscle}}
+					{{exercice.muscle}}
 				</span>
 				<i ng-click="showActions($index)" class="icon ion-android-more-vertical"></i>
 				
 			</div>
 		</div>
 
-		<div class="list list-inset" ng-hide="filteredExercices.length">
+		<div class="list list-inset" ng-hide="!exercices || exercices.length">
 
 		    <div class="item text-center">
 		      Sua busca não retornou resultados

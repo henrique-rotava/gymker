@@ -10,16 +10,10 @@
 				<div class="item item-divider item-text-wrap item-progress">
 					<h2>{{::executingDay.training.name}} - {{::executingDay.marker}}</h2>
 					<p>
-						<div class="row no-padding">
-							<div class="col no-padding">
-								{{::getDayExercicesMuscles(executingDay)}}
-							</div>
-							<div class="col no-padding text-right">
-								<span class="balanced">
-									{{ (executingDay.startDate || now) | date : 'dd/MM/yy HH:mm'}}<br/>{{timer.hours}}:{{timer.minutes}}:{{timer.seconds}}
-								</span>
-							</div>
-						</div>
+						{{::getDayExercicesMuscles(executingDay)}}
+						<span class="item-note balanced">
+							{{ (executingDay.startDate || now) | date : 'dd/MM/yy HH:mm:ss'}} - {{timer.hours}}:{{timer.minutes}}:{{timer.seconds}}
+						</span>
 					</p>
 					
 				</div>

@@ -14,10 +14,11 @@ angular.module('gymker.authenticationServices', ['gymker.userservices'])
 	
 	var populateSession = function(user){
 		user = user;
+		updateSessionUser(user);
 		window.localStorage.setItem('uid', user.id);
 	};
 	
-	var destroySession = function(user){
+	var destroySession = function(){
 		user = undefined;
 		window.localStorage.removeItem('uid');
 	};
@@ -29,11 +30,19 @@ angular.module('gymker.authenticationServices', ['gymker.userservices'])
 			if(uid){
 				console.log('user id found in localStorage');
 				UserRepository.get(uid, function(error, result){
-					if(!error){
+					if(!error && result.id){
 						console.log('user found in database');
 						populateSession(result);
+						callback(error, result);
+					}else{
+						UserRepository.create(function(error, result){
+							if(!error){
+								console.log('user created in database');
+								populateSession(result);
+							}
+							callback(error, result);
+						});
 					}
-					callback(error, result);
 				});
 				
 			}else{
@@ -56,7 +65,8 @@ angular.module('gymker.authenticationServices', ['gymker.userservices'])
 	
 	return {
 		getUser: getUser,
-		isAuthenticated: isAuthenticated
+		isAuthenticated: isAuthenticated,
+		populateSession: populateSession
 	};
 	
 	

@@ -1,10 +1,10 @@
 <ion-view view-title="{{::training.name}} - {{::day.marker}}" ng-controller="ShowTrainingController">
 
 	<ion-content>
-		<div class="card">
+		<div class="card" ng-show="day">
 			<div class="list">
-				<div class="item item-divider item-text-wrap">
-					<h2>{{::training.name}} - {{::day.marker}} <i class="icon ion-android-walk float-right"></i></h2>
+				<div class="item item-text-wrap">
+					<h2><b>{{::training.name}} - {{::day.marker}}</b></h2>
 				</div>
 				<a class="item item-icon-right item-text-wrap item-thumbnail-left item-icon-left" ng-repeat="trainingExercice in ::day.trainingExercices track by $index">
 					<img src="{{training.image}}"/>
@@ -22,7 +22,7 @@
 	<div class="bar bar-footer footer-buttons">
  		<div class="row">
  			<div class="col">
-				<a class="button button-balanced button-clear" ng-href="#/app/training/execute/{{::training.id}}/{{::day.marker}}">Executar</a>
+				<a class="button button-balanced button-clear" ng-click="createExecutionTraining(training)" ng-href="#/app/training/execute/{{::training.id}}/{{::day.marker}}">Executar treino</a>
 			</div>
 		</div>
 	</div>

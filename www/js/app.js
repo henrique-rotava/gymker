@@ -57,8 +57,28 @@ app.filter('filterByProperties', function () {
     
 });
 
+/* Global functions */
 Object.resolve = function(path, obj, safe) {
 	return path.split('.').reduce(function(prev, curr) {
 		return !safe ? prev[curr] : (prev ? prev[curr] : undefined)
 	}, obj || self)
+};
+
+window.getTimeDiff = function(startTime, endDate){
+	
+	function formatTime(decimal){
+		return decimal < 10 ? '0' + decimal : decimal;
+	};
+	
+	var t =  Date.parse(endDate || new Date()) - Date.parse(startTime);
+	var seconds = formatTime(Math.floor( (t/1000) % 60 ));
+	var minutes = formatTime(Math.floor( (t/1000/60) % 60 ));
+	var hours = formatTime(Math.floor( (t/(1000*60*60)) % 24 ));
+	
+	return {
+		'hours': hours,
+		'minutes': minutes,
+		'seconds': seconds,
+		'time': hours + ':' + minutes + ':' + seconds
+	};
 }

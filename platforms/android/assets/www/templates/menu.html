@@ -25,7 +25,7 @@
 
 	<ion-side-menu side="left">
 		<ion-content>
-		    <div class="menu-profile-container dark-bg" ng-controller="ProfileController">
+		    <div class="menu-profile-container dark-bg">
 				<span class="circle profile-pic profile-pic-editing"></span>
 				<label class="stable">{{user.name}}</label>
 			</div>
@@ -33,7 +33,7 @@
 		      	<ion-item menu-close href="#/app/profile">
 		          Perfil
 		        </ion-item>
-		        <ion-item menu-close ng-click="login()">
+		        <ion-item menu-close ng-click="login()" ng-controller="AuthController">
 		          Login
 		        </ion-item>
 		        <ion-item menu-close href="#/app/exercices/create">

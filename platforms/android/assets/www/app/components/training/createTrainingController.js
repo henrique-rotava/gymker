@@ -194,6 +194,7 @@ angular.module('gymker.trainingcontrollers')
 		$scope.training.createdDate = new Date();
 		
 		TrainingRepository.save($scope.training, function(error, result){
+			
 			if(!error){
 				
 				$rootScope.user = result;
@@ -211,8 +212,6 @@ angular.module('gymker.trainingcontrollers')
 						notificationType: 'training'
 					};
 					
-					console.log($scope.training);
-					
 					NotificationRepository.save(coachId, athleteId, notification, function(error, result){
 						if(!error){
 							$rootScope.user = result;
@@ -224,7 +223,6 @@ angular.module('gymker.trainingcontrollers')
 				} else {
 					showSuccessMessage();
 				}
-				
 			} else {
 				showFailureMessage();
 			}
@@ -246,6 +244,10 @@ angular.module('gymker.trainingcontrollers')
 		};
 		
 	};
+	
+	$scope.sendTraining = function(){
+		return !($scope.training.coach.id == $scope.training.athlete.id);
+	}
 	
 	startUp();
 	

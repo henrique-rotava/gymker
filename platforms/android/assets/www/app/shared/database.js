@@ -2,33 +2,20 @@ angular.module('gymker.database', [])
 
 .factory('DataBase', [function(){
 	
-	var localDB = new PouchDB("gymker");
-	var remoteDB = new PouchDB("https://gymker.iriscouch.com/gymker-test");
+	var localDB = new PouchDB("gymker", {adapter: 'websql'});
+//	var remoteDB = new PouchDB("https://gymker.iriscouch.com/gymker-test");
+	var remoteDB = new PouchDB("http://gymker.smileupps.com/gymker");
+	
 
 	var sync = function(){
 		localDB.sync(remoteDB, {live: true, retry: true});
 	}
 	
-	var install = function(){
+	var install = function(db){
 		localDB.get('_design/index').catch(function(error){
 			if(error.status == '404'){
 				
-				var ddoc = {
-				  _id: "_design/index",
-				  views: {
-				    by_type: {
-				      map: function (doc) { 
-				      	emit(doc.type); 
-				      }.toString()
-				    }
-				  }
-				};
 				
-				localDB.put(ddoc).then(function () {
-				  //console.log("index saved");
-				}).catch(function (err) {
-				  //console.log("error saving the index", err);
-				});
 		
 			}
 		});
@@ -89,6 +76,14 @@ angular.module('gymker.database', [])
 	    	plural: 'notifications',
 	    	relations: {
 	    		'sender': {belongsTo: 'user'}
+	    	}
+	    },
+	    {
+	    	singular: 'execution',
+	    	plural: 'executions',
+	    	relations: {
+	    		'training': {belongsTo: 'training'},
+	    		'athlete': {belongsTo: {type: 'user', options: {async: true}}}
 	    	}
 	    }
 	];
@@ -190,13 +185,12 @@ angular.module('gymker.database', [])
 	var parseResponse = function(type, id, results){
 		var parsedResults = parseResults(results);
 		var control = {};
-		
 		return recursiveParseResponse(type, id, parsedResults, schema, control);
 	};
 	
 	var removeReferenceIDs = function(type, document){
 		var relations = schema[type].relations;
-		if(relations){
+		if(relations && document){
 			var propertyNames = Object.keys(relations);
 			for(var index = 0; index < propertyNames.length; index++){
 				var propertyName = propertyNames[index];
@@ -235,12 +229,57 @@ angular.module('gymker.database', [])
 		overrideRelationFunction('del');
 	};
 	
-	var dataBase = localDB;
+	// TODO revoke global access
+	dataBase = localDB;
 	dataBase.startUp = startUp;
 	dataBase.parseResponse = parseResponse;
 	dataBase.removeReferenceIDs = removeReferenceIDs;
 	
+	dataBase.on('error', function (err) { console.log(err); });
 	
 	return dataBase;
 	
 }]);
+
+var installViews = function(db){
+	var ddoc = {
+		_id: '_design/my_index',
+		views: {
+			by_type: {
+				map: function (doc) { 
+					emit(doc.type); 
+				}.toString()
+			},
+			executionsByAthlete: {
+				map: function (doc) { 
+					if(doc._id.indexOf('execution') == 0){
+						emit(doc.data.athlete);
+					}
+				}.toString()
+			},
+			executionsByTraining: {
+				map: function (doc) { 
+					if(doc._id.indexOf('execution') == 0){
+						emit(doc.data.training);
+					}
+				}.toString()
+			},
+			userAuthentication: {
+				map: function (doc) { 
+					if(doc._id.indexOf('user') == 0){
+						emit(doc.data.email + doc.data.password);
+						emit(doc.data.phone + doc.data.password);
+					}
+				}.toString()
+			}
+			
+		}
+	};
+	
+	db.put(ddoc).then(function (result) {
+		console.log(result);
+	}).catch(function (err) {
+		console.error(err);
+	});
+}
+

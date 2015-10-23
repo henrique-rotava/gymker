@@ -1,18 +1,58 @@
-<ion-view view-title="Perfil">
-	<ion-content ng-controller="ProfileController">	
+<ion-view view-title="Perfil" ng-controller="ProfileController">
+	<ion-content >	
 		<div class="text-center padding pic-container">
-			<a class="button button-clear edit-profile-button" ng-href="#/app/profile/edit">
-				<i class="ion-edit"></i>
-			</a>
+<!-- 			<a class="button button-clear edit-profile-button" ng-href="#/app/profile/edit"> -->
+<!-- 				<i class="ion-edit"></i> -->
+<!-- 			</a> -->
 			<div class="circle profile-pic"></div>
 			<br/>
 			<label class="stable profile-name">{{user.name}}</label>
+			<div class="row">
+				<div class="col"></div>
+				<div class="col text-center">
+					<a ng-href="#/app/profile/edit" class="button button-small button-block button-outline button-light">Editar</a>
+				</div>
+				<div class="col"></div>
+			</div>
 		</div>
 		
-		<div class="row">
-			<div class="col text-center">Frequência</div>
-			<div class="col text-center">Peso</div>
-			<div class="col text-center">Treinos</div>
+		<div class="row light-bg profile-properties">
+			<a href="#/app/training/list" class="col text-center">
+				<span class="balanced bigger-counter">{{user.trainings.length || 0}}</span>
+				<br/>
+				Treinos
+			</a>
+			<a href="#/app/profile/athletes" ng-show="user.isTeacher" class="col text-center">
+				<span class="balanced bigger-counter">{{user.athletes.length || 0}}</span>
+				<br/>
+				Alunos
+			</a>
+			<a href="#/app/profile/coachs" class="col text-center">
+				<span class="balanced bigger-counter">{{user.coachs.length || 0}}</span>
+				<br/>
+				Treinadores
+			</a>
 		</div>
+		
+		<div class="content padding-horizontal padding-top">
+			<a href="#/app/training/list" class="button button-block button-balanced">
+				Iniciar novo treino
+			</a>
+		</div>
+		
+		<div class="card" ng-repeat="execution in executions | orderBy:'-startDate' track by $index">
+			<div class="list">
+				<a ng-href="#/app/training/execute/{{execution.id}}" class="item">
+					<h2>
+						<i class="icon ion-android-walk padding-right"></i>{{execution.training.name}} - {{execution.marker}}
+						<span class="item-note energized" ng-show="execution.running">Em execução</span>
+						<span class="item-note balanced" ng-show="execution.finished">Finalizado</span>
+						<span class="item-note assertive" ng-show="!execution.started">Não iniciado</span>
+					</h2>
+					<p>{{execution.startDate | date : 'dd/MM/yy HH:mm'}}</p>
+				</a>
+			</div>
+		</div>
+		
 	</ion-content>
 </ion-view>

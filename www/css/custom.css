@@ -1,4 +1,4 @@
-/* custom */
+/* utils */
 .float-right{
 	float: right;
 }
@@ -14,6 +14,19 @@
 .text-right{
 	text-align:right;
 }
+.no-padding{
+	padding: 0px;
+}
+.no-padding-horizontal{
+	padding-left: 0px;
+	padding-right: 0px;
+}
+.no-padding-vertical{
+	padding-top: 0px;
+	padding-bottom: 0px;
+}
+/* utils end */
+/* custom */
 ion-content{
 	background-color: #E9EAED;
 }
@@ -51,6 +64,13 @@ ion-content{
     right: 25px;
     color: white;
     font-size: 14px;
+    background: red;
+    min-width: 20px;
+    height: 18px;
+    margin-top: 8px;
+    line-height: 18px;
+    border-radius: 8px;
+    margin-right: -10px;
 }
 
 /* Profile */
@@ -67,7 +87,13 @@ ion-content{
     background-position: center center;
     margin:auto;
 }
-
+.profile-properties .col:not(:first-child){
+	border-left: solid 1px #ddd;
+}
+.profile-properties .col{
+	text-decoration: none;
+    color: inherit;
+}
 .profile-pic-editing {
 	width: 60px;
 	height: 60px;
@@ -87,6 +113,7 @@ ion-content{
 	height: 45px;
 	border-width: 0px;
 	display:flex;
+	margin:15px;
 }
 .editing-profile-container label{
     font-size: 20px;
@@ -129,6 +156,10 @@ ion-popover-view.fit ion-content {
 }
 .pic-container {
 	position:relative;
+	background-color: rgba(39, 173, 96, 0.7);
+}
+.bigger-counter{
+	font-size: 22px;
 }
 .pic-container:before {
 	content:"";

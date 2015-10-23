@@ -44,7 +44,7 @@ app.config(function($stateProvider, $urlRouterProvider) {
 	})
 	
 	.state('app.execute-training-day', {
-		url: "/training/execute/:trainingId/:day",
+		url: "/training/execute/:executionId",
 		views: {
 			'menuContent': {
 				templateUrl: "templates/training/execute-training-day.html"

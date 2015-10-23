@@ -233,7 +233,7 @@ angular.module('gymker.userservices', [])
 	
 	var login = function(username, password, callback){
 		DataBase.query(function(doc, emit){
-			if(doc._id.startsWith('user')){
+			if(doc._id.indexOf('user') == 0){
 				emit(doc.data.email + doc.data.password);
 				emit(doc.data.phone + doc.data.password);
 			}

@@ -3,8 +3,8 @@
 	<ion-content>
 		<div class="card">
 			<div class="list">
-				<div class="item item-divider item-text-wrap">
-					<h2>{{::training.name}} <i class="icon ion-android-walk float-right"></i></h2>
+				<div class="item item-text-wrap">
+					<h2><b>{{::training.name}}</b><i class="icon ion-android-walk float-right"></i></h2>
 				</div>
 				<div class="item" ng-show="training.objective">
 					<b>Objetivo: </b>{{::training.objective}}</p>
@@ -19,7 +19,7 @@
 					Dias
 				</div>
 				
-				<a ng-href="#/app/training/show/{{training.id}}/{{day.marker}}" class="item item-icon-right item-text-wrap" ng-repeat="day in ::training.days track by $index | orderBy:'marker'">
+				<a ng-href="#/app/training/show/{{training.id}}/{{day.marker}}" class="item item-icon-right item-text-wrap" ng-repeat="day in training.days track by $index | orderBy:'marker'">
 					<b class="balanced">{{::day.marker}}</b>
 					<p>
 						{{::getDayExercicesMuscles(day)}}
@@ -28,6 +28,21 @@
 				</a>
 			</div>
 		</div>
+		
+		<div class="card" ng-repeat="execution in executions | orderBy:'-startDate' track by $index">
+			<div class="list">
+				<a ng-href="#/app/training/execute/{{execution.id}}" class="item">
+					<h2>
+						<i class="icon ion-android-walk padding-right"></i>{{execution.training.name}} - {{execution.marker}}
+						<span class="item-note energized" ng-show="execution.running">Em execução</span>
+						<span class="item-note balanced" ng-show="execution.finished">Finalizado</span>
+						<span class="item-note assertive" ng-show="!execution.started">Não iniciado</span>
+					</h2>
+					<p>{{execution.startDate | date : 'dd/MM/yy HH:mm'}}</p>
+				</a>
+			</div>
+		</div>
+		
 	</ion-content>
 
 </ion-view>

@@ -141,10 +141,9 @@ angular.module('gymker.trainingcontrollers')
 	};
 	
 	var startCounter = function(execution){
-		$scope.timer = getTimeDiff(execution.startDate, execution.endDate);
 		if(execution.started){
 			timerCounter = $interval(function(){
-				$scope.timer = getTimeDiff(execution.startDate, execution.endDate);
+				$scope.timer = getTimeRemaining(execution.startDate, execution.endDate);
 			}, 1000);
 		}
 	}
@@ -198,9 +197,27 @@ angular.module('gymker.trainingcontrollers')
 				$state.go('app.training-day', {trainingId: trainingId, day: trainingDayMarker});
 			}
 		});
+		
+		
 
 	};
 	
+	function getTimeRemaining(startTime, endDate){
+		
+		function formatTime(decimal){
+			return decimal < 10 ? '0' + decimal : decimal;
+		};
+		
+		var t =  Date.parse(endDate || new Date()) - Date.parse(startTime);
+		var seconds = Math.floor( (t/1000) % 60 );
+		var minutes = Math.floor( (t/1000/60) % 60 );
+		var hours = Math.floor( (t/(1000*60*60)) % 24 );
+		return {
+			'hours': formatTime(hours),
+			'minutes': formatTime(minutes),
+			'seconds': formatTime(seconds)
+		};
+	}
 	
 }]);
 			

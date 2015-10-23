@@ -6,7 +6,7 @@ angular.module('exercicecontrollers',
 		['gymker.exerciceservices']
 );
 angular.module('gymker.trainingcontrollers', 
-		['gymker.exerciceservices', 'gymker.trainingservices']
+		['gymker.exerciceservices', 'gymker.trainingservices', 'gymker.executionservices']
 );
 angular.module('notificationcontrollers', 
 		[]

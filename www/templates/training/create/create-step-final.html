@@ -5,18 +5,22 @@
 	</div>
 	<div class="item item-text-wrap">
 		<div class="list">
-			{{training.name}}
-			<br/>
-			Para {{training.athlete.name}}
+			<div class="item">
+				Treino {{training.name}}
+			</div>
+			<div class="item" ng-show="sendTraining()">
+				Para {{training.athlete.name}}
+			</div>
 			<label class="item item-input item-floating-label">
 				<span class="input-label">Mensagem</span>
 				<input type="text" placeholder="Mensagem" ng-model="training.message">
 			</label>
 			<div class="padding-top">
 				<button class="button button-block button-balanced button-outline" ng-click="saveTraining()">
-					{{training.send ? 'Enviar' : 'Salvar'}}
+					{{sendTraining() ? 'Enviar' : 'Salvar'}}
 				</button>
 			</div>
 		</div>
+		{{messages}}
 	</div>
 </div>

@@ -30,11 +30,19 @@ angular.module('gymker.authenticationServices', ['gymker.userservices'])
 			if(uid){
 				console.log('user id found in localStorage');
 				UserRepository.get(uid, function(error, result){
-					if(!error){
+					if(!error && result.id){
 						console.log('user found in database');
 						populateSession(result);
+						callback(error, result);
+					}else{
+						UserRepository.create(function(error, result){
+							if(!error){
+								console.log('user created in database');
+								populateSession(result);
+							}
+							callback(error, result);
+						});
 					}
-					callback(error, result);
 				});
 				
 			}else{
