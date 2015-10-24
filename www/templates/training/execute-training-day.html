@@ -26,7 +26,7 @@
 					</p>
 					
 				</div>
-				<a class="item item-icon-right item-text-wrap item-thumbnail-left item-icon-left" ng-repeat="trainingExercice in ::executingDay.trainingExercices track by $index">
+				<a class="item item-icon-right item-text-wrap item-thumbnail-left item-icon-left" ng-repeat="trainingExercice in executingDay.trainingExercices track by $index">
 					<img src="{{training.image}}"/>
 					<h2>{{::trainingExercice.exercice.name}}</h2>
 					<p>
@@ -48,9 +48,6 @@
 			<div class="col" ng-show="!executingDay.running">
 				<button class="button button-balanced button-clear" ng-click="startExecution(executingDay)">Iniciar</button>
 			</div>
-<!-- 			<div class="col" ng-show="executingDay.running"> -->
-<!-- 				<button class="button button-balanced button-clear" ng-click="stopExecution(executingDay)">Parar</button> -->
-<!-- 			</div> -->
 			<div class="col" ng-show="executingDay.running || executingDay.started">
 				<button class="button button-balanced button-clear" ng-click="saveExecution(executingDay)">Salvar e finalizar</button>
 			</div>

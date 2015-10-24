@@ -33,6 +33,16 @@ var app = angular.module('gymker',
 		}
 	});
 	
+	$rootScope.getExecutionPercent = function(execution){
+		return ((execution.doneExercicesCount || 0) * 100) / execution.trainingExercices.length;
+	};
+	
+	$rootScope.getExecutionTime = function(execution){
+		var startDate = execution.startDate || new Date();
+		var endDate = execution.endDate || new Date();
+		return getTimeDiff(startDate, endDate);
+	};
+	
 });
 
 app.filter('filterByProperties', function () {

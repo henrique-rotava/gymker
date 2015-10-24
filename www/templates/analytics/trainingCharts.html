@@ -1,12 +1,21 @@
 <ion-view view-title="{{title}}" ng-controller="TrainingChartsController">
 	<ion-content >
 	    
+	    <div class="card">
+	    	<div class="list">
+		    	<div class="item item-button-right">
+		    		<h2>{{execution.training.name}} - {{execution.marker}}</h2>
+		    		<a class="button button-balanced button-clear" ng-href="#/app/training/show/{{::execution.training.id}}/{{::execution.marker}}">Ver treino</a>
+		    	</div>
+	    	</div>
+	    </div>
+	    
 	    <div class="card" ng-repeat="exercice in exercices track by $index">
 	        <div class="item">
 	            {{exercice.name}}
 	        </div>
 	        <div class="item item-text-wrap">
-	            <canvas colours="colours" id="line" class="chart chart-line" data="exercice.weights" labels="exercice.labels" series="series"></canvas>
+	            <canvas chart-colours="colours" id="line" class="chart chart-line" chart-data="exercice.weights" chart-labels="exercice.labels"></canvas>
 	        </div>
 	    </div>
 			

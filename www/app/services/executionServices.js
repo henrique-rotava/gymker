@@ -44,6 +44,7 @@ angular.module('gymker.executionservices', [])
 	};
 	
 	var saveExecutionTrainingDay = function(execution, callback){
+		console.log('before', execution);
 		var executionId;
 		DataBase.rel.save('execution',
 			execution
@@ -52,6 +53,7 @@ angular.module('gymker.executionservices', [])
 			return DataBase.rel.find('execution',  executionId);
 		}).then(function (result) {
 			var executiondb = DataBase.parseResponse('execution', executionId, result);
+			console.log('after', executiondb);
 			callback(false, executiondb);
 		}).catch(function(err){
 			callback(true, err);

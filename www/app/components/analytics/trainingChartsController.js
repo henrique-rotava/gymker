@@ -12,7 +12,11 @@ angular.module('analyticscontrollers')
 		ExecutionRepository.getExecutionsByTrainingDay($stateParams.trainingId, $stateParams.day, function(error, result){
 			if(!error){
 				
+				result = $filter('orderBy')(result, 'startDate');
+				console.log(result);
+				
 				$scope.title = result[0].training.name + ' - ' + result[0].marker;
+				$scope.execution = result[0];
 				
 				var exercices = {};
 				var index = 0
@@ -29,12 +33,13 @@ angular.module('analyticscontrollers')
 							exercices[exercice.id] = {weights:[[]],labels: []};
 							exercices[exercice.id].name = exercice.exercice.name;
 						}
-						console.log(exercice.intensity);
 						exercices[exercice.id].weights[0].push(exercice.intensity.weight || 0); 
 						exercices[exercice.id].labels.push(startDate || "");
 					}
 				}
-				$scope.exercices = exercices;
+				$scope.$apply(function(){
+					$scope.exercices = exercices;
+				});
 			}
 		});
 	}

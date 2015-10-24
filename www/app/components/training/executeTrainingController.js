@@ -55,12 +55,6 @@ angular.module('gymker.trainingcontrollers')
 			$scope.completePercent = ($scope.executingDay.doneExercicesCount * 100) / $scope.executingDay.trainingExercices.length;
 			
 		}
-		console.log($scope.executingDay);
-		ExecutionRepository.save($scope.executingDay, function(error, result){
-			if(!error){
-				$scope.executingDay = result;
-			}
-		});
 	};
 	
 	$scope.configExercice = function(exercice){
@@ -79,15 +73,29 @@ angular.module('gymker.trainingcontrollers')
 			title: exercice.name,
 			scope: $scope,
 			buttons: [
-	           { 
+	           {
 	        	   text: 'Depois' ,
-	        	   type: 'button-balanced button-clear'
+	        	   type: 'button-balanced button-clear',
+	        	   onTap: function(e){
+	        		   ExecutionRepository.save($scope.executingDay, function(error, result){
+	        				if(!error){
+	        					$scope.executingDay = result;
+	        				}
+	        			});
+	        	   }
 	           },
 	           { 
 	        	   text: 'Salvar',
 	        	   type: 'button-balanced button-clear',
 	        	   onTap: function(e){
-	        		   angular.copy($scope.exercice, exercice);
+	        		   
+	        		   exercice.intensity = $scope.exercice.intensity;
+	        		   
+	        		   ExecutionRepository.save($scope.executingDay, function(error, result){
+	        				if(!error){
+	        					$scope.executingDay = result;
+	        				}
+	        			});
 	        		   
 	        		   // Save training exercice for another executions
 	        		   ExecutionRepository.saveTrainingExercice(exercice, function(error, result){
