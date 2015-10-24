@@ -3,9 +3,13 @@
 	<ion-content>
 		<div class="card" ng-show="day">
 			<div class="list">
-				<div class="item item-text-wrap">
-					<h2><b>{{::training.name}} - {{::day.marker}}</b></h2>
-				</div>
+				<a ng-href="#/app/training/show/{{::training.id}}" class="item item-text-wrap item-button-right">
+					<h2 class="balanced"><b>{{::training.name}} - {{::day.marker}}</b></h2>
+					<button class="button button-balanced button-clear icon-left ion-flash" ng-click="createExecutionTraining(training)">Executar</button>
+				</a>
+				<a ng-href="#app/training/charts/{{::training.id}}/{{::day.marker}}" class="item">
+					Gráficos
+				</a>
 				<a class="item item-icon-right item-text-wrap item-thumbnail-left item-icon-left" ng-repeat="trainingExercice in ::day.trainingExercices track by $index">
 					<img src="{{training.image}}"/>
 					<h2>{{::trainingExercice.exercice.name}}</h2>
@@ -19,12 +23,4 @@
 		</div>
 	</ion-content>
 	
-	<div class="bar bar-footer footer-buttons">
- 		<div class="row">
- 			<div class="col">
-				<a class="button button-balanced button-clear" ng-click="createExecutionTraining(training)" ng-href="#/app/training/execute/{{::training.id}}/{{::day.marker}}">Executar treino</a>
-			</div>
-		</div>
-	</div>
-
 </ion-view>

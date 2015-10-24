@@ -25,6 +25,10 @@
 	padding-top: 0px;
 	padding-bottom: 0px;
 }
+.not-link{
+	text-decoration: none;
+    color: inherit;
+}
 /* utils end */
 /* custom */
 ion-content{

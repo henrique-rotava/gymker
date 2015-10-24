@@ -11,9 +11,7 @@ angular.module('profilecontrollers')
 		
 		function loadExecutions(){
 			ExecutionRepository.getExecutionsByUser($rootScope.user, function(error, result){
-				console.log('resultados #', result);
 				if(!error){
-					console.log('resultados', result);
 					$scope.$apply(function(){
 						$scope.executions = result;
 					});

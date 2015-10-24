@@ -139,6 +139,27 @@ angular.module('gymker.executionservices', [])
 		});
 	};
 	
+	var getExecutionsByTrainingDay = function(trainingId, day, callback){
+		
+		var executionIds;
+		DataBase.query(function (doc) { 
+			if(doc._id.indexOf('execution') == 0){
+				emit(doc.data.training + doc.data.marker);
+			}
+		}, {
+			key: trainingId + day,
+			reduce: true
+		}).then(function(result){
+			executionIds = getExecutionIds(result);
+			return DataBase.rel.find('execution', executionIds);
+		}).then(function(result){
+			var executionsResult = DataBase.parseResponse('execution', executionIds, result);
+			callback(false, executionsResult);
+		}).catch(function(error){
+			callback(true, error);
+		});
+	};
+	
 	return {
 		create: createExecutionTrainingDay,
 		del: deleteExecutionTrainingDay,
@@ -146,7 +167,8 @@ angular.module('gymker.executionservices', [])
 		get: getExecutionTrainingDay,
 		save: saveExecutionTrainingDay,
 		getExecutionsByUser: getExecutionsByUser,
-		getExecutionsByTraining: getExecutionsByTraining
+		getExecutionsByTraining: getExecutionsByTraining,
+		getExecutionsByTrainingDay: getExecutionsByTrainingDay
 	};
 	
 }]);

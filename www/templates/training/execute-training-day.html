@@ -8,7 +8,10 @@
 		<div class="card" ng-show="executingDay">
 			<div class="list">
 				<div class="item item-divider item-text-wrap item-progress">
-					<h2>{{::executingDay.training.name}} - {{::executingDay.marker}}</h2>
+					<h2>
+						<a class="not-link balanced" ng-href="#/app/training/show/{{executingDay.training.id}}/{{executingDay.marker}}">
+						{{::executingDay.training.name}} - {{::executingDay.marker}}</a>
+					</h2>
 					<p>
 						<div class="row no-padding">
 							<div class="col no-padding">

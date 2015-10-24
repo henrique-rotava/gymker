@@ -1,4 +1,4 @@
-/* custom */
+/* utils */
 .float-right{
 	float: right;
 }
@@ -14,6 +14,19 @@
 .text-right{
 	text-align:right;
 }
+.no-padding{
+	padding: 0px;
+}
+.no-padding-horizontal{
+	padding-left: 0px;
+	padding-right: 0px;
+}
+.no-padding-vertical{
+	padding-top: 0px;
+	padding-bottom: 0px;
+}
+/* utils end */
+/* custom */
 ion-content{
 	background-color: #E9EAED;
 }

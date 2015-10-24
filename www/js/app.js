@@ -7,7 +7,8 @@ var app = angular.module('gymker',
 		 'gymker.trainingcontrollers',
 		 'gymker.database',
 		 'notificationservices',
-		 'notificationcontrollers'
+		 'notificationcontrollers',
+		 'analyticscontrollers'
 		 ])
 
 .run(function($ionicPlatform, DataBase, AuthService, $rootScope) {
@@ -71,9 +72,9 @@ window.getTimeDiff = function(startTime, endDate){
 	};
 	
 	var t =  Date.parse(endDate || new Date()) - Date.parse(startTime);
-	var seconds = formatTime(Math.floor( (t/1000) % 60 ));
-	var minutes = formatTime(Math.floor( (t/1000/60) % 60 ));
-	var hours = formatTime(Math.floor( (t/(1000*60*60)) % 24 ));
+	var seconds = formatTime(Math.floor( (t/1000) % 60 ) || 0);
+	var minutes = formatTime(Math.floor( (t/1000/60) % 60 ) || 0);
+	var hours = formatTime(Math.floor( (t/(1000*60*60)) % 24 ) || 0);
 	
 	return {
 		'hours': hours,

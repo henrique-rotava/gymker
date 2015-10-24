@@ -1,0 +1,14 @@
+<ion-view view-title="{{title}}" ng-controller="TrainingChartsController">
+	<ion-content >
+	    
+	    <div class="card" ng-repeat="exercice in exercices track by $index">
+	        <div class="item">
+	            {{exercice.name}}
+	        </div>
+	        <div class="item item-text-wrap">
+	            <canvas colours="colours" id="line" class="chart chart-line" data="exercice.weights" labels="exercice.labels" series="series"></canvas>
+	        </div>
+	    </div>
+			
+	</ion-content>
+</ion-view>

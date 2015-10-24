@@ -30,5 +30,14 @@ angular.module('profilecontrollers')
 		}
 	}
 	
+	$scope.getExecutionPercent = function(execution){
+		return ((execution.doneExercicesCount || 0) * 100) / execution.trainingExercices.length;
+	};
+	
+	$scope.getExecutionTime = function(execution){
+		var startDate = execution.startDate || new Date();
+		var endDate = execution.endDate || new Date();
+		return getTimeDiff(startDate, endDate);
+	};
 	
 }]);
