@@ -8,7 +8,10 @@
 		<div class="card" ng-show="executingDay">
 			<div class="list">
 				<div class="item item-divider item-text-wrap item-progress">
-					<h2>{{::executingDay.training.name}} - {{::executingDay.marker}}</h2>
+					<h2>
+						<a class="not-link balanced" ng-href="#/app/training/show/{{executingDay.training.id}}/{{executingDay.marker}}">
+						{{::executingDay.training.name}} - {{::executingDay.marker}}</a>
+					</h2>
 					<p>
 						<div class="row no-padding">
 							<div class="col no-padding">
@@ -23,7 +26,7 @@
 					</p>
 					
 				</div>
-				<a class="item item-icon-right item-text-wrap item-thumbnail-left item-icon-left" ng-repeat="trainingExercice in ::executingDay.trainingExercices track by $index">
+				<a class="item item-icon-right item-text-wrap item-thumbnail-left item-icon-left" ng-repeat="trainingExercice in executingDay.trainingExercices track by $index">
 					<img src="{{training.image}}"/>
 					<h2>{{::trainingExercice.exercice.name}}</h2>
 					<p>
@@ -32,6 +35,15 @@
 				    	<span>{{trainingExercice.intensity.weight || 0}} Kg</span>
 					</p>
 					<i ng-show="executingDay.started" ng-click="checkExercice(trainingExercice)" class="icon {{trainingExercice.done ? 'ion-ios-checkmark-outline' : 'ion-ios-circle-outline'}} balanced"></i>
+				</a>
+			</div>
+			
+		</div>
+		
+		<div class="card" ng-show="executingDay  && executingDay.finished">
+			<div class="list">
+				<a ng-href="#app/training/charts/{{::executingDay.training.id}}/{{::executingDay.marker}}" class="item text-center balanced">
+					Ver análise do treino
 				</a>
 			</div>
 		</div>
@@ -45,9 +57,6 @@
 			<div class="col" ng-show="!executingDay.running">
 				<button class="button button-balanced button-clear" ng-click="startExecution(executingDay)">Iniciar</button>
 			</div>
-<!-- 			<div class="col" ng-show="executingDay.running"> -->
-<!-- 				<button class="button button-balanced button-clear" ng-click="stopExecution(executingDay)">Parar</button> -->
-<!-- 			</div> -->
 			<div class="col" ng-show="executingDay.running || executingDay.started">
 				<button class="button button-balanced button-clear" ng-click="saveExecution(executingDay)">Salvar e finalizar</button>
 			</div>

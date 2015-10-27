@@ -18,6 +18,16 @@ angular.module('profilecontrollers')
 		$scope.modal.show();
 	};
 	
+	$scope.logout = function(){
+		AuthService.logout(function(error, result){
+			if(!error){
+				$scope.$apply(function(){
+					$rootScope.user = result;
+				});
+			}
+		});
+	};
+	
 	var showAlert = function(message) {
 		var alertPopup = $ionicPopup.alert({
 			title: 'Usuário não encontrado',

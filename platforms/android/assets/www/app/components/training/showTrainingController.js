@@ -23,20 +23,25 @@ angular.module('gymker.trainingcontrollers')
 						if($scope.training.days[index].marker == day){
 							$scope.$apply(function(){
 								$scope.day = $scope.training.days[index];
+								ExecutionRepository.getExecutionsByTrainingDay($scope.training.id, $scope.day.marker, function(error, result){
+									if(!error){
+										$scope.$apply(function(){
+											$scope.executions = result;
+										});
+									}
+								});
 							});
 						}
 					}
+				} else {
+					ExecutionRepository.getExecutionsByTraining($scope.training, function(error, result){
+						if(!error){
+							$scope.$apply(function(){
+								$scope.executions = result;
+							});
+						}
+					});
 				}
-				
-				
-				// TODO remove
-				ExecutionRepository.getExecutionsByTraining($scope.training, function(error, result){
-					if(!error){
-						$scope.$apply(function(){
-							$scope.executions = result;
-						});
-					}
-				});
 			}
 		});
 		

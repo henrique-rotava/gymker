@@ -3,12 +3,18 @@ angular.module('profilecontrollers')
 .controller('EditProfileController', ['$rootScope', '$scope', '$ionicPopover', 'AuthService', 'UserRepository', '$ionicLoading',
                                   function($rootScope, $scope, $ionicPopover, AuthService, UserRepository, $ionicLoading){
 	
+	$scope.$on('$ionicView.enter', function() {
+		startUp();
+	});
+
 	var startUp = function(){
 		if($rootScope.user){
 			$scope.formUser = angular.copy($rootScope.user);
+			$scope.formUser.address = $scope.formUser.address || {};
 		}else{
 			$rootScope.$watch('user', function(){
 				$scope.formUser = angular.copy($rootScope.user);
+				$scope.formUser.address = $scope.formUser.address || {};
 			});
 		}
 		$scope.birthDateType = 'text';
@@ -16,10 +22,6 @@ angular.module('profilecontrollers')
 		$scope.inputPasswordType = 'password';
 		console.log($scope.formUser);
 	}
-	
-	$scope.$on('$ionicView.enter', function() {
-		startUp();
-	});
 	
 	$scope.togglePassword = function(){
 		if($scope.inputPasswordType == 'password'){
@@ -73,7 +75,12 @@ angular.module('profilecontrollers')
 	$scope.saveNewPic = function(){
 		$rootScope.user.profilePic = $scope.newImageSrc;
 		$scope.closePopover();
-		UserRepository.save($rootScope.user);
+		UserRepository.save($rootScope.user, function(error, result){
+			if(!error){
+				$rootScope.user = result;
+				$scope.user = angular.copy(result);
+			}
+		});
 	};
 	
 	$scope.closePopover = function(){
@@ -82,8 +89,8 @@ angular.module('profilecontrollers')
 	};
 	
 	$scope.updateProfile = function(formUser) {
-		$rootScope.user = angular.copy(formUser);
-		UserRepository.save($rootScope.user, function(error, result){
+//		$rootScope.user = angular.copy(formUser);
+		UserRepository.save(formUser, function(error, result){
 			if(!error){
 				$ionicLoading.show({ 
 		            template: 'Perfil atualizado com sucesso!',
@@ -104,7 +111,5 @@ angular.module('profilecontrollers')
 			}
 		});
 	};
-	
-	startUp();
 	
 }]);

@@ -1,9 +1,6 @@
 <ion-view view-title="Perfil" ng-controller="ProfileController">
 	<ion-content >	
 		<div class="text-center padding pic-container">
-<!-- 			<a class="button button-clear edit-profile-button" ng-href="#/app/profile/edit"> -->
-<!-- 				<i class="ion-edit"></i> -->
-<!-- 			</a> -->
 			<div class="circle profile-pic"></div>
 			<br/>
 			<label class="stable profile-name">{{user.name}}</label>
@@ -40,38 +37,7 @@
 			</a>
 		</div>
 		
-		<div class="card" ng-repeat="execution in executions | orderBy:'-startDate' track by $index">
-			<div class="list">
-				<a ng-href="#/app/training/execute/{{execution.id}}" class="item">
-					<h2>
-						<i class="icon ion-android-walk padding-right"></i>{{execution.training.name}}
-						<span class="item-note energized" ng-show="execution.running">Em execução</span>
-						<span class="item-note balanced" ng-show="execution.finished">Finalizado</span>
-						<span class="item-note assertive" ng-show="!execution.started">Não iniciado</span>
-					</h2>
-					<p>{{execution.startDate | date : 'dd/MM/yy HH:mm'}}</p>
-				</a>
-				<div class="item">
-					<div class="row no-padding-vertical">
-						<div class="col no-padding-vertical text-left">
-							<span class="balanced bigger-counter">{{execution.marker}}</span>
-							<br/>
-							Dia
-						</div>
-						<div class="col no-padding-vertical text-center">
-							<span class="balanced bigger-counter">{{getExecutionTime(execution).time}}</span>
-							<br/>
-							Tempo
-						</div>
-						<div class="col no-padding-vertical text-right">
-							<span class="balanced bigger-counter">{{getExecutionPercent(execution) | number : 0}} %</span>
-							<br/>
-							Concluído
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
+		<div ng-include src="'templates/executions/list-executions.html'"></div>
 		
 	</ion-content>
 </ion-view>

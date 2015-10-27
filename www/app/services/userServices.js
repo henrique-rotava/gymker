@@ -4,10 +4,12 @@ angular.module('gymker.userservices', [])
 
 	function User(){
 		this.name = 'Meu Nome';
-		this.profilePic = 'img/default_profile_picture.jpg'
+		this.profilePic = 'img/default_profile_picture.jpg';
+		this.isTransient = true;
 	};
 	
 	var save = function(doc, callback){
+		doc.isTransient = false;
 		var uid;
 		DataBase.rel.save('user',
 			doc

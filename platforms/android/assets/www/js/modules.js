@@ -11,3 +11,6 @@ angular.module('gymker.trainingcontrollers',
 angular.module('notificationcontrollers', 
 		[]
 );
+angular.module('analyticscontrollers', 
+		['chart.js']
+);

@@ -5,7 +5,7 @@
 			<div class="list">
 				<a ng-href="#/app/training/show/{{::training.id}}" class="item item-text-wrap item-button-right">
 					<h2 class="balanced"><b>{{::training.name}} - {{::day.marker}}</b></h2>
-					<button class="button button-balanced button-clear icon-left ion-flash" ng-click="createExecutionTraining(training)">Executar</button>
+					<button class="button button-balanced button-clear icon-left ion-ios-play-outline" ng-click="createExecutionTraining(training)">Executar</button>
 				</a>
 				<a ng-href="#app/training/charts/{{::training.id}}/{{::day.marker}}" class="item balanced">
 					Ver análise do treino<i class="icon ion-arrow-graph-up-right padding-left"></i>

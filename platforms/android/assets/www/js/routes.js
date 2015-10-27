@@ -71,6 +71,15 @@ app.config(function($stateProvider, $urlRouterProvider) {
 		}
 	})
   
+	.state('app.training-charts', {
+		url: "/training/charts/:trainingId/:day",
+		views: {
+			'menuContent': {
+				templateUrl: "templates/analytics/trainingCharts.html"
+			}
+		}
+	})
+	
 	.state('app.profile', {
 		url: "/profile",
 		views: {

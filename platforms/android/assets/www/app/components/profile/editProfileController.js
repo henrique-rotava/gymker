@@ -6,9 +6,11 @@ angular.module('profilecontrollers')
 	var startUp = function(){
 		if($rootScope.user){
 			$scope.formUser = angular.copy($rootScope.user);
+			$scope.formUser.address = $scope.formUser.address || {};
 		}else{
 			$rootScope.$watch('user', function(){
 				$scope.formUser = angular.copy($rootScope.user);
+				$scope.formUser.address = $scope.formUser.address || {};
 			});
 		}
 		$scope.birthDateType = 'text';
@@ -82,7 +84,6 @@ angular.module('profilecontrollers')
 	};
 	
 	$scope.updateProfile = function(formUser) {
-		$rootScope.user = angular.copy(formUser);
 		UserRepository.save($rootScope.user, function(error, result){
 			if(!error){
 				$ionicLoading.show({ 

@@ -7,7 +7,8 @@ var app = angular.module('gymker',
 		 'gymker.trainingcontrollers',
 		 'gymker.database',
 		 'notificationservices',
-		 'notificationcontrollers'
+		 'notificationcontrollers',
+		 'analyticscontrollers'
 		 ])
 
 .run(function($ionicPlatform, DataBase, AuthService, $rootScope) {
@@ -31,6 +32,16 @@ var app = angular.module('gymker',
 			updateSessionUser(result);
 		}
 	});
+	
+	$rootScope.getExecutionPercent = function(execution){
+		return ((execution.doneExercicesCount || 0) * 100) / execution.trainingExercices.length;
+	};
+	
+	$rootScope.getExecutionTime = function(execution){
+		var startDate = execution.startDate || new Date();
+		var endDate = execution.endDate || new Date();
+		return getTimeDiff(startDate, endDate);
+	};
 	
 });
 
@@ -71,9 +82,9 @@ window.getTimeDiff = function(startTime, endDate){
 	};
 	
 	var t =  Date.parse(endDate || new Date()) - Date.parse(startTime);
-	var seconds = formatTime(Math.floor( (t/1000) % 60 ));
-	var minutes = formatTime(Math.floor( (t/1000/60) % 60 ));
-	var hours = formatTime(Math.floor( (t/(1000*60*60)) % 24 ));
+	var seconds = formatTime(Math.floor( (t/1000) % 60 ) || 0);
+	var minutes = formatTime(Math.floor( (t/1000/60) % 60 ) || 0);
+	var hours = formatTime(Math.floor( (t/(1000*60*60)) % 24 ) || 0);
 	
 	return {
 		'hours': hours,

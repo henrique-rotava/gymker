@@ -14,9 +14,6 @@
 		<ion-tab title="Geral">
 			<ion-nav-view>
 				<ion-content>
-<!-- 					<div class="item item-divider item-text-wrap"> -->
-<!-- 						Informe seu email ou telefone e uma senha para acessar suas informações em outro dispositivo. -->
-<!-- 					</div> -->
 					<div class="editing-profile-container item item-divider">
 						<div ng-click="openPictureType($event)" class="circle profile-pic profile-pic-editing"></div>
 						<label class="balanced">{{user.name}}</label>
@@ -66,8 +63,34 @@
 				</ion-content>
 			</ion-nav-view>
 		</ion-tab>
+		<ion-tab title="Endereço">
+			<ion-nav-view>
+				<ion-content>
+					<label class="item item-input item-floating-label">
+						<span class="input-label">Rua</span>
+						<input type="text" placeholder="Rua" ng-model="formUser.address.street">
+					</label>
+					<label class="item item-input item-floating-label">
+						<span class="input-label">Número</span>
+						<input type="number" placeholder="Número" ng-model="formUser.address.number">
+					</label>
+					<label class="item item-input item-floating-label">
+						<span class="input-label">Cidade</span>
+						<input type="text" placeholder="Cidade" ng-model="formUser.address.city">
+					</label>
+					<label class="item item-input item-floating-label">
+						<span class="input-label">Estado</span>
+						<input type="text" placeholder="Estado" ng-model="formUser.address.state">
+					</label>
+					<label class="item item-input item-floating-label">
+						<span class="input-label">País</span>
+						<input type="text" placeholder="País" ng-model="formUser.address.country">
+					</label>
+				</ion-content>
+			</ion-nav-view>
+		</ion-tab>
 		
-		<ion-tab title="Treinador">
+		<ion-tab title="Professor">
 			<ion-nav-view>
 				<ion-content>
 					<div class="item item-toggle">
