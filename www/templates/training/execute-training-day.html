@@ -8,10 +8,9 @@
 		<div class="card" ng-show="executingDay">
 			<div class="list">
 				<div class="item item-divider item-text-wrap item-progress">
-					<h2>
-						<a class="not-link balanced" ng-href="#/app/training/show/{{executingDay.training.id}}/{{executingDay.marker}}">
-						{{::executingDay.training.name}} - {{::executingDay.marker}}</a>
-					</h2>
+					<a class="not-link balanced" ng-href="#/app/training/show/{{executingDay.training.id}}/{{executingDay.marker}}">
+					{{::executingDay.training.name}} - {{::executingDay.marker}}</a>
+					<span class="item-note dark">{{ (executingDay.startDate || now) | date : 'dd MMM yyyy - HH:mm'}}</span>
 					<p>
 						<div class="row no-padding">
 							<div class="col no-padding">
@@ -19,14 +18,14 @@
 							</div>
 							<div class="col no-padding text-right">
 								<span class="balanced">
-									{{ (executingDay.startDate || now) | date : 'dd/MM/yy HH:mm'}}<br/>{{timer.hours}}:{{timer.minutes}}:{{timer.seconds}}
+									{{timer.hours}}:{{timer.minutes}}:{{timer.seconds}}
 								</span>
 							</div>
 						</div>
 					</p>
 					
 				</div>
-				<a class="item item-icon-right item-text-wrap item-thumbnail-left item-icon-left" ng-repeat="trainingExercice in executingDay.trainingExercices track by $index">
+				<div class="item item-icon-right item-text-wrap item-thumbnail-left item-icon-left" ng-repeat="trainingExercice in executingDay.trainingExercices track by $index">
 					<img src="{{training.image}}"/>
 					<h2>{{::trainingExercice.exercice.name}}</h2>
 					<p>
@@ -35,7 +34,7 @@
 				    	<span>{{trainingExercice.intensity.weight || 0}} Kg</span>
 					</p>
 					<i ng-show="executingDay.started" ng-click="checkExercice(trainingExercice)" class="icon {{trainingExercice.done ? 'ion-ios-checkmark-outline' : 'ion-ios-circle-outline'}} balanced"></i>
-				</a>
+				</div>
 			</div>
 			
 		</div>

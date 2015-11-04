@@ -1,0 +1,33 @@
+<ion-view view-title="Exercícios" ng-controller="ExerciceController">
+	<ion-content>
+
+		<ion-refresher pulling-text="Arraste para atualizar"
+         pulling-icon="ion-ios7-arrow-thin-down"
+         on-refresh="refresh()">
+		</ion-refresher>
+
+		<div class="card" ng-show="exercice">
+			<div class="list">
+				<div class="item item-thumbnail-left">
+					<img src="cover.jpg">
+					{{exercice.name}}
+					<span class="item-note">{{exercice.muscle}}</span>
+					<p>
+						{{exercice.description}}
+					</p>
+				</div>
+				<div class="item item-image video-wrapper" ng-if="exercice.video">
+					<youtube-embed video-id="{{exercice.video}}"></youtube-embed>
+				</div>
+				<div class="item text-right">
+					<button class="button button-small button-{{downColor}} button-outline icon ion-android-arrow-down" ng-click="downvote(exercice)">
+						{{downvotes || 0}}
+					</button>
+					<button class="button button-small button-{{upColor}} button-outline icon ion-android-arrow-up" ng-click="upvote(exercice)">
+						{{upvotes || 0}}
+					</button>
+				</div>
+			</div>
+		</div>
+	</ion-content>
+</ion-view>

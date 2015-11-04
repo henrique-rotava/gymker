@@ -3,20 +3,19 @@
 	<ion-content>
 		<div class="card" ng-show="day">
 			<div class="list">
-				<a ng-href="#/app/training/show/{{::training.id}}" class="item item-text-wrap item-button-right">
+				<a ng-href="#/app/training/show/{{::training.id}}" class="item item-text-wrap">
 					<h2 class="balanced"><b>{{::training.name}} - {{::day.marker}}</b></h2>
-					<button class="button button-balanced button-clear icon-left ion-ios-play-outline" ng-click="createExecutionTraining(training)">Executar</button>
 				</a>
 				<a ng-href="#app/training/charts/{{::training.id}}/{{::day.marker}}" class="item balanced">
 					Ver análise do treino<i class="icon ion-arrow-graph-up-right padding-left"></i>
 				</a>
-				<a class="item item-icon-right item-text-wrap item-thumbnail-left item-icon-left" ng-repeat="trainingExercice in ::day.trainingExercices track by $index">
+				<a ng-href="#app/exercice/{{trainingExercice.exercice.id}}" class="item item-icon-right item-text-wrap item-thumbnail-left item-icon-left" ng-repeat="trainingExercice in ::day.trainingExercices track by $index">
 					<img src="{{training.image}}"/>
 					<h2>{{::trainingExercice.exercice.name}}</h2>
 					<p>
 						<span>{{trainingExercice.intensity.series || 0}} Séries</span>
 				    	<span>{{trainingExercice.intensity.repetitions || 0}} Repet.</span>
-				    	<span>{{trainingExercice.intensity.weight || 0}} Kg</span>
+				    	<span>{{trainingExercice.intensity.weight || 0}} {{trainingExercice.exercice.type == 'Tempo' ? 'min' : 'Kg'}}</span>
 					</p>
 				</a>
 			</div>
@@ -25,5 +24,13 @@
 		<div ng-include src="'templates/executions/list-executions.html'"></div>
 		
 	</ion-content>
+	
+	<div class="bar bar-footer bar-light footer-buttons">
+ 		<div class="row">
+			<div class="col">
+				<button class="button button-balanced button-clear icon ion-ios-play-outline" ng-click="createExecutionTraining(training)">Executar</button>	
+			</div>
+		</div>
+	</div>
 	
 </ion-view>

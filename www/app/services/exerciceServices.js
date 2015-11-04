@@ -20,12 +20,83 @@ angular.module('gymker.exerciceservices', [])
 		}).catch(function (err) {
 			callback(true, err);
 		});
+	};
+
+	var get = function(id, callback){
+		DataBase.rel.find('exercice', 
+			id
+		).then(function (result) {
+			var user = DataBase.parseResponse('exercice', id, angular.copy(result));
+			callback(false, user);
+		}).catch(function (err) {
+			callback(true, err);
+		});
+	};
+	
+	var saveVote = function(vote, callback){
+		DataBase.rel.save('vote',
+			vote
+		).then(function(response){
+			callback(false, response.votes[0]);
+		}).catch(function(err){
+			callback(true, err);
+		});
+	};
+	
+	var getExerciceVotesCount = function(exerciceId, type, callback){
 		
-	}
+		var exerciceVoteQuery = {
+			map: function (doc) {
+				if(doc._id.indexOf('vote') == 0){
+					emit(doc.data.exercice + doc.data.vote);
+				}
+			},
+			reduce: '_count'
+		};
+		
+		DataBase.query(exerciceVoteQuery, {
+			key: exerciceId + type,
+		}).then(function(result){
+			console.log(result);
+			var count = result.rows[0] ? result.rows[0].value : 0;
+			callback(false, count);
+		}).catch(function (err) {
+			callback(true, err);
+		});
+	};
+	
+	var getUserExerciceVote = function(exerciceId, userId, callback){
+		var exerciceVoteQuery = {
+			map: function (doc) {
+				if(doc._id.indexOf('vote') == 0){
+					emit(doc.data.exercice + doc.data.user);
+				}
+			}
+		};
+		
+		DataBase.query(exerciceVoteQuery, {
+			key: exerciceId + userId,
+			limit: 1,
+			include_docs: true
+		}).then(function(result){
+			var vote;
+			if(result.rows && result.rows[0]){
+				vote = result.rows[0].doc.data.vote;
+			}
+			callback(false, vote);
+		}).catch(function (err) {
+			callback(true, err);
+		});
+	};
+	
 	
 	var repository = {
 		save: save,
-		getAll: getAll
+		getAll: getAll,
+		get: get,
+		saveVote: saveVote,
+		getExerciceVotesCount: getExerciceVotesCount,
+		getUserExerciceVote: getUserExerciceVote
 	}
 
 	return repository;

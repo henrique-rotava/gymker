@@ -15,15 +15,13 @@
 		    <i class="icon ion-ios-close-outline padding-horizontal clear-search" ng-show="search" ng-click="search=''"></i>
 		</div>
 
-		<div class="card" ng-repeat="exercice in exercices | filterByProperties:search:['related.name'] track by $index">
-			<div class="item item-icon-right">
-				
+		<div class="list">
+			<a ng-href="#app/exercice/{{exercice.id}}" class="item item-thumbnail-left" ng-repeat="exercice in exercices | filterByProperties:search:['name','muscle'] track by $index">
+				<img src="{{exercice.image}}"/>
 				{{exercice.name}}
 				<span class="item-note">
 					{{exercice.muscle}}
 				</span>
-				<i ng-click="showActions($index)" class="icon ion-android-more-vertical"></i>
-				
 			</div>
 		</div>
 

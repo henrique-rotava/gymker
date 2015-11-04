@@ -56,6 +56,19 @@ angular.module('exercicecontrollers')
 
 }])
 
+.controller('ExerciceController', ['$scope', '$stateParams', function($scope, $stateParams){
+	
+	
+	$scope.$on('$ionicView.enter', function() {
+		startUp();
+	});
+	
+	var startUp = function(){
+		console.log($stateParams.exerciceId);
+	}
+	
+}])
+
 .controller('UserExerciceController', function($scope, $ionicActionSheet, $ionicPopup) {
   
   

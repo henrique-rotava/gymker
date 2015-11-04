@@ -68,6 +68,20 @@ app.filter('filterByProperties', function () {
     
 });
 
+app.filter('trustAsResourceUrl', ['$sce', function($sce) {
+    return function(val) {
+        return $sce.trustAsResourceUrl(val);
+    };
+}]);
+
+app.directive('youtubeEmbed', ['$sce', function($sce) {
+	return function (scope, elem, attr){
+		var video = attr.videoId;
+		var src = $sce.trustAsResourceUrl('https://www.youtube.com/embed/' + video + '?autohide=1&showinfo=0');
+		elem.html('<iframe width="560" height="315" src="' + src + '" frameborder="0" allowfullscreen></iframe>')
+	};
+}]);
+
 /* Global functions */
 Object.resolve = function(path, obj, safe) {
 	return path.split('.').reduce(function(prev, curr) {

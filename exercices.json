@@ -1,0 +1,426 @@
+var exercices = [
+	{
+		name: 'Supino reto',
+		muscle: 'Peitoral',
+		type: 'Repetições'
+	},
+	{
+		name: 'Supino inclinado',
+		muscle: 'Peitoral',
+		type: 'Repetições'
+	},
+	{
+		name: 'Supino declinado',
+		muscle: 'Peitoral',
+		type: 'Repetições'
+	},
+	{
+		name: 'Supino livre',
+		muscle: 'Peitoral',
+		type: 'Repetições'
+	},
+	{
+		name: 'Mergulho nas paralelas',
+		muscle: 'Peitoral',
+		type: 'Repetições'
+	},
+	{
+		name: 'Voador',
+		muscle: 'Peitoral',
+		type: 'Repetições'
+	},
+	{
+		name: 'Crucifixo',
+		muscle: 'Peitoral',
+		type: 'Repetições'
+	},
+	{
+		name: 'Cross over',
+		muscle: 'Peitoral',
+		type: 'Repetições'
+	},
+	{
+		name: 'Pull over',
+		muscle: 'Peitoral',
+		type: 'Repetições'
+	},
+	{
+		name: 'Rosca com barras',
+		muscle: 'Bíceps',
+		type: 'Repetições'
+	},
+	{
+		name: 'Rosca alternada',
+		muscle: 'Bíceps',
+		type: 'Repetições'
+	},
+	{
+		name: 'Rosca scott',
+		muscle: 'Bíceps',
+		type: 'Repetições'
+	},
+	{
+		name: 'Rosca martelo',
+		muscle: 'Bíceps',
+		type: 'Repetições'
+	},
+	{
+		name: 'Rosca simultânea',
+		muscle: 'Bíceps',
+		type: 'Repetições'
+	},
+	{
+		name: 'Rosca polia',
+		muscle: 'Bíceps',
+		type: 'Repetições'
+	},
+	{
+		name: 'Rosca 21',
+		muscle: 'Bíceps',
+		type: 'Repetições'
+	},
+	{
+		name: 'Rosca pulley',
+		muscle: 'Bíceps',
+		type: 'Repetições'
+	},
+	{
+		name: 'Rosca concentrada',
+		muscle: 'Bíceps',
+		type: 'Repetições'
+	},
+	{
+		name: 'Halter',
+		muscle: 'Antebraço',
+		type: 'Repetições'
+	},
+	{
+		name: 'Barra',
+		muscle: 'Antebraço',
+		type: 'Repetições'
+	},
+	{
+		name: 'Voador invertido',
+		muscle: 'Dorsal',
+		type: 'Repetições'
+	},
+	{
+		name: 'Remada no aparelho',
+		muscle: 'Dorsal',
+		type: 'Repetições'
+	},
+	{
+		name: 'Remada curvada',
+		muscle: 'Dorsal',
+		type: 'Repetições'
+	},
+	{
+		name: 'Remada pulley',
+		muscle: 'Dorsal',
+		type: 'Repetições'
+	},
+	{
+		name: 'Remada pulley barra',
+		muscle: 'Dorsal',
+		type: 'Repetições'
+	},
+	{
+		name: 'Remada inclinada com halteres no banco',
+		muscle: 'Dorsal',
+		type: 'Repetições'
+	},
+	{
+		name: 'Pulley frente',
+		muscle: 'Dorsal',
+		type: 'Repetições'
+	},
+	{
+		name: 'Pulley frente barra',
+		muscle: 'Dorsal',
+		type: 'Repetições'
+	},
+	{
+		name: 'Serrote polia',
+		muscle: 'Dorsal',
+		type: 'Repetições'
+	},
+	{
+		name: 'Serrote livre',
+		muscle: 'Dorsal',
+		type: 'Repetições'
+	},
+	{
+		name: 'Crucifixo invertido no banco',
+		muscle: 'Dorsal',
+		type: 'Repetições'
+	},
+	{
+		name: 'Encolhimento',
+		muscle: 'Dorsal',
+		type: 'Repetições'
+	},
+	{
+		name: 'Remada pulley',
+		muscle: 'Dorsal',
+		type: 'Repetições'
+	},
+	{
+		name: 'Remada alta',
+		muscle: 'Ombro',
+		type: 'Repetições'
+	},
+	{
+		name: 'Elevação lateral',
+		muscle: 'Ombro',
+		type: 'Repetições'
+	},
+	{
+		name: 'Elevação frontal',
+		muscle: 'Ombro',
+		type: 'Repetições'
+	},
+	{
+		name: 'Elevação alternada',
+		muscle: 'Ombro',
+		type: 'Repetições'
+	},
+	{
+		name: 'Elevação na polia',
+		muscle: 'Ombro',
+		type: 'Repetições'
+	},
+	{
+		name: 'Elevação frontal na diagonal com giro',
+		muscle: 'Ombro',
+		type: 'Repetições'
+	},
+	{
+		name: 'Crucifixo invertido na polia',
+		muscle: 'Ombro',
+		type: 'Repetições'
+	},
+	{
+		name: 'Rotação interna',
+		muscle: 'Ombro',
+		type: 'Repetições'
+	},
+	{
+		name: 'Rotaçaõ externa',
+		muscle: 'Ombro',
+		type: 'Repetições'
+	},
+	{
+		name: 'Desenvolvimento',
+		muscle: 'Ombro',
+		type: 'Repetições'
+	},
+	{
+		name: 'Desenvolvimneto Arnold',
+		muscle: 'Ombro',
+		type: 'Repetições'
+	},
+	{
+		name: 'Polia W',
+		muscle: 'Tríceps',
+		type: 'Repetições'
+	},
+	{
+		name: 'Polia com corda',
+		muscle: 'Tríceps',
+		type: 'Repetições'
+	},
+	{
+		name: 'Polia com barra',
+		muscle: 'Tríceps',
+		type: 'Repetições'
+	},
+	{
+		name: 'Francês',
+		muscle: 'Tríceps',
+		type: 'Repetições'
+	},
+	{
+		name: 'Tríceps coice',
+		muscle: 'Tríceps',
+		type: 'Repetições'
+	},
+	{
+		name: 'Tríceps testa',
+		muscle: 'Tríceps',
+		type: 'Repetições'
+	},
+	{
+		name: 'Tríceps banco',
+		muscle: 'Tríceps',
+		type: 'Repetições'
+	},
+	{
+		name: 'Supinado no banco',
+		muscle: 'Tríceps',
+		type: 'Repetições'
+	},
+	{
+		name: 'Barra paralela',
+		muscle: 'Tríceps',
+		type: 'Repetições'
+	},
+	{
+		name: 'Pegada invertida na polia',
+		muscle: 'Tríceps',
+		type: 'Repetições'
+	},
+	{
+		name: 'Flexora',
+		muscle: 'Pernas',
+		type: 'Repetições'
+	},
+	{
+		name: 'Leg press',
+		muscle: 'Pernas',
+		type: 'Repetições'
+	},
+	{
+		name: 'Hack',
+		muscle: 'Pernas',
+		type: 'Repetições'
+	},
+	{
+		name: 'Extensora',
+		muscle: 'Pernas',
+		type: 'Repetições'
+	},
+	{
+		name: 'Cadeira abdutora',
+		muscle: 'Pernas',
+		type: 'Repetições'
+	},
+	{
+		name: 'Abdutora livre',
+		muscle: 'Pernas',
+		type: 'Repetições'
+	},
+	{
+		name: 'Cadeira adutora',
+		muscle: 'Pernas',
+		type: 'Repetições'
+	},
+	{
+		name: 'Adutora livre',
+		muscle: 'Pernas',
+		type: 'Repetições'
+	},
+	{
+		name: 'Agachamento com barra',
+		muscle: 'Pernas',
+		type: 'Repetições'
+	},
+	{
+		name: 'Agachamento co polia',
+		muscle: 'Pernas',
+		type: 'Repetições'
+	},
+	{
+		name: 'Afundo guiado',
+		muscle: 'Pernas',
+		type: 'Repetições'
+	},
+	{
+		name: 'Afundo livre',
+		muscle: 'Pernas',
+		type: 'Repetições'
+	},
+	{
+		name: 'Quatro apoios',
+		muscle: 'Pernas',
+		type: 'Repetições'
+	},
+	{
+		name: 'Glúteo no step',
+		muscle: 'Pernas',
+		type: 'Repetições'
+	},
+	{
+		name: 'Glúteo na polia',
+		muscle: 'Pernas',
+		type: 'Repetições'
+	},
+	{
+		name: 'Panturilha',
+		muscle: 'Pernas',
+		type: 'Repetições'
+	},
+	{
+		name: 'Levantamento terra',
+		muscle: 'Pernas',
+		type: 'Repetições'
+	},
+	{
+		name: 'Reto superior',
+		muscle: 'Abdominal',
+		type: 'Repetições'
+	},
+	{
+		name: 'Reto superior na cadeira',
+		muscle: 'Abdominal',
+		type: 'Repetições'
+	},
+	{
+		name: 'Oblíquo na cadeira',
+		muscle: 'Abdominal',
+		type: 'Repetições'
+	},
+	{
+		name: 'Oblíquo livre',
+		muscle: 'Abdominal',
+		type: 'Repetições'
+	},
+	{
+		name: 'Reto inferior',
+		muscle: 'Abdominal',
+		type: 'Repetições'
+	},
+	{
+		name: 'Paravertebral',
+		muscle: 'Abdominal',
+		type: 'Repetições'
+	},
+	{
+		name: 'Prancha',
+		muscle: 'Abdominal',
+		type: 'Repetições'
+	},
+	{
+		name: 'Ponte',
+		muscle: 'Abdominal',
+		type: 'Repetições'
+	},
+	{
+		name: 'Esteira',
+		muscle: 'Aeróbio',
+		type: 'Tempo'
+	},
+	{
+		name: 'Bicicleta horizontal',
+		muscle: 'Aeróbio',
+		type: 'Tempo'
+	},
+	{
+		name: 'Bicicleta vertical',
+		muscle: 'Aeróbio',
+		type: 'Tempo'
+	},
+	{
+		name: 'Bicicleta spinning',
+		muscle: 'Aeróbio',
+		type: 'Tempo'
+	},
+	{
+		name: 'Elíptico',
+		muscle: 'Aeróbio',
+		type: 'Tempo'
+	}
+];
+for(i in exercices){
+	var exe = exercices[i];
+	dataBase.rel.save('exercice', exe);
+}

@@ -257,6 +257,27 @@ angular.module('gymker.userservices', [])
 			callback(true, err);
 		});
 	};
+	
+	var validateUniqueKeys = function(value, callback){
+		DataBase.query(function(doc, emit){
+			if(doc._id.indexOf('user') == 0){
+				emit(doc.data.email);
+				emit(doc.data.phone);
+				emit(doc.data.cref);
+			}
+		}, {
+			key: value
+		}).then(function(result){
+			var users = result.rows;
+			if(users.length > 0){
+				callback(false, false);
+			}else{
+				callback(false, true);
+			}
+		}).catch(function (err) {
+			callback(true, err);
+		});
+	};
 
 	return {
 		save: save,
@@ -268,7 +289,8 @@ angular.module('gymker.userservices', [])
 		getUserRelations: getUserRelations,
 		acceptRelationship: acceptRelationship,
 		rejectRelationship: rejectRelationship,
-		login: login
+		login: login,
+		validateUniqueKeys: validateUniqueKeys
 	};
 
 }]);

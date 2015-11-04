@@ -24,6 +24,15 @@ app.config(function($stateProvider, $urlRouterProvider) {
 			}
 		}
 	})
+	
+	.state('app.exercice', {
+		url: "/exercice/:exerciceId",
+		views: {
+			'menuContent': {
+				templateUrl: "templates/exercices/exercice.html"
+			}
+		}
+	})
 
 	.state('app.training-show', {
 		url: "/training/show/:trainingId",
