@@ -5,8 +5,12 @@ angular.module('gymker.database', [])
 	var localDB = new PouchDB("gymker", {adapter: 'websql'});
 //	var remoteDB = new PouchDB("https://gymker.iriscouch.com/gymker-test");
 //	var remoteDB = new PouchDB("http://gymker.smileupps.com/gymker");
-	var remoteDB = new PouchDB("http://gymkerdb-henriquerotava.rhcloud.com/gymker");
-	
+	var remoteDB = new PouchDB("http://gymkerdb-henriquerotava.rhcloud.com/gymker", {
+		auth: {
+		    username: 'gymker',
+		    password: 'C0nnect123'
+		}
+	});
 
 	var sync = function(){
 		localDB.sync(remoteDB, {live: true, retry: true});
@@ -88,6 +92,12 @@ angular.module('gymker.database', [])
 	    {
 	    	singular: 'vote',
 	    	plural: 'votes',
+	    	exercice: {belongsTo: {type: 'exercice', options: {async: true}}},
+	    	user: {belongsTo: {type: 'user', options: {async: true}}}
+	    },
+	    {
+	    	singular: 'comment',
+	    	plural: 'comments',
 	    	exercice: {belongsTo: {type: 'exercice', options: {async: true}}},
 	    	user: {belongsTo: {type: 'user', options: {async: true}}}
 	    }
