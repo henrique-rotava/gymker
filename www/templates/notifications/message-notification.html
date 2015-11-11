@@ -1,0 +1,26 @@
+<ion-view view-title="Notificação" ng-controller="ShowContactNotificationController">
+
+	<ion-content>
+		
+		<div class="card">
+			<div class="item item-divider">
+				<h2>{{notification.title}}</h2>
+				<p>
+					De: <a ng-href="#app/user/{{notification.sender.id}}" class="not-link balanced">{{notification.sender.name}}</a>
+				</p>
+			</div>
+			<div class="item item-text-wrap">
+				{{notification.message}}
+			</div>
+			
+<!-- 			<div class="row"> -->
+<!-- 				<div class="col text-center"> -->
+<!-- 					<a class="button button-clear button-balanced full-width" href="#/app/training/show/{{notification.training}}"> -->
+<!-- 						Ver treino -->
+<!-- 					</a> -->
+<!-- 				</div> -->
+<!-- 			</div> -->
+			
+		</div>
+	</ion-content>
+</ion-view>

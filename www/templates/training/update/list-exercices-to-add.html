@@ -1,0 +1,52 @@
+<ion-modal-view>
+	<ion-header-bar>
+		<h1 class="title balanced">Adicionar exercícios</h1>
+		<div class="buttons">
+			<button class="button button-clear icon ion-ios-close-empty" ng-click="closeSelection()"></button>
+		</div>
+	</ion-header-bar>
+	<ion-content>
+		<div class="item item-input-inset stable-bg item-button-right">
+			<label class="item-input-wrapper">
+				<i class="icon ion-search placeholder-icon"></i>
+				<input type="text" placeholder="Pesquisar" ng-model="search">
+			</label>
+			<i class="icon ion-ios-close-outline padding-horizontal clear-search" ng-show="search" ng-click="search=''"></i>
+		</div>
+		
+		<div class="list">
+			<div class="item item-text-wrap item-thumbnail-left item-checkbox-right" ng-repeat="exercice in exercices | filterByProperties:search:['name','muscle'] track by $index">
+				<img src="{{exercice.image}}">
+				{{exercice.name}}
+				<span class="item-note">
+					{{exercice.muscle}}
+			    </span>
+			    <p>
+			    	<span>{{exercice.intensity.series || 0}} Séries</span>
+			    	<span>{{exercice.intensity.repetitions || 0}} Repet.</span>
+			    	<span>{{exercice.intensity.weight || 0}} Kg</span>
+			    </p>
+				<label class="checkbox checkbox-balanced">
+					<input type="checkbox" ng-click="selectExerciceToAdd(exercice)">
+				</label>
+			</div>
+		</div>
+		
+		<div class="list list-inset" ng-hide="exercice">
+		    <div class="item text-center icon-left">
+		    	<i class="icon ion-android-warning"></i>
+				Sua busca não retornou resultados
+		    </div>
+		</div>
+		
+	</ion-content>
+	
+	<div class="bar bar-footer footer-buttons">
+ 		<div class="row">
+			<div class="col">
+				<button class="button button-balanced button-clear icon-left ion-ios-plus-outline" ng-click="addExercices()">Adicionar</button>
+			</div>
+		</div>
+	</div>
+	
+</ion-modal-view>

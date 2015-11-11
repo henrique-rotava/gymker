@@ -206,9 +206,40 @@ angular.module('gymker.trainingservices', [])
 		});
 	};
 	
+	var updateTrainingDay = function(trainingDay, callback){
+		DataBase.rel.save('trainingDay',
+			// save the training day
+			trainingDay
+		).then(function(result){
+			return DataBase.rel.find('trainingDay', trainingDay.id);
+		}).then(function(result){	
+			var dbtrainingDay = DataBase.parseResponse('trainingDay', trainingDay.id, angular.copy(result));
+			callback(false, dbtrainingDay);
+		}).catch(function (err) {
+			callback(true, err);
+		});
+	};
+	
+	var addExercicesToDay = function(trainingDay, exercices, callback){
+		var trainingExercices = convertExercicesToTrainingExercices(exercices);
+		saveExercices(trainingExercices, trainingDay, function(error, exercicesResult, dayResult){
+			
+			if(!error){
+				var newExerciceList = trainingDay.trainingExercices || [];
+				trainingDay.trainingExercices = newExerciceList.concat(exercicesResult);
+				updateTrainingDay(trainingDay, callback);
+			}else{
+				callback(true, exercicesResult);
+			}
+		});
+		
+	};
+	
 	return {
 		save: save,
-		get: get
+		get: get,
+		updateTrainingDay: updateTrainingDay,
+		addExercicesToDay: addExercicesToDay
 	};
 	
 }]);

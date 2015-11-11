@@ -6,7 +6,7 @@
 			<div class="item item-divider">
 				<h2>{{notification.title}}</h2>
 				<p>
-					<a href="">{{notification.sender.name}}</a> gostaria de ser seu(sua) treinador(a).
+					<a ng-href="#app/user/{{notification.sender.id}}" class="not-link balanced">{{notification.sender.name}}</a> gostaria de ser seu(sua) treinador(a).
 				</p>
 			</div>
 			<div class="item item-text-wrap">
@@ -14,13 +14,18 @@
 			</div>
 			
 			<div class="row">
-				<div class="col text-center">
-					<button class="button button-clear button-balanced full-width icon-button ion-ios-close-outline" ng-click="rejectContact(notification.relation)">
+				<div class="col text-center" ng-show="notification.status">
+					<button class="button button-clear button-dark full-width" disabled ng-click="rejectContact(notification)">
+						Contato {{notification.status == 'accepted' ? 'confirmado' : 'rejeitado'}}
+					</button>
+				</div>
+				<div class="col text-center" ng-show="!notification.status">
+					<button class="button button-clear button-balanced full-width icon-button ion-ios-close-outline" ng-click="rejectContact(notification)">
 						Rejeitar
 					</button>
 				</div>
-				<div class="col text-center">
-					<button class="button button-clear button-balanced full-width icon-button ion-ios-checkmark-outline" ng-click="acceptContact(notification.relation)">
+				<div class="col text-center" ng-show="!notification.status">
+					<button class="button button-clear button-balanced full-width icon-button ion-ios-checkmark-outline" ng-click="acceptContact(notification)">
 						Aceitar
 					</button>
 				</div>

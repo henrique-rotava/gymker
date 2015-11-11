@@ -22,16 +22,22 @@ var app = angular.module('gymker',
 	});
 	
 	updateSessionUser = function(user){
-		$rootScope.user = user;
+		$rootScope.$apply(function(){
+			$rootScope.user = user;
+		});
 	}
 
 	DataBase.startUp();
 	
-	AuthService.getUser(function(error, result){
-		if(!error){
-			updateSessionUser(result);
-		}
-	});
+	loadUser = function(){
+		AuthService.getUser(function(error, result){
+			if(!error){
+				updateSessionUser(result);
+			}
+		});
+	}
+	
+	loadUser();
 	
 	$rootScope.getExecutionPercent = function(execution){
 		return ((execution.doneExercicesCount || 0) * 100) / execution.trainingExercices.length;

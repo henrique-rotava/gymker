@@ -6,7 +6,7 @@
 			<div class="item item-divider">
 				<h2>{{notification.title}}</h2>
 				<p>
-					<a href="">{{notification.sender.name}}</a> enviou um novo treino para você.
+					<a ng-href="#app/user/{{notification.sender.id}}" class="not-link balanced">{{notification.sender.name}}</a> enviou um novo treino para você.
 				</p>
 			</div>
 			<div class="item item-text-wrap" ng-show="{{notification.message}}">

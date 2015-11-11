@@ -33,7 +33,7 @@
 				    	<span>{{trainingExercice.intensity.repetitions || 0}} Repet.</span>
 				    	<span>{{trainingExercice.intensity.weight || 0}} Kg</span>
 					</p>
-					<i ng-show="executingDay.started" ng-click="checkExercice(trainingExercice)" class="icon {{trainingExercice.done ? 'ion-ios-checkmark-outline' : 'ion-ios-circle-outline'}} balanced"></i>
+					<i ng-show="executingDay.started" ng-click="checkExercice(trainingExercice)" class="icon {{trainingExercice.done ? 'ion-ios-checkmark' : 'ion-ios-circle-outline'}} balanced"></i>
 				</div>
 			</div>
 			
@@ -51,13 +51,13 @@
 	<div class="bar bar-footer footer-buttons" ng-show="executingDay && !executingDay.finished">
  		<div class="row">
 			<div class="col">
-				<button class="button button-balanced button-clear icon-left ion-ios-close-empty" ng-click="discardExecution(executingDay)">Descartar</button>
+				<button class="button button-balanced button-clear icon-left ion-ios-close-outline" ng-click="discardExecution(executingDay)">Descartar</button>
 			</div>
 			<div class="col" ng-show="!executingDay.running">
 				<button class="button button-balanced button-clear icon-left ion-ios-play-outline" ng-click="startExecution(executingDay)">Iniciar</button>
 			</div>
 			<div class="col" ng-show="executingDay.running || executingDay.started">
-				<button class="button button-balanced button-clear icon-left ion-ios-checkmark-empty" ng-click="saveExecution(executingDay)">Salvar e finalizar</button>
+				<button class="button button-balanced button-clear icon-left ion-ios-checkmark-outline" ng-click="saveExecution(executingDay)">Salvar e finalizar</button>
 			</div>
 		</div>
 	</div>

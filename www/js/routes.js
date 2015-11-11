@@ -97,6 +97,15 @@ app.config(function($stateProvider, $urlRouterProvider) {
 			}
 		}
 	})
+	
+	.state('app.user', {
+		url: "/user/:userId",
+		views: {
+			'menuContent': {
+				templateUrl: "templates/profile/external-profile.html"
+			}
+		}
+	})
   
 	.state('app.profile-edit', {
 		url: "/profile/edit",
@@ -139,6 +148,15 @@ app.config(function($stateProvider, $urlRouterProvider) {
 		views: {
 			'menuContent': {
 				templateUrl: "templates/notifications/contact-request-notification.html"
+			}
+		}
+	})
+	
+	.state('app.notifications-message', {
+		url: "/profile/message-notification/:notificationId",
+		views: {
+			'menuContent': {
+				templateUrl: "templates/notifications/message-notification.html"
 			}
 		}
 	})

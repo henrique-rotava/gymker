@@ -8,13 +8,28 @@ angular.module('notificationservices', [])
 		user[propertyName] = notifications;
 	}
 	
+	var update = function(notification, callback){
+		DataBase.rel.save('notification',
+			// save the notification
+			notification
+			
+		).then(function(result){
+			return DataBase.rel.find('notification', notification.id);
+		}).then(function(result){	
+			var dbNotification = DataBase.parseResponse('notification', notification.id, angular.copy(result));
+			callback(false, dbNotification);
+		}).catch(function (err) {
+			callback(true, err);
+		});
+	};
+	
 	var save = function(senderId, recipientId, notification, callback){
 		
 		notification.sender = senderId;
 		notification.read = false;
 		
 		DataBase.rel.save('notification',
-			// salva the notification
+			// save the notification
 			notification
 			
 		).then(function(result){
@@ -104,7 +119,8 @@ angular.module('notificationservices', [])
 	return {
 		save: save,
 		read: read,
-		get: get
+		get: get,
+		update: update
 	}
 	
 }])

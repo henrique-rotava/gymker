@@ -1,13 +1,18 @@
-<ion-view view-title="Perfil" ng-controller="ProfileController">
-	<ion-content >	
+<ion-view view-title="Perfil" ng-controller="ExternalProfileController">
+	<ion-content >
+		<style>
+			.pic-container:before, .profile-pic{
+				background-image: url({{externalUser.profilePic}});
+			}
+		</style>
 		<div class="text-center padding pic-container">
 			<div class="circle profile-pic"></div>
 			<br/>
-			<label class="stable profile-name">{{user.name}}</label>
+			<label class="stable profile-name">{{externalUser.name}}</label>
 			<div class="row">
 				<div class="col"></div>
 				<div class="col text-center">
-					<a ng-href="#/app/profile/edit" class="button button-small button-block button-outline button-light">Editar</a>
+					<div ng-click="writeNotification()" class="button button-small button-block button-outline button-light">Enviar notificação</div>
 				</div>
 				<div class="col"></div>
 			</div>
@@ -15,25 +20,19 @@
 		
 		<div class="row light-bg profile-properties">
 			<a href="#/app/training/list" class="col text-center">
-				<span class="balanced bigger-counter">{{user.trainings.length || 0}}</span>
+				<span class="balanced bigger-counter">{{externalUser.trainings.length || 0}}</span>
 				<br/>
 				Treinos
 			</a>
 			<a href="#/app/profile/athletes" ng-show="user.cref" class="col text-center">
-				<span class="balanced bigger-counter">{{user.athletes.length || 0}}</span>
+				<span class="balanced bigger-counter">{{externalUser.athletes.length || 0}}</span>
 				<br/>
 				Alunos
 			</a>
 			<a href="#/app/profile/coachs" class="col text-center">
-				<span class="balanced bigger-counter">{{user.coachs.length || 0}}</span>
+				<span class="balanced bigger-counter">{{externalUser.coachs.length || 0}}</span>
 				<br/>
 				Treinadores
-			</a>
-		</div>
-		
-		<div class="content padding-horizontal padding-top">
-			<a href="#/app/training/list" class="button button-block button-balanced">
-				Iniciar novo treino
 			</a>
 		</div>
 		

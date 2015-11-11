@@ -68,13 +68,14 @@ ion-content{
     right: 25px;
     color: white;
     font-size: 14px;
-    background: red;
+    background: #ef473a;
     min-width: 20px;
     height: 18px;
     margin-top: 8px;
     line-height: 18px;
     border-radius: 8px;
     margin-right: -10px;
+    border: solid 1px #27ae60;
 }
 .input-floating-error{
     position: absolute;
@@ -264,4 +265,24 @@ input[type=text].input-box {
     height: 3px;
     transition: width 200ms ease-in-out;
 }
+
+.item-checkbox-right{
+	padding-right: 60px;
+}
+.item-checkbox-right .checkbox {
+    position: absolute;
+    top: 50%;
+    right: 8px;
+    left: 8px;
+    z-index: 3;
+    margin-top: -21px;
+}
+.item-checkbox-right .checkbox input, .item-checkbox-right .checkbox-icon{
+	float:right;	
+}
+
+a.button .icon:before, a.button.icon:before, a.button.icon-left:before, a.button.icon-right:before{
+	margin-top: 0px;
+}
+
 /**/

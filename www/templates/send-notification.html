@@ -1,0 +1,27 @@
+<ion-modal-view>
+	<ion-header-bar>
+		<h1 class="title balanced">Enviar notificação</h1>
+		<div class="buttons">
+			<button class="button button-clear icon ion-ios-close-empty" ng-click="closeModal()"></button>
+		</div>
+	</ion-header-bar>
+	<ion-content>
+		<div class="card">
+			<form ng-submit="sendNotification()">
+				<div class="list list-inset">
+					<label class="item item-input item-floating-label">
+						<span class="input-label">Título</span>
+						<input type="text" placeholder="Título" ng-model="notification.title">
+					</label>
+					<label class="item item-input item-floating-label">
+						<span class="input-label">Mensagem</span>
+						<textarea type="text" placeholder="Mensagem" ng-model="notification.message" rows="6"></textarea>
+					</label>
+					<label class="item">
+						<button class="button button-block button-balanced" type="submit">Enviar</button>
+					</label>
+				</div>
+			</form>
+		</div>
+	</ion-content>
+</ion-modal-view>

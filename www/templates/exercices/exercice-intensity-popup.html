@@ -22,8 +22,8 @@
 			</button>
 		</span>
 		<span class="button-small col col-12"></span>
-		<span class="button-small col col-25" ng-show="exercice.type == 'Repetições'">
-			<label for="weight">Peso</label>
+		<span class="button-small col col-25" ng-show="exercice.type == 'Repetições' || exercice.exercice.type == 'Repetições'">
+			<label for="weight">Kg</label>
 			<button type="button" class="button button-clear button-small button-dark" ng-click="increase('weight')">
 				<i class="icon ion-chevron-up"></i>
 			</button>
@@ -33,8 +33,8 @@
 			</button>
 		</span>
 		
-		<span class="button-small col col-25" ng-show="exercice.type == 'Tempo'">
-			<label for="weight">Tempo</label>
+		<span class="button-small col col-25" ng-show="exercice.type == 'Tempo' || exercice.exercice.type == 'Tempo'">
+			<label for="weight">Minutos</label>
 			<button type="button" class="button button-clear button-small button-dark" ng-click="increase('time')">
 				<i class="icon ion-chevron-up"></i>
 			</button>

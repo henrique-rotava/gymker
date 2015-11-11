@@ -36,9 +36,9 @@
 		        <ion-item menu-close ng-click="login()" ng-controller="AuthController" ng-if="user.isTransient">
 		          Login
 		        </ion-item>
-		        <ion-item menu-close href="#/app/exercices/create">
-		          Novo exercício
-		        </ion-item>
+<!-- 		        <ion-item menu-close href="#/app/exercices/create"> -->
+<!-- 		          Novo exercício -->
+<!-- 		        </ion-item> -->
 		        <ion-item menu-close href="#/app/exercices">
 		          Exercícios
 		        </ion-item>
@@ -49,10 +49,10 @@
 		          Novo treino
 		        </ion-item>
 		        <ion-item menu-close href="#/app/profile/athletes" ng-if="user.cref">
-		          Meus alunos
+		          Alunos
 		        </ion-item>
 		        <ion-item menu-close href="#/app/profile/coachs">
-		          Meus treinadores
+		          Treinadores
 		        </ion-item>
 		        <ion-item menu-close ng-click="logout()" ng-controller="AuthController" ng-if="!user.isTransient">
 		          Sair

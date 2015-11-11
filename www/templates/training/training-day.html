@@ -2,22 +2,29 @@
 
 	<ion-content>
 		<div class="card" ng-show="day">
-			<div class="list">
+			<div class="list" show-reorder="true">
 				<a ng-href="#/app/training/show/{{::training.id}}" class="item item-text-wrap">
 					<h2 class="balanced"><b>{{::training.name}} - {{::day.marker}}</b></h2>
 				</a>
-				<a ng-href="#app/training/charts/{{::training.id}}/{{::day.marker}}" class="item balanced">
-					Ver análise do treino<i class="icon ion-arrow-graph-up-right padding-left"></i>
+				<a ng-href="#app/training/charts/{{::training.id}}/{{::day.marker}}" class="item balanced text-center">
+					Ver análise do treino<i class="icon ion-ios-analytics-outline padding-left"></i>
 				</a>
-				<a ng-href="#app/exercice/{{trainingExercice.exercice.id}}" class="item item-icon-right item-text-wrap item-thumbnail-left item-icon-left" ng-repeat="trainingExercice in ::day.trainingExercices track by $index">
-					<img src="{{training.image}}"/>
+				<div ng-href="#app/exercice/{{trainingExercice.exercice.id}}" 
+					class="item item-text-wrap item-thumbnail-left item-checkbox-right" 
+					ng-repeat="trainingExercice in day.trainingExercices track by $index">
+					<img src="{{training.exercice.image}}"/>
 					<h2>{{::trainingExercice.exercice.name}}</h2>
 					<p>
+						<span>{{::trainingExercice.exercice.muscle}}</span>
+						<br/>
 						<span>{{trainingExercice.intensity.series || 0}} Séries</span>
 				    	<span>{{trainingExercice.intensity.repetitions || 0}} Repet.</span>
 				    	<span>{{trainingExercice.intensity.weight || 0}} {{trainingExercice.exercice.type == 'Tempo' ? 'min' : 'Kg'}}</span>
 					</p>
-				</a>
+					<label class="checkbox checkbox-balanced" ng-show="select">
+						<input type="checkbox" ng-click="selectExercice(trainingExercice)">
+					</label>
+				</div>
 			</div>
 		</div>
 		
@@ -27,8 +34,17 @@
 	
 	<div class="bar bar-footer bar-light footer-buttons">
  		<div class="row">
-			<div class="col">
+			<div class="col" ng-show="!select">
 				<button class="button button-balanced button-clear icon ion-ios-play-outline" ng-click="createExecutionTraining(training)">Executar</button>	
+			</div>
+			<div class="col" ng-show="!select">
+				<button class="button button-balanced button-clear icon ion-ios-plus-outline" ng-click="openSelection()">Adicionar</button>	
+			</div>
+			<div class="col" ng-show="select">
+				<button class="button button-balanced button-clear icon ion-ios-minus-outline" ng-click="removeSelection()">Remover</button>	
+			</div>
+			<div class="col">
+				<button class="button button-balanced button-clear icon {{select ? 'ion-ios-checkmark' : 'ion-ios-checkmark-outline'}}" ng-click="select=!select">Selecionar</button>	
 			</div>
 		</div>
 	</div>

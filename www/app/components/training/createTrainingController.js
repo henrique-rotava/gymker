@@ -100,7 +100,7 @@ angular.module('gymker.trainingcontrollers')
 	};
 	
 	$scope.selectExercice = function(exercice, letter){
-		
+		console.log(exercice.selected);
 		if(exercice.selected){
 			$scope.configExercice(exercice);
 			addExercice(exercice, letter);
