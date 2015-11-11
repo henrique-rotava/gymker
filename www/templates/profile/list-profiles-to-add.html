@@ -15,18 +15,16 @@
 		</div>
 		
 		<div class="list">
-			<div class="item item-toggle item-avatar item-toggle" ng-repeat="user in users | filterByProperties:search:['name'] track by $index">
+			<div class="item item-avatar item-checkbox-right" ng-repeat="user in users | filterByProperties:search:['name'] track by $index">
 				<img src="{{user.profilePic}}">
 				{{user.name}}
 				<p>{{user.email}}</p>
 				<span class="item-note" ng-if="relationUsersIDs[user.id]">
 					Adicionado
 				</span>
-				<label class="toggle toggle-balanced" ng-if="!relationUsersIDs[user.id]">
-					<input type="checkbox" ng-model="user.selected" ng-change="selectUser(user)">
-					<div class="track">
-						<div class="handle"></div>
-					</div>
+				
+				<label class="checkbox checkbox-balanced">
+					<input type="checkbox" ng-model="user.selected" ng-change="selectUser(user)"/>
 				</label>
 			</div>
 		</div>
