@@ -1,4 +1,4 @@
-<ion-view view-title="Meus treinadores" ng-controller="AthleteController">
+<ion-view view-title="Treinadores" ng-controller="AthleteController">
 	<ion-content>
 	
 		<ion-refresher pulling-text="Arraste para atualizar"
@@ -16,15 +16,15 @@
 		</div>
 		
 		<div class="list">
-			<div class="item item-avatar item-icon-right" ng-repeat="relation in filteredRelations = (relations | filter:search)">
+			<a ng-href="#app/user/{{relation.relater.id}}" class="item item-avatar item-icon-right" ng-repeat="relation in relations | filterByProperties:search:['relater.name'] track by $index">
 				<img src="{{relation.related.profilePic}}">
 				{{relation.relater.name}}
-				<p>{{relation.relater.email}}</p>
 				<span ng-if="!relation.relaterConfirmed" class="item-note">
 					Não confirmado
 				</span>
+				<p>{{relation.relater.email}}</p>
 				<i class="icon ion-android-more-vertical"></i>
-			</div>
+			</a>
 		</div>
 		
 		<div class="list list-inset" ng-hide="relations.length || !relationsLoaded">
@@ -40,7 +40,7 @@
 	<div class="bar bar-footer footer-buttons">
  		<div class="row">
 			<div class="col">
-				<button class="button button-balanced button-clear icon-left ion-ios-personadd" ng-click="openInvite()">Adicionar</button>
+				<button class="button button-balanced button-clear icon-left ion-ios-personadd-outline" ng-click="openInvite()">Adicionar</button>
 			</div>
 		</div>
 	</div>

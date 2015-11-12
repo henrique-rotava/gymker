@@ -104,14 +104,22 @@ angular.module('gymker.database', [])
 	    {
 	    	singular: 'vote',
 	    	plural: 'votes',
-	    	exercice: {belongsTo: {type: 'exercice', options: {async: true}}},
-	    	user: {belongsTo: {type: 'user', options: {async: true}}}
+	    	relations: {
+		    	'exercice': {belongsTo: {type: 'exercice', options: {async: true}}},
+		    	'user': {belongsTo: {type: 'user', options: {async: true}}}
+	    	}
 	    },
 	    {
 	    	singular: 'comment',
 	    	plural: 'comments',
-	    	exercice: {belongsTo: {type: 'exercice', options: {async: true}}},
-	    	user: {belongsTo: {type: 'user', options: {async: true}}}
+	    	relations: {
+		    	'exercice': {belongsTo: {type: 'exercice', options: {async: true}}},
+		    	'user': {belongsTo: {type: 'user', options: {async: true}}}
+	    	}
+	    },
+	    {
+	    	singular: 'config',
+	    	plural: 'configs'
 	    }
 	];
 	

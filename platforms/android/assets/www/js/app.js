@@ -22,16 +22,22 @@ var app = angular.module('gymker',
 	});
 	
 	updateSessionUser = function(user){
-		$rootScope.user = user;
+		$rootScope.$apply(function(){
+			$rootScope.user = user;
+		});
 	}
 
 	DataBase.startUp();
 	
-	AuthService.getUser(function(error, result){
-		if(!error){
-			updateSessionUser(result);
-		}
-	});
+	loadUser = function(){
+		AuthService.getUser(function(error, result){
+			if(!error){
+				updateSessionUser(result);
+			}
+		});
+	}
+	
+	loadUser();
 	
 	$rootScope.getExecutionPercent = function(execution){
 		return ((execution.doneExercicesCount || 0) * 100) / execution.trainingExercices.length;
@@ -67,6 +73,20 @@ app.filter('filterByProperties', function () {
     }
     
 });
+
+app.filter('trustAsResourceUrl', ['$sce', function($sce) {
+    return function(val) {
+        return $sce.trustAsResourceUrl(val);
+    };
+}]);
+
+app.directive('youtubeEmbed', ['$sce', function($sce) {
+	return function (scope, elem, attr){
+		var video = attr.videoId;
+		var src = $sce.trustAsResourceUrl('https://www.youtube.com/embed/' + video + '?autohide=1&showinfo=0');
+		elem.html('<iframe width="560" height="315" src="' + src + '" frameborder="0" allowfullscreen></iframe>')
+	};
+}]);
 
 /* Global functions */
 Object.resolve = function(path, obj, safe) {

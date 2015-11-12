@@ -1,12 +1,19 @@
-<ion-view view-title="Novo Exercício">
-	<ion-content ng-controller="CreateExerciceController">
+<ion-view view-title="Novo Exercício" ng-controller="CreateExerciceController">
+	<ion-content>
 		
 		<div class="card">
-<!-- 			<div class="item item-divider"> -->
-<!-- 				<h2>Primeiros passos</h2> -->
-<!-- 				<p>Apenas algumas informações básicas do treino.</p> -->
-<!-- 			</div> -->
 			<div class="list">
+					
+					<div class="item item-image">
+						
+						<div class="image-selector">
+							<i class="icon ion-image"></i>
+							<br/>
+							<span>Selecionar imagem</span>
+						</div>
+						
+					</div>
+			
 					<label class="item item-input item-floating-label">
 						<span class="input-label">Nome</span>
 						<input type="text" placeholder="Nome" ng-model="exercice.name">
@@ -29,6 +36,20 @@
 							<option ng-repeat="type in exerciceTypes">{{type}}</option>
 						</select>
 					</label>
+					
+					<label class="item item-input item-floating-label">
+						<span class="input-label">Descrição</span>
+						<textarea rows="6" placeholder="Descrição" ng-model="exercice.description"></textarea>
+					</label>
+					
+					<label class="item item-input item-floating-label">
+						<span class="input-label">ID de vídeo do YouTube</span>
+						<input type="text" placeholder="ID de vídeo do YouTube" ng-model="exercice.video">
+					</label>
+					
+					<div class="item item-image video-wrapper" ng-if="exercice.video">
+						<youtube-embed video-id="{{exercice.video}}"></youtube-embed>
+					</div>
 						
 				<div class="padding">
 		        	<button class="button button-block button-balanced" ng-click="createExercice()">Criar</button>

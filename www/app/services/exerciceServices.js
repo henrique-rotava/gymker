@@ -89,6 +89,15 @@ angular.module('gymker.exerciceservices', [])
 		});
 	};
 	
+	var getMuscles = function(callback){
+		DataBase.rel.find('config', 'muscles')
+		.then(function(result){
+			callback(false, result.configs[0]);
+		}).catch(function(error){
+			callback(true, error);
+		});
+	};
+	
 	
 	var repository = {
 		save: save,
@@ -96,7 +105,8 @@ angular.module('gymker.exerciceservices', [])
 		get: get,
 		saveVote: saveVote,
 		getExerciceVotesCount: getExerciceVotesCount,
-		getUserExerciceVote: getUserExerciceVote
+		getUserExerciceVote: getUserExerciceVote,
+		getMuscles: getMuscles
 	}
 
 	return repository;

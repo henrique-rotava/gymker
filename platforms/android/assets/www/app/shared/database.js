@@ -3,9 +3,26 @@ angular.module('gymker.database', [])
 .factory('DataBase', [function(){
 	
 	var localDB = new PouchDB("gymker", {adapter: 'websql'});
-//	var remoteDB = new PouchDB("https://gymker.iriscouch.com/gymker-test");
-	var remoteDB = new PouchDB("http://gymker.smileupps.com/gymker");
+	var remoteDB = new PouchDB("http://gymkerdb-henriquerotava.rhcloud.com/gymker", {
+		auth: {
+		    username: 'gymker',
+		    password: 'C0nnect123'
+		}
+	});
 	
+	// Listening for database changes
+	var changes = localDB.changes({
+		since: 'now',
+		live: true,
+		doc_ids: ['user_2_' + localStorage.getItem('uid')]
+	}).on('change', function(change) {
+		console.log('Database changed');
+		loadUser();
+	}).on('error', function (err) {
+		console.log('Sync error', err);
+	});
+
+	//changes.cancel();
 
 	var sync = function(){
 		localDB.sync(remoteDB, {live: true, retry: true});
@@ -14,8 +31,6 @@ angular.module('gymker.database', [])
 	var install = function(db){
 		localDB.get('_design/index').catch(function(error){
 			if(error.status == '404'){
-				
-				
 		
 			}
 		});
@@ -85,6 +100,26 @@ angular.module('gymker.database', [])
 	    		'training': {belongsTo: 'training'},
 	    		'athlete': {belongsTo: {type: 'user', options: {async: true}}}
 	    	}
+	    },
+	    {
+	    	singular: 'vote',
+	    	plural: 'votes',
+	    	relations: {
+		    	'exercice': {belongsTo: {type: 'exercice', options: {async: true}}},
+		    	'user': {belongsTo: {type: 'user', options: {async: true}}}
+	    	}
+	    },
+	    {
+	    	singular: 'comment',
+	    	plural: 'comments',
+	    	relations: {
+		    	'exercice': {belongsTo: {type: 'exercice', options: {async: true}}},
+		    	'user': {belongsTo: {type: 'user', options: {async: true}}}
+	    	}
+	    },
+	    {
+	    	singular: 'config',
+	    	plural: 'configs'
 	    }
 	];
 	

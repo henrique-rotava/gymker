@@ -1,36 +1,44 @@
 <ion-view view-title="Treinos" ng-controller="ListTrainingsController">
-	<ion-view title="Treinos">
-		<ion-content>
-			<ion-refresher pulling-text="Arraste para atualizar"
-	         pulling-icon="ion-ios7-arrow-thin-down"
-	         on-refresh="refreshTrainings()">
-			</ion-refresher>
-			
-			<div class="item item-input-inset stable-bg">
-			    <label class="item-input-wrapper">
-			    	<i class="icon ion-search placeholder-icon"></i>
-			    	<input type="text" placeholder="Pesquisar" ng-model="search">
-			    </label>
-			    <i class="icon ion-ios-close-outline padding-horizontal clear-search" ng-show="search" ng-click="search=''"></i>
-			</div>
-			
-			<div class="list">
-				<a href="#/app/training/show/{{training.id}}" class="item" ng-repeat="training in trainings | filterByProperties:search:['name','coach.name'] track by $index">
-					{{training.name}}
-				    <p>
-				    	{{training.coach.name}}
-				    </p>
+
+	<ion-content>
+		<ion-refresher pulling-text="Arraste para atualizar"
+         pulling-icon="ion-ios7-arrow-thin-down"
+         on-refresh="refreshTrainings()">
+		</ion-refresher>
+		
+		<div class="item item-input-inset stable-bg">
+		    <label class="item-input-wrapper">
+		    	<i class="icon ion-search placeholder-icon"></i>
+		    	<input type="text" placeholder="Pesquisar" ng-model="search">
+		    </label>
+		    <i class="icon ion-ios-close-outline padding-horizontal clear-search" ng-show="search" ng-click="search=''"></i>
+		</div>
+		
+		<div class="list">
+			<a href="#/app/training/show/{{training.id}}" class="item" ng-repeat="training in trainings | filterByProperties:search:['name','coach.name'] | orderBy:'-createdDate' track by $index">
+				{{training.name}}
+			    <span class="item-note">{{ training.createdDate | date : 'dd MMM yyyy' : '-03'}}</span>
+			    <p>
+			    	{{training.coach.name}}
+			    </p>
+			</a>
+		</div>
+		
+		<div class="list list-inset" ng-hide="trainings.length || !trainingsLoaded">
+		     <div class="item text-center">
+				Você ainda não possui treinos.
+				<a href="#/app/training/create" class="button button-block button-outline button-balanced">
+					Novo treino
 				</a>
+		    </div>
+		</div>
+	</ion-content>
+	
+	<div class="bar bar-footer bar-light footer-buttons">
+ 		<div class="row">
+			<div class="col">
+				<a class="button button-balanced button-clear icon-left ion-ios-plus-outline" ng-href="#/app/training/create">Novo treino</a>	
 			</div>
-			
-			<div class="list list-inset" ng-hide="trainings.length || !trainingsLoaded">
-			     <div class="item text-center">
-					Você ainda não possui treinos.
-					<a href="#/app/training/create" class="button button-block button-outline button-balanced">
-						Novo treino
-					</a>
-			    </div>
-			</div>
-		</ion-content>
-	</ion-view>
+		</div>
+	</div>
 </ion-view>

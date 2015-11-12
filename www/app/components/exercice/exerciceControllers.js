@@ -4,26 +4,42 @@ angular.module('exercicecontrollers')
     ['$scope', '$ionicLoading', 'ExerciceRepository',
      function($scope, $ionicLoading, ExerciceRepository){
 
-  $scope.muscles = ['Bíceps', 'Tríceps', 'Peitoral', 'Costas', 'Antebraço', 'Coxa'];
-  $scope.exerciceTypes = ['Tempo', 'Repetições'];
+	$scope.$on('$ionicView.enter', function() {
+		startUp();
+	});
+    
+	var startUp = function(){
+		$scope.exercice = {};
+		
+		ExerciceRepository.getMuscles(function(error, result){
+			console.log(result);
+			if(!error){
+				$scope.$apply(function(){
+					$scope.muscles = result.muscles.sort();
+				});
+			}
+		});
+	};
+	$scope.exerciceTypes = ['Tempo', 'Repetições'];
 
-  $scope.exercice = {};
-
-  $scope.createExercice = function(){
-    ExerciceRepository.save($scope.exercice, function(error, result){
-      if(!error){
-        $ionicLoading.show({ 
-            template: 'Exercício criado!',
-            noBackdrop: true,
-            duration: 2000
-        });
-        $scope.exercice = {};
-      }else{
-        console.log("error");
-      }
-      console.log(result);
-    });
-  }
+	$scope.createExercice = function(){
+		ExerciceRepository.save($scope.exercice, function(error, result){
+			if(!error){
+				$ionicLoading.show({ 
+					template: 'Exercício criado!',
+					noBackdrop: true,
+					duration: 2000
+				});
+				$scope.exercice = {};
+			}else{
+				$ionicLoading.show({ 
+					template: 'Ocorreu um erro durante a criação do exercício.',
+					noBackdrop: true,
+					duration: 2000
+				});
+			}
+		});
+	};
 
 }])
 
@@ -56,77 +72,5 @@ angular.module('exercicecontrollers')
 
 }])
 
-.controller('ExerciceController', ['$scope', '$stateParams', function($scope, $stateParams){
-	
-	
-	$scope.$on('$ionicView.enter', function() {
-		startUp();
-	});
-	
-	var startUp = function(){
-		console.log($stateParams.exerciceId);
-	}
-	
-}])
-
-.controller('UserExerciceController', function($scope, $ionicActionSheet, $ionicPopup) {
-  
-  
-
-  $scope.exercices = [
-    {name: "Bíceps com barra", muscle: "Bíceps", series: 4, repetitions: 10, weight: 15},
-    {name: "Supinado", muscle: "Tríceps", series: 4, repetitions: 10, weight: 10},
-    {name: "Esteira", muscle: "Aeróbico", tempo: 10, weight: 10},
-    {name: "Barra", muscle: "Antebraço", series: 4, repetitions: 10, weight: 9}
-  ]
-
-  $scope.showActions = function(iindex) {
-   // Show the action sheet
-   var hideSheet = $ionicActionSheet.show({
-     buttons: [
-       { text: '<i class="icon ion-ios-analytics-outline"></i>Desempenho' },
-       { text: '<i class="icon ion-ios-star-outline"></i>Avaliação' },
-       { text: '<i class="icon ion-ios-information-outline"></i>Detalhes'}
-     ],
-     destructiveText: '<i class="icon ion-ios-minus-outline"></i>Remover',
-     titleText: 'Opções',
-     cancelText: '<i class="icon ion-ios-close-outline"></i>Fechar',
-     cancel: function() {
-      },
-     buttonClicked: function(index) {
-       return true;
-     },
-     destructiveButtonClicked: function(){
-        console.log(iindex);
-        return true;
-     }
-   });
-
- };
-
-	$scope.changeWeight = function(exer){
-		$scope.weight = exer.weight;
-		var weightPopUp = $ionicPopup.show({
-			templateUrl: 'popup.html',
-			title: 'Selecione o peso',
-			scope: $scope,
-			buttons: [
-		          { text: 'Cancelar' },
-		          {
-		        	  text: '<b>Salvar</b>',
-		        	  type: 'button-positive',
-		        	  onTap: function(e) {
-		        		  return $scope.weight;
-		        	  }
-		          }
-		    ]
-		});
-	
-		weightPopUp.then(function(res) {
-			exer.weight = res;
-		});
-	}
-
-})
 
 

@@ -15,15 +15,27 @@ angular.module('notificationcontrollers')
 		$ionicLoading.hide();
 	});
 	
-	$scope.acceptContact = function(relationId){
-		UserRepository.acceptRelationship(relationId, function(error, result){
+	$scope.acceptContact = function(notification){
+		UserRepository.acceptRelationship(notification.relation, function(error, result){
 			console.log(result);
+			notification.status = 'accepted';
+			NotificationRepository.update(notification, function(erro, result){
+				$scope.$apply(function(){
+					$scope.notification = result;
+				});
+			});
 		});
 	};
 	
-	$scope.rejectContact = function(relationId){
-		UserRepository.rejectRelationship(relationId, function(error, result){
+	$scope.rejectContact = function(notification){
+		UserRepository.rejectRelationship(notification.relation, function(error, result){
 			console.log(result);
+			notification.status = 'rejected';
+			NotificationRepository.update(notification, function(erro, result){
+				$scope.$apply(function(){
+					$scope.notification = result;
+				});
+			});
 		});
 	};
 	

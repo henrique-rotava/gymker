@@ -1,3 +1,22 @@
+var muscles = {
+	id: 'muscles',
+	muscles: [
+		'Peitoral',
+		'Bíceps', 
+		'Antebraço', 
+		'Dorsal', 
+		'Ombro', 
+		'Tríceps', 
+		'Pernas', 
+		'Abdominal', 
+		'Aeróbio',
+		'Panturilha',
+		'Trapézio'
+	]
+};
+
+dataBase.rel.save('config', muscles);
+
 var exercices = [
 	{
 		name: 'Supino reto',
@@ -205,7 +224,7 @@ var exercices = [
 		type: 'Repetições'
 	},
 	{
-		name: 'Rotaçaõ externa',
+		name: 'Rotação externa',
 		muscle: 'Ombro',
 		type: 'Repetições'
 	},

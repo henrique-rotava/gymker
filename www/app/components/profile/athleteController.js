@@ -1,7 +1,7 @@
 angular.module('profilecontrollers')
 
-.controller('AthleteController', ['$rootScope', '$scope', '$ionicModal', 'UserRepository', '$ionicLoading', 'NotificationRepository',
-                                function($rootScope, $scope, $ionicModal, UserRepository, $ionicLoading, NotificationRepository){
+.controller('AthleteController', ['$rootScope', '$scope', '$ionicModal', 'UserRepository', '$ionicLoading', 'NotificationRepository','$filter',
+                                function($rootScope, $scope, $ionicModal, UserRepository, $ionicLoading, NotificationRepository,$filter){
 
 	$scope.$on('$ionicView.enter', function() {
 		$scope.startUp();
@@ -62,7 +62,10 @@ angular.module('profilecontrollers')
 	    });
 		UserRepository.getAll(function(err, result){
 			if(!err){
-				$scope.users = result;
+				
+				$scope.users = $filter('filter')(result, {cref:''}, function(actual, expected) {
+					return actual;
+				});
 			}
 			$ionicLoading.hide();
 		});

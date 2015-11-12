@@ -18,18 +18,18 @@
 			<div class="item item-avatar item-checkbox-right" ng-repeat="user in users | filterByProperties:search:['name'] track by $index">
 				<img src="{{user.profilePic}}">
 				{{user.name}}
-				<p>{{user.email}}</p>
 				<span class="item-note" ng-if="relationUsersIDs[user.id]">
 					Adicionado
 				</span>
+				<p>{{user.email}}</p>
 				
-				<label class="checkbox checkbox-balanced">
+				<label class="checkbox checkbox-balanced" ng-if="!relationUsersIDs[user.id]">
 					<input type="checkbox" ng-model="user.selected" ng-change="selectUser(user)"/>
 				</label>
 			</div>
 		</div>
 		
-		<div class="list list-inset" ng-hide="filteredUsers.length">
+		<div class="list list-inset" ng-hide="true">
 		    <div class="item text-center icon-left">
 		    	<i class="icon ion-android-warning"></i>
 				Sua busca não retornou resultados

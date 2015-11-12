@@ -1,8 +1,12 @@
 angular.module('profilecontrollers')
 
-.controller('EditProfileController', ['$rootScope', '$scope', '$ionicPopover', 'AuthService', 'UserRepository', '$ionicLoading',
-                                  function($rootScope, $scope, $ionicPopover, AuthService, UserRepository, $ionicLoading){
+.controller('EditProfileController', ['$rootScope', '$scope', '$ionicPopover', 'AuthService', 'UserRepository', '$ionicLoading', '$timeout',
+                                  function($rootScope, $scope, $ionicPopover, AuthService, UserRepository, $ionicLoading, $timeout){
 	
+	$scope.$on('$ionicView.enter', function() {
+		startUp();
+	});
+
 	var startUp = function(){
 		if($rootScope.user){
 			$scope.formUser = angular.copy($rootScope.user);
@@ -16,12 +20,8 @@ angular.module('profilecontrollers')
 		$scope.birthDateType = 'text';
 		$scope.newImageSrc;
 		$scope.inputPasswordType = 'password';
-		console.log($scope.formUser);
+		$scope.errors = {};
 	}
-	
-	$scope.$on('$ionicView.enter', function() {
-		startUp();
-	});
 	
 	$scope.togglePassword = function(){
 		if($scope.inputPasswordType == 'password'){
@@ -75,7 +75,12 @@ angular.module('profilecontrollers')
 	$scope.saveNewPic = function(){
 		$rootScope.user.profilePic = $scope.newImageSrc;
 		$scope.closePopover();
-		UserRepository.save($rootScope.user);
+		UserRepository.save($rootScope.user, function(error, result){
+			if(!error){
+				$rootScope.user = result;
+				$scope.user = angular.copy(result);
+			}
+		});
 	};
 	
 	$scope.closePopover = function(){
@@ -84,7 +89,7 @@ angular.module('profilecontrollers')
 	};
 	
 	$scope.updateProfile = function(formUser) {
-		UserRepository.save($rootScope.user, function(error, result){
+		UserRepository.save(formUser, function(error, result){
 			if(!error){
 				$ionicLoading.show({ 
 		            template: 'Perfil atualizado com sucesso!',
@@ -106,6 +111,61 @@ angular.module('profilecontrollers')
 		});
 	};
 	
-	startUp();
+	var validateEmailTimeout;
+	var validatePhoneTimeout;
+	var validateCREFTimeout;
+	
+	var validateKeys = function(value, property, required, regex, timeout, suffix){
+		$timeout.cancel(timeout);
+		
+		console.log('changed', value);
+		
+		if(!required && (!value || value.length == 0)){
+			$scope.errors[property] = '';
+			console.log('empty valid');
+			return;
+		}
+		
+		if(value != $scope.user[property]){
+			
+			timeout = $timeout(function(){
+				
+				if(regex && !regex.test(value)){
+					console.log('not valid');
+					$scope.$apply(function(){
+						$scope.errors[property] = suffix + ' inválido';
+					});
+					return;
+				}else{
+					console.log('valid');
+					$scope.errors[property] = '';
+				}
+		
+				console.log('validating on repository');
+				UserRepository.validateUniqueKeys(value, function(error, result){
+					$scope.$apply(function(){
+						if(!result){
+							$scope.errors[property] = suffix + ' já cadastrado';
+						}
+					});
+				});
+			}, 500);
+		}
+		
+	}
+	
+	$scope.validateEmail = function(email){
+		var regex = /[A-Z0-9._%+-]+@[A-Z0-9.-]+.[A-Z]{2,4}/igm;
+		validate(email, 'email', false, regex, validateEmailTimeout, 'Email');
+	};
+	
+	$scope.validatePhone = function(phone){
+		var regex = /[0-9]{8,15}/igm;
+		validate(phone, 'phone', false, regex, validatePhoneTimeout, 'Telefone');
+	};
+	
+	$scope.validateCREF = function(cref){
+		validate(cref, 'cref', false, null, validateCREFTimeout, 'CREF');
+	};
 	
 }]);

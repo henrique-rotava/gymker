@@ -18,10 +18,10 @@
 			<a ng-href="#app/user/{{relation.related.id}}" class="item item-avatar item-icon-right" ng-repeat="relation in relations | filterByProperties:search:['related.name'] track by $index">
 				<img src="{{relation.related.profilePic}}">
 				{{relation.related.name}}
-				<p>{{relation.related.email}}</p>
 				<span ng-if="!relation.relatedConfirmed" class="item-note">
 					Não confirmado
 				</span>
+				<p>{{relation.related.email}}</p>
 				<i class="icon ion-android-more-vertical"></i>
 			</a>
 		</div>

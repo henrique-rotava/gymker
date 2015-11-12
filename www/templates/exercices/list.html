@@ -17,12 +17,12 @@
 
 		<div class="list">
 			<a ng-href="#app/exercice/{{exercice.id}}" class="item item-thumbnail-left" ng-repeat="exercice in exercices | filterByProperties:search:['name','muscle'] track by $index">
-				<img src="{{exercice.image}}"/>
+				<img src="{{exercice.image || '/img/default_exercise_pic.jpg'}}"/>
 				{{exercice.name}}
 				<span class="item-note">
 					{{exercice.muscle}}
 				</span>
-			</div>
+			</a>
 		</div>
 
 		<div class="list list-inset" ng-hide="!exercices || exercices.length">

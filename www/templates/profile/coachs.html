@@ -16,13 +16,13 @@
 		</div>
 		
 		<div class="list">
-			<a ng-href="#app/user/{{relation.relater.id}}" class="item item-avatar item-icon-right" ng-repeat="relation in filteredRelations = (relations | filter:search)">
+			<a ng-href="#app/user/{{relation.relater.id}}" class="item item-avatar item-icon-right" ng-repeat="relation in relations | filterByProperties:search:['relater.name'] track by $index">
 				<img src="{{relation.related.profilePic}}">
 				{{relation.relater.name}}
-				<p>{{relation.relater.email}}</p>
 				<span ng-if="!relation.relaterConfirmed" class="item-note">
 					Não confirmado
 				</span>
+				<p>{{relation.relater.email}}</p>
 				<i class="icon ion-android-more-vertical"></i>
 			</a>
 		</div>

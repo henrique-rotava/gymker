@@ -15,16 +15,14 @@
 		    <i class="icon ion-ios-close-outline padding-horizontal clear-search" ng-show="search" ng-click="search=''"></i>
 		</div>
 
-		<div class="card" ng-repeat="exercice in exercices | filterByProperties:search:['related.name'] track by $index">
-			<div class="item item-icon-right">
-				
+		<div class="list">
+			<a ng-href="#app/exercice/{{exercice.id}}" class="item item-thumbnail-left" ng-repeat="exercice in exercices | filterByProperties:search:['name','muscle'] track by $index">
+				<img src="{{exercice.image || '/img/default_exercise_pic.jpg'}}"/>
 				{{exercice.name}}
 				<span class="item-note">
 					{{exercice.muscle}}
 				</span>
-				<i ng-click="showActions($index)" class="icon ion-android-more-vertical"></i>
-				
-			</div>
+			</a>
 		</div>
 
 		<div class="list list-inset" ng-hide="!exercices || exercices.length">
@@ -37,4 +35,13 @@
 		
 
 	</ion-content>
+	
+	<div class="bar bar-footer bar-light footer-buttons">
+ 		<div class="row">
+			<div class="col">
+				<a href="#app/exercices/create" class="button button-balanced button-clear icon-left ion-ios-plus-outline">Novo exercício</a>	
+			</div>
+		</div>
+	</div>
+	
 </ion-view>

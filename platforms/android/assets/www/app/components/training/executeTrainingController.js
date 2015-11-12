@@ -173,7 +173,6 @@ angular.module('gymker.trainingcontrollers')
 		
 		console.log(execution);
 		ExecutionRepository.del(angular.copy(execution), function(error, result){
-			$interval.cancel(timerCounter);
 			
 			var trainingId = execution.training.id;
 			var trainingDayMarker = execution.marker;

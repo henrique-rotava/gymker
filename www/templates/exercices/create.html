@@ -1,5 +1,5 @@
-<ion-view view-title="Novo Exercício">
-	<ion-content ng-controller="CreateExerciceController">
+<ion-view view-title="Novo Exercício" ng-controller="CreateExerciceController">
+	<ion-content>
 		
 		<div class="card">
 			<div class="list">
@@ -9,7 +9,7 @@
 						<div class="image-selector">
 							<i class="icon ion-image"></i>
 							<br/>
-							<span>Adicionar uma imagem</span>
+							<span>Selecionar imagem</span>
 						</div>
 						
 					</div>
@@ -39,7 +39,7 @@
 					
 					<label class="item item-input item-floating-label">
 						<span class="input-label">Descrição</span>
-						<input type="text" placeholder="Descrição" ng-model="exercice.description">
+						<textarea rows="6" placeholder="Descrição" ng-model="exercice.description"></textarea>
 					</label>
 					
 					<label class="item item-input item-floating-label">

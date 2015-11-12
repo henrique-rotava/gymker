@@ -284,5 +284,7 @@ input[type=text].input-box {
 a.button .icon:before, a.button.icon:before, a.button.icon-left:before, a.button.icon-right:before{
 	margin-top: 0px;
 }
-
+.item-thumbnail-left > img:first-child{
+    object-fit: cover;
+}
 /**/

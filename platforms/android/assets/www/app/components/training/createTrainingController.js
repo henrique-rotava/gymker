@@ -74,6 +74,7 @@ angular.module('gymker.trainingcontrollers')
 		texercice.intensity.series = texercice.intensity.series || 0;
 		texercice.intensity.repetitions = texercice.intensity.repetitions || 0;
 		texercice.intensity.weight = texercice.intensity.weight || 0;
+		texercice.intensity.time = texercice.intensity.time || 0;
 		
 		$scope.exercice = texercice;
 		
@@ -99,7 +100,7 @@ angular.module('gymker.trainingcontrollers')
 	};
 	
 	$scope.selectExercice = function(exercice, letter){
-		
+		console.log(exercice.selected);
 		if(exercice.selected){
 			$scope.configExercice(exercice);
 			addExercice(exercice, letter);
