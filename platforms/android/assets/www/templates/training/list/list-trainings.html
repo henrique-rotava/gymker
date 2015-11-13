@@ -1,6 +1,6 @@
 <ion-view view-title="Treinos" ng-controller="ListTrainingsController">
 
-	<ion-content>
+	<ion-content class="has-footer">
 		<ion-refresher pulling-text="Arraste para atualizar"
          pulling-icon="ion-ios7-arrow-thin-down"
          on-refresh="refreshTrainings()">
@@ -15,12 +15,15 @@
 		</div>
 		
 		<div class="list">
-			<a href="#/app/training/show/{{training.id}}" class="item" ng-repeat="training in trainings | filterByProperties:search:['name','coach.name'] | orderBy:'-createdDate' track by $index">
+			<a href="#/app/training/show/{{training.id}}" class="item {{select ? 'item-checkbox-right' : ''}}" ng-repeat="training in trainings | filterByProperties:search:['name','coach.name'] | orderBy:'-createdDate' track by $index">
 				{{training.name}}
 			    <span class="item-note">{{ training.createdDate | date : 'dd MMM yyyy' : '-03'}}</span>
 			    <p>
 			    	{{training.coach.name}}
 			    </p>
+			    <label class="checkbox checkbox-balanced" ng-show="select">
+					<input type="checkbox" ng-click="selectExercice(trainingExercice)">
+				</label>
 			</a>
 		</div>
 		
@@ -36,8 +39,14 @@
 	
 	<div class="bar bar-footer bar-light footer-buttons">
  		<div class="row">
-			<div class="col">
+			<div class="col" ng-show="!select">
 				<a class="button button-balanced button-clear icon-left ion-ios-plus-outline" ng-href="#/app/training/create">Novo treino</a>	
+			</div>
+			<div class="col" ng-show="select">
+				<button class="button button-balanced button-clear icon ion-ios-minus-outline" ng-click="removeSelection()">Remover</button>	
+			</div>
+			<div class="col">
+				<button class="button button-balanced button-clear icon {{select ? 'ion-ios-checkmark' : 'ion-ios-checkmark-outline'}}" ng-click="select=!select">Selecionar</button>	
 			</div>
 		</div>
 	</div>

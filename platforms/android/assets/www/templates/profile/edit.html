@@ -14,7 +14,7 @@
 
 		<ion-tab title="Geral">
 			<ion-nav-view>
-				<ion-content>
+				<ion-content class="has-footer">
 					
 					<div class="editing-profile-container item item-divider">
 						<div ng-click="openPictureType($event)" class="circle profile-pic profile-pic-editing"></div>
@@ -58,7 +58,7 @@
 		
 		<ion-tab title="Segurança">
 			<ion-nav-view>
-				<ion-content>
+				<ion-content class="has-footer">
 					<label class="item item-input item-floating-label">
 						<span class="input-label">Senha</span>
 						<input type="{{inputPasswordType}}" placeholder="Senha" ng-model="formUser.password">
@@ -69,7 +69,7 @@
 		</ion-tab>
 		<ion-tab title="Endereço">
 			<ion-nav-view>
-				<ion-content>
+				<ion-content class="has-footer">
 					<label class="item item-input item-floating-label">
 						<span class="input-label">Rua</span>
 						<input type="text" placeholder="Rua" ng-model="formUser.address.street">
@@ -96,7 +96,7 @@
 		
 		<ion-tab title="Professor">
 			<ion-nav-view>
-				<ion-content>
+				<ion-content class="has-footer">
 					<div class="item item-divider text-wrap">
 						Informe seu CREF para tornar-se um professor.
 					</div>

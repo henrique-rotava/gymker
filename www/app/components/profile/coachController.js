@@ -29,20 +29,26 @@ angular.module('profilecontrollers')
 	}
 	
 	$scope.loadRelations = function(){
-		$rootScope.$watch('user', function(){
-			if($rootScope.user){
-				UserRepository.getUserRelations($rootScope.user, 'athletes', function(err, result){
-					if(!err){
-						$scope.relations = result;
-						setRelationIDs();
-						$scope.relationsLoaded = true;
-					}
-					$ionicLoading.hide();
-					$scope.$broadcast('scroll.refreshComplete');
-				});
-			}
-		});
+		if($rootScope.user){
+			loadRelationsFromRepository();
+		}else{
+			$rootScope.$watch('user', function(){
+				loadRelationsFromRepository();
+			});
+		}
 	}
+	
+	var loadRelationsFromRepository = function(user){
+		UserRepository.getUserRelations($rootScope.user, 'athletes', function(err, result){
+			if(!err){
+				$scope.relations = result;
+				setRelationIDs();
+				$scope.relationsLoaded = true;
+			}
+			$ionicLoading.hide();
+			$scope.$broadcast('scroll.refreshComplete');
+		});
+	};
 	
 	$scope.refreshRelations = function(){
 		$scope.loadRelations();

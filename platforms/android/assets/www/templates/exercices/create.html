@@ -1,22 +1,33 @@
 <ion-view view-title="Novo Exercício" ng-controller="CreateExerciceController">
+
 	<ion-content>
+	
+		<style>
+			.new-profile-pic{
+				background-image: url({{newImageSrc}});
+			}
+			.image-selector{
+				background-image: url({{exercice.image}});
+			}
+		</style>
 		
 		<div class="card">
 			<div class="list">
 					
-					<div class="item item-image">
+					<div class="item item-image" ng-click="openPictureType($event)">
 						
 						<div class="image-selector">
-							<i class="icon ion-image"></i>
+							<i class="icon ion-image" ng-show="!exercice.image"></i>
 							<br/>
-							<span>Selecionar imagem</span>
+							<span ng-show="!exercice.image">Selecionar imagem</span>
 						</div>
 						
 					</div>
 			
 					<label class="item item-input item-floating-label">
 						<span class="input-label">Nome</span>
-						<input type="text" placeholder="Nome" ng-model="exercice.name">
+						<span class="input-floating-error">{{errors.name}}</span>
+						<input type="text" placeholder="Nome" ng-model="exercice.name" ng-change="validateName()">
 					</label>
 					
 					<label class="item item-input item-select">

@@ -1,4 +1,4 @@
-<ion-view view-title="Exercícios" ng-controller="ExerciceController">
+<ion-view view-title="{{exercice.name}}" ng-controller="ExerciceController">
 	<ion-content>
 
 		<ion-refresher pulling-text="Arraste para atualizar"
@@ -9,7 +9,7 @@
 		<div class="card" ng-show="exercice">
 			<div class="list">
 				<div class="item item-thumbnail-left item-text-wrap">
-					<img src="{{exercice.image || '/img/default_exercise_pic.jpg'}}"/>
+					<img src="{{exercice.image || 'img/default_exercise_pic.jpg'}}"/>
 					<b>{{exercice.name}}</b>
 					<span class="item-note">{{exercice.muscle}}</span>
 					<p>
@@ -20,11 +20,11 @@
 					<youtube-embed video-id="{{exercice.video}}"></youtube-embed>
 				</div>
 				<div class="item text-right">
-					<button class="button button-small button-{{downColor}} button-outline icon ion-android-arrow-down" ng-click="downvote(exercice)">
-						{{downvotes || 0}}
-					</button>
-					<button class="button button-small button-{{upColor}} button-outline icon ion-android-arrow-up" ng-click="upvote(exercice)">
+					<button class="button button-small button-{{upColor}} button-outline icon ion-arrow-up-a" ng-click="upvote(exercice)">
 						{{upvotes || 0}}
+					</button>
+					<button class="button button-small button-{{downColor}} button-outline icon ion-arrow-down-a" ng-click="downvote(exercice)">
+						{{downvotes || 0}}
 					</button>
 				</div>
 			</div>

@@ -1,5 +1,5 @@
 <ion-view view-title="Alunos" ng-controller="CoachController">
-	<ion-content>
+	<ion-content class="has-footer">
 	
 		<ion-refresher pulling-text="Arraste para atualizar"
 	         pulling-icon="ion-ios7-arrow-thin-down"
@@ -15,14 +15,13 @@
 		</div>
 		
 		<div class="list">
-			<a ng-href="#app/user/{{relation.related.id}}" class="item item-avatar item-icon-right" ng-repeat="relation in relations | filterByProperties:search:['related.name'] track by $index">
+			<a ng-href="#app/user/{{relation.related.id}}" class="item item-avatar" ng-repeat="relation in relations | filterByProperties:search:['related.name'] track by $index">
 				<img src="{{relation.related.profilePic}}">
 				{{relation.related.name}}
 				<span ng-if="!relation.relatedConfirmed" class="item-note">
 					Não confirmado
 				</span>
 				<p>{{relation.related.email}}</p>
-				<i class="icon ion-android-more-vertical"></i>
 			</a>
 		</div>
 		

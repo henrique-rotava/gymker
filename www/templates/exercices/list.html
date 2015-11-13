@@ -1,5 +1,5 @@
 <ion-view view-title="Exercícios">
-	<ion-content ng-controller="ListExerciceController">
+	<ion-content ng-controller="ListExerciceController" class="has-footer">
 
 		<ion-refresher pulling-text="Arraste para atualizar"
          pulling-icon="ion-ios7-arrow-thin-down"
@@ -17,7 +17,7 @@
 
 		<div class="list">
 			<a ng-href="#app/exercice/{{exercice.id}}" class="item item-thumbnail-left" ng-repeat="exercice in exercices | filterByProperties:search:['name','muscle'] track by $index">
-				<img src="{{exercice.image || '/img/default_exercise_pic.jpg'}}"/>
+				<img src="{{exercice.image || 'img/default_exercise_pic.jpg'}}"/>
 				{{exercice.name}}
 				<span class="item-note">
 					{{exercice.muscle}}

@@ -232,9 +232,11 @@ input[type=text].input-box {
 }
 .image-selector{
 	width:100%;
-	min-height: 150px;
+	min-height: 180px;
 	background: #ddd;
-	padding: 27px 15px;
+	padding: 44px 15px;
+	background-size: cover;
+	background-position: center center;
 }
 .image-selector .icon{
 	font-size: 70px;
