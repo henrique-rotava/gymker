@@ -10,7 +10,7 @@
 				<div class="item item-divider item-text-wrap item-progress">
 					<a class="not-link balanced" ng-href="#/app/training/show/{{executingDay.training.id}}/{{executingDay.marker}}">
 					{{::executingDay.training.name}} - {{::executingDay.marker}}</a>
-					<span class="item-note dark">{{ (executingDay.startDate || now) | date : 'dd MMM yyyy - HH:mm'}}</span>
+					<span class="item-note dark">{{ (executingDay.startDate || now) | date : 'dd MMM yyyy HH:mm'}}</span>
 					<p>
 						<div class="row no-padding">
 							<div class="col no-padding">
@@ -26,7 +26,7 @@
 					
 				</div>
 				<div class="item item-icon-right item-text-wrap item-thumbnail-left item-icon-left" ng-repeat="trainingExercice in executingDay.trainingExercices track by $index">
-					<img src="{{training.image}}"/>
+					<img src="{{exercice.image || 'img/default_exercise_pic.jpg'}}"/>
 					<h2>{{::trainingExercice.exercice.name}}</h2>
 					<p>
 						<span>{{trainingExercice.intensity.series || 0}} Séries</span>

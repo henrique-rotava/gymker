@@ -1,4 +1,4 @@
-<ion-view view-title="Treino" ng-controller="ShowTrainingController">
+<ion-view view-title="{{::training.name}}" ng-controller="ShowTrainingController">
 
 	<ion-content>
 		<div class="card">
@@ -18,7 +18,7 @@
 				<div class="item item-divider">
 					Dias
 				</div>
-				
+
 				<a ng-href="#/app/training/show/{{training.id}}/{{day.marker}}" class="item item-icon-right item-text-wrap" ng-repeat="day in training.days track by $index | orderBy:'marker'">
 					<b class="balanced">{{::day.marker}}</b>
 					<p>
@@ -28,9 +28,9 @@
 				</a>
 			</div>
 		</div>
-		
+
 		<div ng-include src="'templates/executions/list-executions.html'"></div>
-		
+
 	</ion-content>
 
 </ion-view>

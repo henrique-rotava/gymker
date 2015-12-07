@@ -2,17 +2,20 @@
 
 	<ion-content class="has-footer">
 		<div class="card" ng-show="day">
-			<div class="list" show-reorder="true">
+			<div class="list">
 				<a ng-href="#/app/training/show/{{::training.id}}" class="item item-text-wrap">
 					<h2 class="balanced"><b>{{::training.name}} - {{::day.marker}}</b></h2>
+					<p>
+						{{::getDayExercicesMuscles(day)}}
+					</p>
 				</a>
 				<a ng-href="#app/training/charts/{{::training.id}}/{{::day.marker}}" class="item balanced text-center">
 					Ver análise do treino<i class="icon ion-ios-analytics-outline padding-left"></i>
 				</a>
-				<div ng-href="#app/exercice/{{trainingExercice.exercice.id}}" 
-					class="item item-text-wrap item-thumbnail-left item-checkbox-right" 
+				<div ng-href="#app/exercice/{{trainingExercice.exercice.id}}"
+					class="item item-text-wrap item-thumbnail-left item-checkbox-right"
 					ng-repeat="trainingExercice in day.trainingExercices track by $index">
-					<img src="{{training.exercice.image}}"/>
+					<img src="{{exercice.image || 'img/default_exercise_pic.jpg'}}"/>
 					<h2>{{::trainingExercice.exercice.name}}</h2>
 					<p>
 						<span>{{::trainingExercice.exercice.muscle}}</span>
@@ -27,26 +30,26 @@
 				</div>
 			</div>
 		</div>
-		
+
 		<div ng-include src="'templates/executions/list-executions.html'"></div>
-		
+
 	</ion-content>
-	
+
 	<div class="bar bar-footer bar-light footer-buttons">
  		<div class="row">
 			<div class="col" ng-show="!select">
-				<button class="button button-balanced button-clear icon ion-ios-play-outline" ng-click="createExecutionTraining(training)">Executar</button>	
+				<button class="button button-balanced button-clear icon ion-ios-play-outline" ng-click="createExecutionTraining(training)">Executar</button>
 			</div>
 			<div class="col" ng-show="!select">
-				<button class="button button-balanced button-clear icon ion-ios-plus-outline" ng-click="openSelection()">Adicionar</button>	
+				<button class="button button-balanced button-clear icon ion-ios-plus-outline" ng-click="openSelection()">Adicionar</button>
 			</div>
 			<div class="col" ng-show="select">
-				<button class="button button-balanced button-clear icon ion-ios-minus-outline" ng-click="removeSelection()">Remover</button>	
+				<button class="button button-balanced button-clear icon ion-ios-minus-outline" ng-click="removeSelection()">Remover</button>
 			</div>
 			<div class="col">
-				<button class="button button-balanced button-clear icon {{select ? 'ion-ios-checkmark' : 'ion-ios-checkmark-outline'}}" ng-click="select=!select">Selecionar</button>	
+				<button class="button button-balanced button-clear icon {{select ? 'ion-ios-checkmark' : 'ion-ios-checkmark-outline'}}" ng-click="select=!select">Selecionar</button>
 			</div>
 		</div>
 	</div>
-	
+
 </ion-view>

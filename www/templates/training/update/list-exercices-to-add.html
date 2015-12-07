@@ -16,7 +16,7 @@
 		
 		<div class="list">
 			<div class="item item-text-wrap item-thumbnail-left item-checkbox-right" ng-repeat="exercice in exercices | filterByProperties:search:['name','muscle'] track by $index">
-				<img src="{{exercice.image}}">
+				<img src="{{exercice.image || 'img/default_exercise_pic.jpg'}}"/>
 				{{exercice.name}}
 				<span class="item-note">
 					{{exercice.muscle}}

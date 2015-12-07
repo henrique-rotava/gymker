@@ -37,7 +37,7 @@ angular.module('gymker.trainingcontrollers')
 				var muscle = trainingExercices[index].exercice.muscle;
 				muscles[muscle] = '';
 			}
-			return Object.keys(muscles).join();
+			return Object.keys(muscles).join(', ');
 		}
 	};
 	

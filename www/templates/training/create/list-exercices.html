@@ -7,8 +7,8 @@
 </div>
 
 <div class="list">
-	<div class="item item-avatar item-checkbox-right" ng-repeat="exercice in filteredExercices = (getExerciceDay(letter) | filter:search)">
-		<img src="img/default_profile_picture.jpg">
+	<div class="item item-thumbnail-left item-checkbox-right" ng-repeat="exercice in filteredExercices = (getExerciceDay(letter) | filter:search)">
+		<img src="{{exercice.image || 'img/default_exercise_pic.jpg'}}"/>
 		{{exercice.name}}
 		<span class="item-note">
 			{{exercice.muscle}}

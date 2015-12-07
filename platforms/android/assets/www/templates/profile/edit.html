@@ -8,19 +8,19 @@
 			background-image: url({{newImageSrc}});
 		}
 	</style>
-	
+
 	<form id="edit-profile" name="edit-profile">
 	<ion-tabs class="tabs-striped tabs-top tabs-background-light tabs-color-balanced">
 
 		<ion-tab title="Geral">
 			<ion-nav-view>
 				<ion-content class="has-footer">
-					
+
 					<div class="editing-profile-container item item-divider">
 						<div ng-click="openPictureType($event)" class="circle profile-pic profile-pic-editing"></div>
 						<label class="balanced">{{user.name}}</label>
 					</div>
-					
+
 					<div class="list">
 						<label class="item item-input item-floating-label">
 							<span class="input-label">Nome</span>
@@ -40,7 +40,7 @@
 							<span class="input-label">Data de nascimento</span>
 							<input type="{{birthDateType}}" placeholder="Data de nascimento" ng-model="formUser.birthDate" type="text" ng-focus="updateBirthDateType('date')" ng-blur="updateBirthDateType()"/>
 						</label>
-						
+
 						<label class="item item-input item-select">
 							<div class="input-label">
 						      Sexo
@@ -50,12 +50,12 @@
 						      <option>Feminino</option>
 						    </select>
 						</label>
-						
+
 					</div>
 				</ion-content>
 			</ion-nav-view>
 		</ion-tab>
-		
+
 		<ion-tab title="Segurança">
 			<ion-nav-view>
 				<ion-content class="has-footer">
@@ -93,7 +93,7 @@
 				</ion-content>
 			</ion-nav-view>
 		</ion-tab>
-		
+
 		<ion-tab title="Professor">
 			<ion-nav-view>
 				<ion-content class="has-footer">
@@ -102,6 +102,7 @@
 					</div>
 					<label class="item item-input item-floating-label">
 						<span class="input-label">CREF</span>
+						<span class="input-floating-error">{{errors.cref}}</span>
 						<input type="text" placeholder="CREF" ng-model="formUser.cref" ng-change="validateCREF(formUser.cref)">
 					</label>
 				</ion-content>
@@ -110,13 +111,13 @@
 
 	</ion-tabs>
 	</form>
- 	
+
  	<div class="bar bar-footer bar-light footer-buttons">
  		<div class="row">
 			<div class="col">
-				<button class="button button-balanced button-clear icon-left ion-ios-checkmark-outline" ng-click="updateProfile(formUser)">Salvar</button>	
+				<button class="button button-balanced button-clear icon-left ion-ios-checkmark-outline" ng-click="updateProfile(formUser)">Salvar</button>
 			</div>
 		</div>
 	</div>
- 
+
 </ion-view>

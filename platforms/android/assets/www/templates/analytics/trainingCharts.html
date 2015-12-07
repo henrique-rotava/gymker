@@ -1,7 +1,7 @@
 <ion-view view-title="{{title}}" ng-controller="TrainingChartsController">
-	<ion-content >
-	    
-	    <div class="card">
+		<ion-content >
+
+	    <div class="card" ng-show="exercices">
 	    	<div class="list">
 		    	<div class="item item-button-right">
 		    		<h2>{{execution.training.name}} - {{execution.marker}}</h2>
@@ -9,7 +9,7 @@
 		    	</div>
 	    	</div>
 	    </div>
-	    
+
 	    <div class="card" ng-repeat="exercice in exercices track by $index">
 	        <div class="item">
 	            {{exercice.name}}
@@ -18,6 +18,6 @@
 	            <canvas chart-colours="colours" id="line" class="chart chart-line" chart-data="exercice.weights" chart-labels="exercice.labels"></canvas>
 	        </div>
 	    </div>
-			
+
 	</ion-content>
 </ion-view>

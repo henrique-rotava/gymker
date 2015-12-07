@@ -5,7 +5,7 @@
          pulling-icon="ion-ios7-arrow-thin-down"
          on-refresh="refreshTrainings()">
 		</ion-refresher>
-		
+
 		<div class="item item-input-inset stable-bg">
 		    <label class="item-input-wrapper">
 		    	<i class="icon ion-search placeholder-icon"></i>
@@ -13,20 +13,20 @@
 		    </label>
 		    <i class="icon ion-ios-close-outline padding-horizontal clear-search" ng-show="search" ng-click="search=''"></i>
 		</div>
-		
+
 		<div class="list">
-			<a href="#/app/training/show/{{training.id}}" class="item {{select ? 'item-checkbox-right' : ''}}" ng-repeat="training in trainings | filterByProperties:search:['name','coach.name'] | orderBy:'-createdDate' track by $index">
+			<div ng-click="clickAction(training.id)" class="item {{select ? 'item-checkbox-right' : ''}}" ng-repeat="training in trainings | filterByProperties:search:['name','coach.name'] | orderBy:'-createdDate' track by $index">
 				{{training.name}}
 			    <span class="item-note">{{ training.createdDate | date : 'dd MMM yyyy' : '-03'}}</span>
 			    <p>
 			    	{{training.coach.name}}
 			    </p>
 			    <label class="checkbox checkbox-balanced" ng-show="select">
-					<input type="checkbox" ng-click="selectExercice(trainingExercice)">
+					<input type="checkbox">
 				</label>
-			</a>
+			</div>
 		</div>
-		
+
 		<div class="list list-inset" ng-hide="trainings.length || !trainingsLoaded">
 		     <div class="item text-center">
 				Você ainda não possui treinos.
@@ -36,17 +36,17 @@
 		    </div>
 		</div>
 	</ion-content>
-	
+
 	<div class="bar bar-footer bar-light footer-buttons">
  		<div class="row">
 			<div class="col" ng-show="!select">
-				<a class="button button-balanced button-clear icon-left ion-ios-plus-outline" ng-href="#/app/training/create">Novo treino</a>	
+				<a class="button button-balanced button-clear icon-left ion-ios-plus-outline" ng-href="#/app/training/create">Novo treino</a>
 			</div>
 			<div class="col" ng-show="select">
-				<button class="button button-balanced button-clear icon ion-ios-minus-outline" ng-click="removeSelection()">Remover</button>	
+				<button class="button button-balanced button-clear icon ion-ios-minus-outline" ng-click="removeSelection()">Remover</button>
 			</div>
 			<div class="col">
-				<button class="button button-balanced button-clear icon {{select ? 'ion-ios-checkmark' : 'ion-ios-checkmark-outline'}}" ng-click="select=!select">Selecionar</button>	
+				<button class="button button-balanced button-clear icon {{select ? 'ion-ios-checkmark' : 'ion-ios-checkmark-outline'}}" ng-click="select=!select">Selecionar</button>
 			</div>
 		</div>
 	</div>

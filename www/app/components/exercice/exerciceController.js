@@ -2,12 +2,12 @@ angular.module('exercicecontrollers')
 
 .controller('ExerciceController', ['$scope', '$stateParams', 'ExerciceRepository',
                                    function($scope, $stateParams, ExerciceRepository){
-	
-	
+
+
 	$scope.$on('$ionicView.enter', function() {
 		startUp();
 	});
-	
+
 	var startUp = function(){
 		$scope.upColor = 'dark';
 		$scope.downColor = 'dark';
@@ -16,16 +16,16 @@ angular.module('exercicecontrollers')
 		ExerciceRepository.get(exerciceId, function(error, result){
 			console.log(result);
 			if(!error){
-				
-				
+
+
 				ExerciceRepository.getExerciceVotesCount(exerciceId, '1', function(error, result){
 					$scope.upvotes = result;
 				});
-				
+
 				ExerciceRepository.getExerciceVotesCount(exerciceId, '-1', function(error, result){
 					$scope.downvotes = result;
 				});
-				
+
 				ExerciceRepository.getUserExerciceVote(exerciceId, $scope.user.id, function(error, result){
 					$scope.$apply(function(){
 						if(result === 1){
@@ -38,22 +38,23 @@ angular.module('exercicecontrollers')
 					});
 					$scope.$broadcast('scroll.refreshComplete');
 				});
-				
+
 				$scope.$apply(function(){
 					$scope.exercice = result;
 				});
 			}
 		});
 	}
-	
+
 	$scope.refresh = function(){
 		startUp();
 	};
-	
+
 	$scope.upvote = function(exercice){
 		if($scope.canVote){
 			$scope.canVote = false;
-			$scope.upvotes = $scope.upvotes ? $scope.upvotes++ : 1;
+			$scope.upvotes = $scope.upvotes ? ++$scope.upvotes : 1;
+      console.log($scope.upvotes);
 			$scope.upColor = 'balanced';
 			var vote = {
 				exercice: exercice.id,
@@ -65,7 +66,7 @@ angular.module('exercicecontrollers')
 			});
 		}
 	};
-	
+
 	$scope.downvote = function(exercice){
 		if($scope.canVote){
 			$scope.canVote = false;
@@ -81,5 +82,5 @@ angular.module('exercicecontrollers')
 			});
 		}
 	};
-	
+
 }])
